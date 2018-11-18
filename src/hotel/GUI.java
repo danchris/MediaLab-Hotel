@@ -1,14 +1,10 @@
 package hotel;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
+import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,106 +24,69 @@ import javafx.stage.Stage;
  */
 public class GUI extends Application {
 
-	private static int minutes = 0;
-	private static int seconds = 0;
+
 	private AnimationTimer timer;
-	//LongProperty timeMillis = new SimpleLongProperty(0);
+	private static BorderPane rootPane;
+	private static VBox topContainer;
+	private static MenuBar menuBar;
+	private static Menu Game;
+	private static Menu Statistics;
+	private static MenuItem Start;
+	private static MenuItem Stop;
+	private static MenuItem Cards;
+	private static MenuItem Exit;
+	private static MenuItem Hotels;
+	private static MenuItem Entrances;
+	private static MenuItem Profits;
+	private static TilePane InfoBar;
+	private static Text Player1;
+	private static Text Player2;
+	private static Text Player3;
+	private static Text AvailableHotels;
+	private static Text TotalTime;
+	private static SplitPane Boards;
+	private static VBox GameBoard;
+	private static ToolBar toolBar;
+	private static Scene scene;
+
+	
+	public void init() {
+		
+		System.out.println("GUI.java: Init Application");
+		timer = new AnimationTimer() {
+
+		    private static final long STOPPED = -1 ;
+		    private long startTime = STOPPED ;
+
+		    @Override
+		    public void handle(long timestamp) {
+		        if (startTime == STOPPED) {
+		            startTime = timestamp ;
+		        }
+		        long elapsedNanos = timestamp - startTime ;
+		        long elapsedMillis = elapsedNanos / 1_000_000 ;
+		        TotalTime.setText("Total Time: " + String.format("%02d : %02d", 
+		        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
+		        	    TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) - 
+		        	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
+		        	));
+		    }
+
+		    @Override
+		    public void stop() {
+		        startTime = STOPPED ;
+		        super.stop();
+		    }
+		};
+	}
 	
 	public void start(Stage primaryStage) throws Exception {
 		Platform.runLater(() -> {
 			try {
-				System.out.println("GUI.java: Create GUI");
-
-				primaryStage.setTitle("MediaLab Hotel");
-				BorderPane rootPane = new BorderPane();
-				VBox topContainer = new VBox();
-
-				// Menu
-
-				MenuBar menuBar = new MenuBar();
-				Menu Game = new Menu("Game");
-				Menu Statistics = new Menu("Statistics");
-				MenuItem Start = new MenuItem("Start");
-				MenuItem Stop = new MenuItem("Stop");
-				MenuItem Cards = new MenuItem("Cards");
-				MenuItem Exit = new MenuItem("Exit");
-				MenuItem Hotels = new MenuItem("Hotels");
-				MenuItem Entrances = new MenuItem("Entrances");
-				MenuItem Profits = new MenuItem("Profits");
-				Game.getItems().addAll(Start, Stop, Cards, Exit);
-				Statistics.getItems().addAll(Hotels, Entrances, Profits);
-				menuBar.getMenus().add(Game);
-				menuBar.getMenus().add(Statistics);
-
-				Start.setOnAction(actionEvent -> startGame(primaryStage));
-				Stop.setOnAction(actionEvent -> stopGame(primaryStage));
-				Exit.setOnAction(actionEvent -> Platform.exit());
-
-				// Info Bar
-				TilePane InfoBar = new TilePane();
-				InfoBar.setOrientation(Orientation.HORIZONTAL);
-				InfoBar.setTileAlignment(Pos.CENTER);
-				InfoBar.setHgap(40);
-				Text Player1 = new Text("Player 1: ");
-				Text Player2 = new Text("Player 2: ");
-				Text Player3 = new Text("Player 3: ");
-				Text AvailableHotels = new Text("Available Hotels: ");
-				Text TotalTime = new Text("Total Time: ");
-				// InfoBar.setSpacing(200);
-				InfoBar.getChildren().add(Player1);
-				InfoBar.getChildren().add(Player2);
-				InfoBar.getChildren().add(Player3);
-				InfoBar.getChildren().add(AvailableHotels);
-				InfoBar.getChildren().add(TotalTime);
-
-				topContainer.getChildren().addAll(menuBar, InfoBar);
-
-				// Boards
-				SplitPane Boards = new SplitPane();
-
-				VBox GameBoard = new VBox();
-				ToolBar toolBar = new ToolBar();
-				toolBar.setOrientation(Orientation.VERTICAL);
-				GameBoard.setMaxSize(800, 600);
-				toolBar.setMaxSize(300,600);
-
-				Boards.getItems().addAll(GameBoard, toolBar);
-
-				rootPane.setTop(topContainer);
-				rootPane.setCenter(Boards);
-				Scene scene = new Scene(rootPane, 800, 600);
-
-
-				primaryStage.setScene(scene);
-				timer = new AnimationTimer() {
-
-				    private static final long STOPPED = -1 ;
-				    private long startTime = STOPPED ;
-
-				    @Override
-				    public void handle(long timestamp) {
-				        if (startTime == STOPPED) {
-				            startTime = timestamp ;
-				        }
-				        long elapsedNanos = timestamp - startTime ;
-				        long elapsedMillis = elapsedNanos / 1_000_000 ;
-				        TotalTime.setText("Total Time: " + String.format("%02d : %02d", 
-				        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
-				        	    TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) - 
-				        	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
-				        	));
-				    }
-
-				    @Override
-				    public void stop() {
-				        startTime = STOPPED ;
-				        super.stop();
-				    }
-				};
-				timer.start();
+				System.out.println("GUI.java: Start Application");
+				createGUI(primaryStage);
+				startGame(primaryStage);
 				
-				primaryStage.show();
-
 			} catch (Exception ex) {
 				System.out.println("GUI.java: Exception throw");
 				System.out.println(ex);
@@ -139,15 +98,105 @@ public class GUI extends Application {
 	
 	public void createGUI(Stage primaryStage) {
 		//TODO Copy gui creation here maybe in init...
+		System.out.println("GUI.java: Create GUI");
+
+		primaryStage.setTitle("MediaLab Hotel");
+		rootPane = new BorderPane();
+		topContainer = new VBox();
+		
+		createMenuBar(primaryStage);
+		createInfoBar(primaryStage);
+		createBoards(primaryStage);
+		
+		topContainer.getChildren().addAll(menuBar, InfoBar);
+
+		rootPane.setTop(topContainer);
+		rootPane.setCenter(Boards);
+		scene = new Scene(rootPane, 800, 600);
+		primaryStage.setScene(scene);
+	}
+	
+	
+	public void createBoards(Stage primaryStage) {
+		
+		System.out.println("GUI.java: Create Boards");
+		// Boards
+		Boards = new SplitPane();
+
+		GameBoard = new VBox();
+		toolBar = new ToolBar();
+		toolBar.setOrientation(Orientation.VERTICAL);
+		GameBoard.setPrefSize(500, 600);
+		toolBar.setPrefSize(300, 600);
+		Boards.getItems().addAll(GameBoard, toolBar);
+		
+		primaryStage.show();
+
+	}
+	public void createInfoBar(Stage primaryStage){
+		System.out.println("GUI.java: Create Info Bar");
+		// Info Bar
+		InfoBar = new TilePane();
+		InfoBar.setOrientation(Orientation.HORIZONTAL);
+		InfoBar.setTileAlignment(Pos.CENTER);
+		InfoBar.setHgap(40);
+		Player1 = new Text("Player 1: ");
+		Player2 = new Text("Player 2: ");
+		Player3 = new Text("Player 3: ");
+		AvailableHotels = new Text("Available Hotels: ");
+		TotalTime = new Text("Total Time: ");
+		// InfoBar.setSpacing(200);
+		InfoBar.getChildren().add(Player1);
+		InfoBar.getChildren().add(Player2);
+		InfoBar.getChildren().add(Player3);
+		InfoBar.getChildren().add(AvailableHotels);
+		InfoBar.getChildren().add(TotalTime);
+	}	
+	public void createMenuBar(Stage primaryStage) {
+		// Menu
+
+		System.out.println("GUI.java: Create Menu Bar");
+		menuBar = new MenuBar();
+		Game = new Menu("Game");
+		Statistics = new Menu("Statistics");
+		Start = new MenuItem("Start");
+		Stop = new MenuItem("Stop");
+		Cards = new MenuItem("Cards");
+		Exit = new MenuItem("Exit");
+		Hotels = new MenuItem("Hotels");
+		Entrances = new MenuItem("Entrances");
+		Profits = new MenuItem("Profits");
+		Game.getItems().addAll(Start, Stop, Cards, Exit);
+		Statistics.getItems().addAll(Hotels, Entrances, Profits);
+		menuBar.getMenus().add(Game);
+		menuBar.getMenus().add(Statistics);
+
+		Start.setOnAction(actionEvent -> {
+			try {
+				System.out.println("GUI.java: Start new Game");
+				start(primaryStage);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("GUI.java: Start Button Pressed Exception");
+				e.printStackTrace();
+			}
+		});
+		Stop.setOnAction(actionEvent -> stopGame(primaryStage));
+		Exit.setOnAction(actionEvent -> Platform.exit());
+
+		
 	}
 	public void startGame(Stage primaryStage) {
 		//TODO Start new game Timer etc.
-		System.out.println("Start New Game");
+		System.out.println("GUI.java: Start New Game");
+		timer.stop();
+		timer.start();
 	}
 	
 	public void stopGame(Stage primaryStage) {
 		//TODO Stop Game stop timer etc.
-		System.out.println("Stop Game");
+		System.out.println("GUI.java: Stop Game");
+		timer.stop();
 	}
 
 	@Override
