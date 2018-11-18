@@ -66,9 +66,9 @@ public class GUI extends Application {
 		        long elapsedNanos = timestamp - startTime ;
 		        long elapsedMillis = elapsedNanos / 1_000_000 ;
 		        TotalTime.setText("Total Time: " + String.format("%02d : %02d", 
-		        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
-		        	    TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) - 
-		        	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
+		        	    TimeUnit.MILLISECONDS.toHours(elapsedMillis),
+		        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis) - 
+		        	    TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(elapsedMillis))
 		        	));
 		    }
 
@@ -126,8 +126,8 @@ public class GUI extends Application {
 		GameBoard = new VBox();
 		toolBar = new ToolBar();
 		toolBar.setOrientation(Orientation.VERTICAL);
-		GameBoard.setPrefSize(500, 600);
-		toolBar.setPrefSize(300, 600);
+		GameBoard.setPrefSize(600, 600);
+		toolBar.setPrefSize(200, 600);
 		Boards.getItems().addAll(GameBoard, toolBar);
 		
 		primaryStage.show();
