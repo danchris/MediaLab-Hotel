@@ -16,6 +16,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -145,6 +146,9 @@ public class GUI extends Application {
 		Player3 = new Text("Player 3: ");
 		AvailableHotels = new Text("Available Hotels: ");
 		TotalTime = new Text("Total Time: ");
+		Player1.setFill(Color.BLUE);
+		Player2.setFill(Color.RED);
+		Player3.setFill(Color.GREEN);
 		// InfoBar.setSpacing(200);
 		InfoBar.getChildren().add(Player1);
 		InfoBar.getChildren().add(Player2);
