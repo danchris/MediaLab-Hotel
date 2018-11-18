@@ -2,8 +2,13 @@ package hotel;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -25,9 +30,9 @@ public class GUI extends Application {
 
 	private static int minutes = 0;
 	private static int seconds = 0;
-//	private AnimationTimer timer;
-	private Timer timer;
-
+	private AnimationTimer timer;
+	//LongProperty timeMillis = new SimpleLongProperty(0);
+	
 	public void start(Stage primaryStage) throws Exception {
 		Platform.runLater(() -> {
 			try {
@@ -62,7 +67,7 @@ public class GUI extends Application {
 				TilePane InfoBar = new TilePane();
 				InfoBar.setOrientation(Orientation.HORIZONTAL);
 				InfoBar.setTileAlignment(Pos.CENTER);
-				InfoBar.setHgap(50);
+				InfoBar.setHgap(40);
 				Text Player1 = new Text("Player 1: ");
 				Text Player2 = new Text("Player 2: ");
 				Text Player3 = new Text("Player 3: ");
@@ -94,24 +99,32 @@ public class GUI extends Application {
 
 
 				primaryStage.setScene(scene);
-				timer = new Timer();
-				timer.scheduleAtFixedRate(new TimerTask() {
-				    @Override
-				    public void run() {
-				    	seconds++;
-				    	if (seconds==60) {
-				    		minutes++;
-				    		if (minutes == 60) minutes = 0;
-				    		seconds = 0;
-				    	}
-				    	
-				    	if (seconds < 10 && minutes < 10) TotalTime.setText("Total Time: 0"+minutes+":0"+seconds);
-				    	else if (seconds < 10 && minutes >= 10) TotalTime.setText("Total Time: "+minutes+":0"+seconds);
-				    	else if (seconds >= 10 && minutes < 10) TotalTime.setText("Total Time: 0"+minutes+":"+seconds);
-				    	else TotalTime.setText("Total Time: "+minutes+":"+seconds);
-				    }
-				}, 0, 1000);
+				timer = new AnimationTimer() {
 
+				    private static final long STOPPED = -1 ;
+				    private long startTime = STOPPED ;
+
+				    @Override
+				    public void handle(long timestamp) {
+				        if (startTime == STOPPED) {
+				            startTime = timestamp ;
+				        }
+				        long elapsedNanos = timestamp - startTime ;
+				        long elapsedMillis = elapsedNanos / 1_000_000 ;
+				        TotalTime.setText("Total Time: " + String.format("%02d : %02d", 
+				        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis),
+				        	    TimeUnit.MILLISECONDS.toSeconds(elapsedMillis) - 
+				        	    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(elapsedMillis))
+				        	));
+				    }
+
+				    @Override
+				    public void stop() {
+				        startTime = STOPPED ;
+				        super.stop();
+				    }
+				};
+				timer.start();
 				
 				primaryStage.show();
 
@@ -139,8 +152,7 @@ public class GUI extends Application {
 
 	@Override
 	public void stop() {
-		timer.cancel();
-		timer.purge();
+		timer.stop();
 		System.out.println("GUI.java: Hotel Application Exiting...");
 		Platform.exit();
 	}
