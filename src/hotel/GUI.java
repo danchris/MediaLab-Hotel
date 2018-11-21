@@ -115,6 +115,8 @@ public class GUI extends Application {
 		rootPane.setCenter(Boards);
 		scene = new Scene(rootPane, 800, 600);
 		primaryStage.setScene(scene);
+		primaryStage.show();
+		primaryStage.setResizable(false);
 	}
 	
 	
@@ -131,7 +133,6 @@ public class GUI extends Application {
 		toolBar.setPrefSize(200, 600);
 		Boards.getItems().addAll(GameBoard, toolBar);
 		
-		primaryStage.show();
 
 	}
 	public void createInfoBar(Stage primaryStage){
