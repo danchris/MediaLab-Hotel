@@ -30,12 +30,7 @@ public class GUI extends Application {
 	private static BorderPane rootPane;
 	private static VBox topContainer;
 	private static HotelMenuBar menuBar;
-	private static TilePane InfoBar;
-	private static Text Player1;
-	private static Text Player2;
-	private static Text Player3;
-	private static Text AvailableHotels;
-	private static Text TotalTime;
+	private static HotelInfoBar InfoBar;
 	private static SplitPane Boards;
 	private static VBox GameBoard;
 	private static ToolBar toolBar;
@@ -64,7 +59,7 @@ public class GUI extends Application {
 		        }
 		        long elapsedNanos = timestamp - startTime ;
 		        long elapsedMillis = elapsedNanos / 1_000_000 ;
-		        TotalTime.setText("Total Time: " + String.format("%02d : %02d", 
+		        InfoBar.getTotalTime().setText("Total Time: " + String.format("%02d : %02d", 
 		        	    TimeUnit.MILLISECONDS.toHours(elapsedMillis),
 		        	    TimeUnit.MILLISECONDS.toMinutes(elapsedMillis) - 
 		        	    TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(elapsedMillis))
@@ -112,8 +107,8 @@ public class GUI extends Application {
 		rootPane = new BorderPane();
 		topContainer = new VBox();
 		
-		createMenuBar(primaryStage);
-		createInfoBar(primaryStage);
+		menuBar = new HotelMenuBar(primaryStage,timer);
+		InfoBar = new HotelInfoBar();
 		createBoards(primaryStage);
 		
 		topContainer.getChildren().addAll(menuBar, InfoBar);
@@ -146,42 +141,6 @@ public class GUI extends Application {
 
 	}
 	
-	/*
-	 * ftiaxnei to infobar
-	 */
-	public void createInfoBar(Stage primaryStage){
-		System.out.println("GUI.java: Create Info Bar");
-		// Info Bar
-		InfoBar = new TilePane();
-		InfoBar.setOrientation(Orientation.HORIZONTAL);
-		InfoBar.setTileAlignment(Pos.CENTER);
-		InfoBar.setHgap(40);
-		Player1 = new Text("Player 1: ");
-		Player2 = new Text("Player 2: ");
-		Player3 = new Text("Player 3: ");
-		AvailableHotels = new Text("Available Hotels: ");
-		TotalTime = new Text("Total Time: ");
-		Player1.setFill(Color.BLUE);
-		Player2.setFill(Color.RED);
-		Player3.setFill(Color.GREEN);
-		// InfoBar.setSpacing(200);
-		InfoBar.getChildren().add(Player1);
-		InfoBar.getChildren().add(Player2);
-		InfoBar.getChildren().add(Player3);
-		InfoBar.getChildren().add(AvailableHotels);
-		InfoBar.getChildren().add(TotalTime);
-	}	
-	
-
-	/*
-	 * ftiaxnei to menubar
-	 */
-	public void createMenuBar(Stage primaryStage) {
-		// Menu
-
-		System.out.println("GUI.java: Create Menu Bar object");
-		menuBar = new HotelMenuBar(primaryStage,timer);
-	}
 	
 
 	public void startGame(Stage primaryStage) {
