@@ -51,6 +51,13 @@ public class GUI extends Application {
 	private static Scene scene;
 
 	
+
+	
+	/*
+	 * h init ksekinaei ton timer
+	 * (non-Javadoc)
+	 * @see javafx.application.Application#init()
+	 */
 	public void init() {
 		
 		System.out.println("GUI.java: Init Application");
@@ -81,6 +88,11 @@ public class GUI extends Application {
 		};
 	}
 	
+	/*
+	 * h start ftiaxnei to GUI kai ksekinaei to stage
+	 * (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		Platform.runLater(() -> {
 			try {
@@ -96,7 +108,11 @@ public class GUI extends Application {
 
 	}
 	
-	
+	/*
+	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis
+	 * create menuber, create infobar kai create board,
+	 * episis ksekinaei to scene
+	 */
 	public void createGUI(Stage primaryStage) {
 		//TODO Copy gui creation here maybe in init...
 		System.out.println("GUI.java: Create GUI");
@@ -120,6 +136,9 @@ public class GUI extends Application {
 	}
 	
 	
+	/*
+	 * ftiaxnei ta boards, diladi to game board kai to toolbox
+	 */
 	public void createBoards(Stage primaryStage) {
 		
 		System.out.println("GUI.java: Create Boards");
@@ -135,6 +154,10 @@ public class GUI extends Application {
 		
 
 	}
+	
+	/*
+	 * ftiaxnei to infobar
+	 */
 	public void createInfoBar(Stage primaryStage){
 		System.out.println("GUI.java: Create Info Bar");
 		// Info Bar
@@ -157,6 +180,11 @@ public class GUI extends Application {
 		InfoBar.getChildren().add(AvailableHotels);
 		InfoBar.getChildren().add(TotalTime);
 	}	
+	
+
+	/*
+	 * ftiaxnei to menubar
+	 */
 	public void createMenuBar(Stage primaryStage) {
 		// Menu
 
@@ -191,6 +219,10 @@ public class GUI extends Application {
 
 		
 	}
+	
+	/*
+	 * ksekinaei to game me to button
+	 */
 	public void startGame(Stage primaryStage) {
 		//TODO Start new game Timer etc.
 		System.out.println("GUI.java: Start New Game");
@@ -198,6 +230,9 @@ public class GUI extends Application {
 		timer.start();
 	}
 	
+	/*
+	 * stamataei to game me to button
+	 */
 	public void stopGame(Stage primaryStage) {
 		//TODO Stop Game stop timer etc.
 		System.out.println("GUI.java: Stop Game");
