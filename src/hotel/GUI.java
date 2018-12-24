@@ -1,6 +1,7 @@
 package hotel;
 
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -87,7 +88,7 @@ public class GUI extends Application {
 	 * create menuber, create infobar kai create board,
 	 * episis ksekinaei to scene
 	 */
-	public void createGUI(Stage primaryStage) {
+	public void createGUI(Stage primaryStage) throws IOException {
 		//TODO Copy gui creation here maybe in init...
 		System.out.println("GUI.java: Create GUI");
 
@@ -108,6 +109,7 @@ public class GUI extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
+		HotelFileReader f = new HotelFileReader();
 	}
 	
 	
