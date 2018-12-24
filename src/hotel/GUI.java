@@ -5,19 +5,9 @@ import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /*
@@ -31,9 +21,7 @@ public class GUI extends Application {
 	private static VBox topContainer;
 	private static HotelMenuBar menuBar;
 	private static HotelInfoBar InfoBar;
-	private static SplitPane Boards;
-	private static VBox GameBoard;
-	private static ToolBar toolBar;
+	private static HotelBoards Boards;
 	private static Scene scene;
 
 	
@@ -109,7 +97,8 @@ public class GUI extends Application {
 		
 		menuBar = new HotelMenuBar(primaryStage,timer);
 		InfoBar = new HotelInfoBar();
-		createBoards(primaryStage);
+		Boards = new HotelBoards();
+		
 		
 		topContainer.getChildren().addAll(menuBar, InfoBar);
 
@@ -127,16 +116,7 @@ public class GUI extends Application {
 	 */
 	public void createBoards(Stage primaryStage) {
 		
-		System.out.println("GUI.java: Create Boards");
-		// Boards
-		Boards = new SplitPane();
 
-		GameBoard = new VBox();
-		toolBar = new ToolBar();
-		toolBar.setOrientation(Orientation.VERTICAL);
-		GameBoard.setPrefSize(600, 600);
-		toolBar.setPrefSize(200, 600);
-		Boards.getItems().addAll(GameBoard, toolBar);
 		
 
 	}
