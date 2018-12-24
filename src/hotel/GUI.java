@@ -29,16 +29,7 @@ public class GUI extends Application {
 	private AnimationTimer timer;
 	private static BorderPane rootPane;
 	private static VBox topContainer;
-	private static MenuBar menuBar;
-	private static Menu Game;
-	private static Menu Statistics;
-	private static MenuItem Start;
-	private static MenuItem Stop;
-	private static MenuItem Cards;
-	private static MenuItem Exit;
-	private static MenuItem Hotels;
-	private static MenuItem Entrances;
-	private static MenuItem Profits;
+	private static HotelMenuBar menuBar;
 	private static TilePane InfoBar;
 	private static Text Player1;
 	private static Text Player2;
@@ -188,55 +179,16 @@ public class GUI extends Application {
 	public void createMenuBar(Stage primaryStage) {
 		// Menu
 
-		System.out.println("GUI.java: Create Menu Bar");
-		menuBar = new MenuBar();
-		Game = new Menu("Game");
-		Statistics = new Menu("Statistics");
-		Start = new MenuItem("Start");
-		Stop = new MenuItem("Stop");
-		Cards = new MenuItem("Cards");
-		Exit = new MenuItem("Exit");
-		Hotels = new MenuItem("Hotels");
-		Entrances = new MenuItem("Entrances");
-		Profits = new MenuItem("Profits");
-		Game.getItems().addAll(Start, Stop, Cards, Exit);
-		Statistics.getItems().addAll(Hotels, Entrances, Profits);
-		menuBar.getMenus().add(Game);
-		menuBar.getMenus().add(Statistics);
-
-		Start.setOnAction(actionEvent -> {
-			try {
-				System.out.println("GUI.java: Start new Game");
-				start(primaryStage);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				System.out.println("GUI.java: Start Button Pressed Exception");
-				e.printStackTrace();
-			}
-		});
-		Stop.setOnAction(actionEvent -> stopGame(primaryStage));
-		Exit.setOnAction(actionEvent -> Platform.exit());
-
-		
+		System.out.println("GUI.java: Create Menu Bar object");
+		menuBar = new HotelMenuBar(primaryStage,timer);
 	}
 	
-	/*
-	 * ksekinaei to game me to button
-	 */
+
 	public void startGame(Stage primaryStage) {
 		//TODO Start new game Timer etc.
 		System.out.println("GUI.java: Start New Game");
 		timer.stop();
 		timer.start();
-	}
-	
-	/*
-	 * stamataei to game me to button
-	 */
-	public void stopGame(Stage primaryStage) {
-		//TODO Stop Game stop timer etc.
-		System.out.println("GUI.java: Stop Game");
-		timer.stop();
 	}
 
 	@Override
