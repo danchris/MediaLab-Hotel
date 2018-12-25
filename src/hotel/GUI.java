@@ -95,10 +95,11 @@ public class GUI extends Application {
 		primaryStage.setTitle("MediaLab Hotel");
 		rootPane = new BorderPane();
 		topContainer = new VBox();
-		
+		HotelFileReader f = new HotelFileReader();
+		String[][] file = f.getBoard();
 		menuBar = new HotelMenuBar(primaryStage,timer);
 		InfoBar = new HotelInfoBar();
-		Boards = new HotelBoards();
+		Boards = new HotelBoards(file);
 		
 		
 		topContainer.getChildren().addAll(menuBar, InfoBar);
@@ -109,18 +110,7 @@ public class GUI extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
-		HotelFileReader f = new HotelFileReader();
-	}
-	
-	
-	/*
-	 * ftiaxnei ta boards, diladi to game board kai to toolbox
-	 */
-	public void createBoards(Stage primaryStage) {
-		
-
-		
-
+	//	HotelFileReader f = new HotelFileReader();
 	}
 	
 	
