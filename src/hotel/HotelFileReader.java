@@ -26,8 +26,8 @@ public class HotelFileReader {
 				tmp = line.split(",");
 				System.out.println(tmp.length);
 				for(int j = 0; j < 15; j++) array[i][j] = tmp[j];
-				System.out.println(Arrays.toString(array));
-				System.out.println(array);
+				//System.out.println(Arrays.toString(array));
+				//System.out.println(array);
 			}
 			reader.close();
 		} catch (IOException e) {

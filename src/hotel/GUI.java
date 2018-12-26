@@ -97,6 +97,12 @@ public class GUI extends Application {
 		topContainer = new VBox();
 		HotelFileReader f = new HotelFileReader();
 		String[][] file = f.getBoard();
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 15; j++) {
+				System.out.print(file[i][j]+ " ");
+			}
+			System.out.println("");
+		}
 		menuBar = new HotelMenuBar(primaryStage,timer);
 		InfoBar = new HotelInfoBar();
 		Boards = new HotelBoards(file);
