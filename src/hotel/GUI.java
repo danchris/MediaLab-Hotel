@@ -90,6 +90,7 @@ public class GUI extends Application {
 	 * episis ksekinaei to scene
 	 */
 	public void createGUI(Stage primaryStage) throws IOException {
+		try {
 		//TODO Copy gui creation here maybe in init...
 		System.out.println("GUI.java: Create GUI");
 
@@ -117,8 +118,11 @@ public class GUI extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
-	//	HotelFileReader f = new HotelFileReader();
+		}
+	catch (IOException e) {
+		 e.printStackTrace();
 	}
+}
 	
 	
 
