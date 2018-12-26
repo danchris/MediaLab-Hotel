@@ -5,8 +5,10 @@ import java.util.Map;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
+/*
+ * @author Daniel Christodoulopoulos
+ */
 public class HotelBoardBox extends Rectangle {
 
 	private Rectangle rect;
@@ -34,10 +36,8 @@ public class HotelBoardBox extends Rectangle {
 		rect = new Rectangle();
 		rect.setWidth(35);
 		rect.setHeight(45);
-		System.out.println("HotelBoardBox.java: " + input + " ara xrwma" + colors.get(input));
 		c = Color.web(colors.get(input), 0.9);
 		rect.setFill(c);
-		// rect.setFill(Color.TRANSPARENT);
 		rect.setStroke(Color.BLACK);
 	}
 

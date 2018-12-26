@@ -2,6 +2,7 @@ package hotel;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -95,17 +96,17 @@ public class GUI extends Application {
 		primaryStage.setTitle("MediaLab Hotel");
 		rootPane = new BorderPane();
 		topContainer = new VBox();
-		HotelFileReader f = new HotelFileReader();
-		String[][] file = f.getBoard();
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 15; j++) {
-				System.out.print(file[i][j]+ " ");
-			}
-			System.out.println("");
+		HotelFileReader fileReader = new HotelFileReader();
+		String[][] board = fileReader.getBoard();
+		ArrayList<HotelCard> cards = new ArrayList<HotelCard>(); 
+		cards = fileReader.getHotelsCards();
+		for(HotelCard tmp : cards) {
+			System.out.println("GUI.java: Tupwnw tis cards");
+			tmp.printHotelCard();
 		}
 		menuBar = new HotelMenuBar(primaryStage,timer);
 		InfoBar = new HotelInfoBar();
-		Boards = new HotelBoards(file);
+		Boards = new HotelBoards(board);
 		
 		
 		topContainer.getChildren().addAll(menuBar, InfoBar);

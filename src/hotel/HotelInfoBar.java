@@ -6,6 +6,9 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/*
+ * @author Daniel Christodoulopoulos
+ */
 public class HotelInfoBar extends TilePane{
 	private static Text Player1;
 	private static Text Player2;
@@ -27,7 +30,6 @@ public class HotelInfoBar extends TilePane{
 		Player1.setFill(Color.BLUE);
 		Player2.setFill(Color.RED);
 		Player3.setFill(Color.GREEN);
-		// InfoBar.setSpacing(200);
 		this.getChildren().add(Player1);
 		this.getChildren().add(Player2);
 		this.getChildren().add(Player3);

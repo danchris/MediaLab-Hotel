@@ -11,7 +11,6 @@ public class Hotel {
 		try {
 			System.out.println("Hotel.java: Launch new Application");
 			Application.launch(GUI.class, args);
-		//	GUI gui = new GUI();
 		} catch (Exception ex) {
 			System.out.println("Hotel.java: Exception catch");
 			System.out.println(ex);

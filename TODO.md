@@ -4,7 +4,7 @@
 
 [*] isws na kanw mia klasi na kanei extend px to menubar, na epistrefei ena menubar, kai ta boards ksexwristh klasi tha htan kalitera
 
-[ ] na kanw class gia ta hotels, kai na diavazw apo ta arxeia me ton file reader
+[*] na kanw class gia ta hotels, kai na diavazw apo ta arxeia me ton file reader
 
 [ ] na kanw class gia ton paikti
 

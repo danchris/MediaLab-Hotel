@@ -7,7 +7,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 
-
+/*
+ * @author Daniel Christodoulopoulos
+ */
 
 public class HotelMenuBar extends MenuBar{
 	private static Menu Game;
