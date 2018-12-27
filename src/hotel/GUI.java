@@ -3,6 +3,8 @@ package hotel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -26,9 +28,32 @@ public class GUI extends Application {
 	private static HotelBoards Boards;
 	private static Scene scene;
 
+
+
+	private static Map<String, String> colors;
+	static {
+		colors = new HashMap<String, String>();
+		colors.put("S", "#fffac8");
+		colors.put("1", "#3cb44b");
+		colors.put("2", "#ffe119");
+		colors.put("3", "#4363d8");
+		colors.put("4", "#f58231");
+		colors.put("5", "#911eb4");
+		colors.put("6", "#42d4f4");
+		colors.put("7", "#aaffc3");
+		colors.put("8", "#bfef45");
+		colors.put("C", "#fffac8");
+		colors.put("B", "#fffac8");
+		colors.put("H", "#fffac8");
+		colors.put("E", "#fffac8");
+		//colors.put("F", "#fffac8");
+		colors.put("F", "#000000");
+	}
+	public static Map<String,String> getColors(){
+		return colors;
+	}
 	
 
-	
 	/*
 	 * h init ksekinaei ton timer
 	 * (non-Javadoc)
@@ -111,7 +136,8 @@ public class GUI extends Application {
 		
 		
 		topContainer.getChildren().addAll(menuBar, InfoBar);
-
+		System.out.println("Ela");
+		System.out.println("Start is " + Boards.getStartBox()._getX() + " " + Boards.getStartBox()._getY());
 		rootPane.setTop(topContainer);
 		rootPane.setCenter(Boards);
 		scene = new Scene(rootPane, 800, 600);
@@ -139,4 +165,6 @@ public class GUI extends Application {
 		System.out.println("GUI.java: Hotel Application Exiting...");
 		Platform.exit();
 	}
+	
+
 }

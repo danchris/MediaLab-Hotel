@@ -12,36 +12,53 @@ import javafx.scene.shape.Rectangle;
 public class HotelBoardBox extends Rectangle {
 
 	private Rectangle rect;
-	private static Map<String, String> colors;
-	static {
-		colors = new HashMap<String, String>();
-		colors.put("S", "#fffac8");
-		colors.put("1", "#3cb44b");
-		colors.put("2", "#ffe119");
-		colors.put("3", "#4363d8");
-		colors.put("4", "#f58231");
-		colors.put("5", "#911eb4");
-		colors.put("6", "#42d4f4");
-		colors.put("7", "#aaffc3");
-		colors.put("8", "#bfef45");
-		colors.put("C", "#fffac8");
-		colors.put("B", "#fffac8");
-		colors.put("H", "#fffac8");
-		colors.put("E", "#fffac8");
-		colors.put("F", "#fffac8");
-	}
-	private Color c;
+	private int x;
+	private int y;
+	private String id;
+	private HotelBoardBox next = null;
 
-	public HotelBoardBox(String input) {
+	private Color c;
+	
+	public HotelBoardBox(String input,int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.id = input;
+		
 		rect = new Rectangle();
 		rect.setWidth(35);
 		rect.setHeight(45);
-		c = Color.web(colors.get(input), 0.9);
+		rect.setLayoutX(x);
+		rect.setLayoutY(y);
+		c = Color.web(GUI.getColors().get(input), 0.9);
 		rect.setFill(c);
 		rect.setStroke(Color.BLACK);
 	}
 
+	public int _getX() {
+		return x;
+	}
+	
+	public int _getY() {
+		return y;
+	}
+	
+	public String getID() {
+		return id;
+	}
+	
+	public HotelBoardBox getNext() {
+		return next;
+	}
+	
+	public void setNext(HotelBoardBox next) {
+		this.next = next;
+	}
+	
 	public Rectangle getHotelBoardBox() {
 		return rect;
+	}
+	
+	public void printHotelBoardBox() {
+		System.out.print(this.id+" ");
 	}
 }
