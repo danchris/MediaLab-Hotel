@@ -29,7 +29,6 @@ public class HotelFileReader {
 			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
 			File folder = getRandom(listOfFolders);
 			File[] listOfFiles = folder.listFiles();
-			int numberOfCards = listOfFiles.length - 1;
 			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");
 			reader = new BufferedReader(file);
 			readBoard(reader);
