@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -17,22 +18,32 @@ public class HotelFileReader {
 	public HotelFileReader() throws IOException {
 
 		try {
+
 			String gameDir = new File("").getAbsolutePath();
 			FileReader file;
 			BufferedReader reader;
-			File folder = new File(gameDir + "/boards/default");
+			// gameBoardsFolder o fakelos me tous fakelous twn boards
+			File gameBoardsFolder = new File(gameDir + "/boards");
+			File[] listOfFolders = gameBoardsFolder.listFiles();
+			
+			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
+			File folder = getRandom(listOfFolders);
 			File[] listOfFiles = folder.listFiles();
 			int numberOfCards = listOfFiles.length - 1;
-			file = new FileReader(gameDir + "/boards/default/board.txt");
+			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");
 			reader = new BufferedReader(file);
 			readBoard(reader);
 			HotelCard tmpHotelCard;
 			hotelsCards = new ArrayList<HotelCard>();
-			for (int i = 1; i <= numberOfCards; i++) {
-				file = new FileReader(gameDir + "/boards/default/" + i + ".txt");
-				reader = new BufferedReader(file);
-				tmpHotelCard = new HotelCard(readHotelCards(reader));
-				hotelsCards.add(tmpHotelCard);
+			for (File tmp : listOfFiles) {
+				String n = tmp.getName();
+				System.out.println("TO onoma tou arxeiou einai " + n);
+				if (!tmp.getName().equals("board.txt")) {
+					file = new FileReader(gameBoardsFolder + "/" + folder.getName() +"/"+ n);
+					reader = new BufferedReader(file);
+					tmpHotelCard = new HotelCard(readHotelCards(reader));
+					hotelsCards.add(tmpHotelCard);
+				}
 			}
 
 		} catch (IOException e) {
@@ -72,11 +83,18 @@ public class HotelFileReader {
 		String[] tmp = null;
 		while ((line = reader.readLine()) != null) {
 			tmp = line.split(",");
-			for(String tmpS : tmp)
+			for (String tmpS : tmp)
 				lines.add(tmpS);
 		}
 		reader.close();
 
 		return lines;
 	}
+
+	// Pick a random element from array
+	public static File getRandom(File[] array) {
+		int rnd = new Random().nextInt(array.length);
+		return array[rnd];
+	}
+
 }

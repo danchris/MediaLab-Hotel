@@ -25,7 +25,7 @@ public class GUI extends Application {
 	private static HotelInfoBar InfoBar;
 	private static HotelBoards Boards;
 	private static Scene scene;
-
+	private static ArrayList<String> hotelsIds = new ArrayList<String>();
 	private static Map<String, String> colors;
 	static {
 		colors = new HashMap<String, String>();
@@ -48,6 +48,10 @@ public class GUI extends Application {
 
 	public static Map<String, String> getColors() {
 		return colors;
+	}
+	
+	public static ArrayList<String> getHotelsIds(){
+		return hotelsIds;
 	}
 
 	/*
