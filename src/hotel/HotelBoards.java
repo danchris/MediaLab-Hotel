@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -16,7 +17,7 @@ import javafx.scene.text.TextAlignment;
  */
 public class HotelBoards extends SplitPane {
 
-	private static GridPane GameBoard;
+	private static Pane GameBoard;
 	private static ToolBar toolBar;
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];
 	private static HotelBoardBox startBox = null;
@@ -25,7 +26,7 @@ public class HotelBoards extends SplitPane {
 		System.out.println("HotelBoards.java: Create Boards");
 		// Boards
 
-		GameBoard = new GridPane();
+		GameBoard = new Pane();
 		toolBar = new ToolBar();
 		toolBar.setOrientation(Orientation.VERTICAL);
 		GameBoard.setPrefSize(600, 600);
@@ -38,10 +39,9 @@ public class HotelBoards extends SplitPane {
 				if (file[i][j].equals("S"))
 					startBox = a;
 				gridBoard[i][j] = a;
-				GameBoard.add(a.getHotelBoardBox(), j, i, 1, 1);
+				GameBoard.getChildren().add(a);
 			}
 		}
-		GameBoard.setAlignment(Pos.CENTER);
 		this.getItems().addAll(GameBoard, toolBar);
 	}
 

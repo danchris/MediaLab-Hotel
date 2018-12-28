@@ -3,13 +3,14 @@ package hotel;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /*
  * @author Daniel Christodoulopoulos
  */
-public class HotelBoardBox extends Rectangle {
+public class HotelBoardBox extends StackPane {
 
 	private Rectangle rect;
 	private int x;
@@ -19,19 +20,19 @@ public class HotelBoardBox extends Rectangle {
 
 	private Color c;
 	
+	
 	public HotelBoardBox(String input,int x, int y) {
 		this.x = x;
 		this.y = y;
 		this.id = input;
 		
-		rect = new Rectangle();
-		rect.setWidth(35);
-		rect.setHeight(45);
-		rect.setLayoutX(x);
-		rect.setLayoutY(y);
+		rect = new Rectangle(34,44);
 		c = Color.web(GUI.getColors().get(input), 0.9);
 		rect.setFill(c);
 		rect.setStroke(Color.BLACK);
+		getChildren().add(rect);
+		setTranslateX(y*36);
+		setTranslateY(x*46);
 	}
 
 	public int _getX() {
