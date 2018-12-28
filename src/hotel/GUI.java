@@ -3,7 +3,9 @@ package hotel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -25,7 +27,6 @@ public class GUI extends Application {
 	private static HotelInfoBar InfoBar;
 	private static HotelBoards Boards;
 	private static Scene scene;
-	private static int colorCounter = 0;
 	private static Map<String,String> finalColors;
 	static {
 		finalColors = new HashMap<String,String>();
@@ -37,8 +38,18 @@ public class GUI extends Application {
 		finalColors.put("F", "#000000");
 	}
 	
-	private static String[] colors = {"#3cb44b", "#ffe119", "#4363d8", "#f58231", "#911eb4",
-			"#42d4f4", "#aaffc3", "#bfef45"};
+	private static Queue<String> colors;
+	static {
+		colors = new LinkedList<String>();
+		colors.add("#3cb44b");
+		colors.add("#ffe119");
+		colors.add("#4363d8");
+		colors.add("#f58231");
+		colors.add("#911eb4");
+		colors.add("#42d4f4");
+		colors.add("#aaffc3");
+		colors.add("#bfef45");
+		};
 
 	public static Map<String,String> getFinalColors(){
 		return finalColors;
@@ -48,17 +59,10 @@ public class GUI extends Application {
 		finalColors.put(key, value);
 	}
 	
-	public static String[] getColors() {
+	public static Queue<String> getColors() {
 		return colors;
 	}
 	
-	public static void incColorCounter() {
-		colorCounter++;
-	}
-	
-	public static int getColorCounter() {
-		return colorCounter;
-	}
 
 	/*
 	 * h init ksekinaei ton timer (non-Javadoc)

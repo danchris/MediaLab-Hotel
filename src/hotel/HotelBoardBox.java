@@ -27,22 +27,18 @@ public class HotelBoardBox extends StackPane {
 	private Color c;
 //	private Image img;
 
-	public HotelBoardBox(String input, int x, int y) throws IOException,ArrayIndexOutOfBoundsException {
+	public HotelBoardBox(String input, int x, int y) throws IOException{
 		System.out.println("HotelBoardBox.java: Constructor");
 		this.x = x;
 		this.y = y;
 		this.id = input;
 
 		rect = new Rectangle(34, 44);
-		System.out.println("KAlestika gia input " + input + " kai o counter einai " + GUI.getColorCounter());
 		if (GUI.getFinalColors().containsKey(input))
 			tmpColor = GUI.getFinalColors().get(input);
 		else {
-			if (GUI.getColorCounter() > GUI.getColors().length)
-				throw new ArrayIndexOutOfBoundsException("HotelBoardBox.java : Array out of bound colors");
-			tmpColor = GUI.getColors()[GUI.getColorCounter()];
+			tmpColor = GUI.getColors().remove();
 			GUI.setFinalColors(input,tmpColor);
-			GUI.incColorCounter();
 		}
 	
 		c = Color.web(tmpColor, 0.9);
