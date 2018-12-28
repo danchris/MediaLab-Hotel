@@ -66,10 +66,6 @@ public class HotelBoardBox extends StackPane {
 		this.next = next;
 	}
 	
-	public Rectangle getHotelBoardBox() {
-		return rect;
-	}
-	
 	public void printHotelBoardBox() {
 		System.out.print(this.id+" ");
 	}
