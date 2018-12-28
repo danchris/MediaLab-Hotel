@@ -1,5 +1,7 @@
 package hotel;
 
+import java.io.IOException;
+
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -22,7 +24,7 @@ public class HotelBoards extends SplitPane {
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];
 	private static HotelBoardBox startBox = null;
 
-	public HotelBoards(String[][] file) {
+	public HotelBoards(String[][] file) throws IOException{
 		System.out.println("HotelBoards.java: Create Boards");
 		// Boards
 

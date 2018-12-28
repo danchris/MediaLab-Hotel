@@ -1,11 +1,17 @@
 package hotel;
 
-import java.util.HashMap;
-import java.util.Map;
 
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -19,9 +25,9 @@ public class HotelBoardBox extends StackPane {
 	private HotelBoardBox next = null;
 
 	private Color c;
+//	private Image img;
 	
-	
-	public HotelBoardBox(String input,int x, int y) {
+	public HotelBoardBox(String input,int x, int y) throws IOException{
 		this.x = x;
 		this.y = y;
 		this.id = input;
@@ -30,7 +36,12 @@ public class HotelBoardBox extends StackPane {
 		c = Color.web(GUI.getColors().get(input), 0.9);
 		rect.setFill(c);
 		rect.setStroke(Color.BLACK);
+	//	img = new Image(new FileInputStream("/home/daniel/Sxolh/ROH Y/7o eksamino/MediaLab/project/Hotel/imgs/green.png"));
+	 //   ImageView imageView = new ImageView(img); 
+	  //  imageView.setFitHeight(20);
+	   // imageView.setFitWidth(20);
 		getChildren().add(rect);
+	//	getChildren().add(imageView);
 		setTranslateX(y*36);
 		setTranslateY(x*46);
 	}
