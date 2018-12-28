@@ -27,28 +27,24 @@ public class HotelBoardBox extends StackPane {
 	private Color c;
 //	private Image img;
 
-	public HotelBoardBox(String input, int x, int y) throws IOException {
+	public HotelBoardBox(String input, int x, int y) throws IOException,ArrayIndexOutOfBoundsException {
 		System.out.println("HotelBoardBox.java: Constructor");
 		this.x = x;
 		this.y = y;
 		this.id = input;
 
 		rect = new Rectangle(34, 44);
-		if (!GUI.getHotelsIds().contains(input) && GUI.getColors().containsKey(input)) {
-			System.out.println("OLLA KALA TO INPUT EINAI"+input);
-			tmpColor = GUI.getColors().get(input);
-			GUI.getHotelsIds().add(input);
-		}
+		System.out.println("KAlestika gia input " + input + " kai o counter einai " + GUI.getColorCounter());
+		if (GUI.getFinalColors().containsKey(input))
+			tmpColor = GUI.getFinalColors().get(input);
 		else {
-			System.out.println("ELSE"+ input);
-
-			for (Map.Entry<String, String> it : GUI.getColors().entrySet()) {
-				if (!GUI.getHotelsIds().contains(it.getKey()) && Character.isDigit(it.getKey().charAt(0)))
-					System.out.println(input);
-					tmpColor = it.getValue();
-					GUI.getHotelsIds().add(it.getKey());
-			}
+			if (GUI.getColorCounter() > GUI.getColors().length)
+				throw new ArrayIndexOutOfBoundsException("HotelBoardBox.java : Array out of bound colors");
+			tmpColor = GUI.getColors()[GUI.getColorCounter()];
+			GUI.setFinalColors(input,tmpColor);
+			GUI.incColorCounter();
 		}
+	
 		c = Color.web(tmpColor, 0.9);
 		System.out.println("HotelBoardBox.java: Color picked is " + c);
 		rect.setFill(c);

@@ -25,33 +25,39 @@ public class GUI extends Application {
 	private static HotelInfoBar InfoBar;
 	private static HotelBoards Boards;
 	private static Scene scene;
-	private static ArrayList<String> hotelsIds = new ArrayList<String>();
-	private static Map<String, String> colors;
+	private static int colorCounter = 0;
+	private static Map<String,String> finalColors;
 	static {
-		colors = new HashMap<String, String>();
-		colors.put("S", "#fffac8");
-		colors.put("1", "#3cb44b");
-		colors.put("2", "#ffe119");
-		colors.put("3", "#4363d8");
-		colors.put("4", "#f58231");
-		colors.put("5", "#911eb4");
-		colors.put("6", "#42d4f4");
-		colors.put("7", "#aaffc3");
-		colors.put("8", "#bfef45");
-		colors.put("C", "#fffac8");
-		colors.put("B", "#fffac8");
-		colors.put("H", "#fffac8");
-		colors.put("E", "#fffac8");
-		// colors.put("F", "#fffac8");
-		colors.put("F", "#000000");
+		finalColors = new HashMap<String,String>();
+		finalColors.put("S", "#fffac8");
+		finalColors.put("C", "#fffac8");
+		finalColors.put("B", "#fffac8");
+		finalColors.put("H", "#fffac8");
+		finalColors.put("E", "#fffac8");
+		finalColors.put("F", "#000000");
 	}
+	
+	private static String[] colors = {"#3cb44b", "#ffe119", "#4363d8", "#f58231", "#911eb4",
+			"#42d4f4", "#aaffc3", "#bfef45"};
 
-	public static Map<String, String> getColors() {
+	public static Map<String,String> getFinalColors(){
+		return finalColors;
+	}
+	
+	public static void setFinalColors(String key, String value) {
+		finalColors.put(key, value);
+	}
+	
+	public static String[] getColors() {
 		return colors;
 	}
 	
-	public static ArrayList<String> getHotelsIds(){
-		return hotelsIds;
+	public static void incColorCounter() {
+		colorCounter++;
+	}
+	
+	public static int getColorCounter() {
+		return colorCounter;
 	}
 
 	/*
