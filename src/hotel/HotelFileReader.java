@@ -2,10 +2,14 @@ package hotel;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javafx.scene.image.Image;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -14,12 +18,17 @@ public class HotelFileReader {
 
 	private String[][] array;
 	private ArrayList<HotelCard> hotelsCards;
+	private String gameDir;
+	private static Image arrow;
+	private static Image green;
+	private static Image blue;
+	private static Image red;
 
 	public HotelFileReader() throws IOException {
 
 		try {
 
-			String gameDir = new File("").getAbsolutePath();
+			gameDir = new File("").getAbsolutePath();
 			FileReader file;
 			BufferedReader reader;
 			// gameBoardsFolder o fakelos me tous fakelous twn boards
@@ -27,11 +36,13 @@ public class HotelFileReader {
 			File[] listOfFolders = gameBoardsFolder.listFiles();
 			
 			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
-			File folder = getRandom(listOfFolders);
+			//File folder = getRandom(listOfFolders);
+			File folder = new File(gameBoardsFolder + "/default");
 			File[] listOfFiles = folder.listFiles();
 			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");
 			reader = new BufferedReader(file);
 			readBoard(reader);
+			readImages();
 			HotelCard tmpHotelCard;
 			hotelsCards = new ArrayList<HotelCard>();
 			for (File tmp : listOfFiles) {
@@ -73,6 +84,21 @@ public class HotelFileReader {
 		reader.close();
 
 	}
+	
+	private void readImages() throws IOException{
+		System.out.println("HotelFileReader.java: readImages");
+		File imagesFolder = new File(gameDir + "/imgs");
+		try {
+			green = new Image(new FileInputStream(imagesFolder+"/green.png"));
+			blue = new Image(new FileInputStream(imagesFolder+"/blue.png"));
+			red = new Image(new FileInputStream(imagesFolder+"/red.png"));
+			arrow = new Image(new FileInputStream(imagesFolder+"/arrow.png"));
+		} catch (FileNotFoundException e) {
+			System.out.println("HotelFileReader.java: png error file not found");
+			e.printStackTrace();
+		}		
+	}
+	
 
 	// read one hotel card file to list of strings
 	private ArrayList<String> readHotelCards(BufferedReader reader) throws IOException {
@@ -95,5 +121,17 @@ public class HotelFileReader {
 		int rnd = new Random().nextInt(array.length);
 		return array[rnd];
 	}
+	
 
+	public static Image getPawn(String i) {
+		if (i.equals("green")) return green;
+		if (i.equals("blue")) return blue;
+		if (i.equals("red")) return red;
+		
+		return null;
+	}
+
+	public static Image getArrow() {
+		return arrow;
+	}
 }

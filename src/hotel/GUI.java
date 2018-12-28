@@ -140,7 +140,7 @@ public class GUI extends Application {
 			menuBar = new HotelMenuBar(primaryStage, timer);
 			InfoBar = new HotelInfoBar();
 			Boards = new HotelBoards(board);
-
+			
 			topContainer.getChildren().addAll(menuBar, InfoBar);
 			System.out.println("Ela");
 			System.out.println("Start is " + Boards.getStartBox()._getX() + " " + Boards.getStartBox()._getY());

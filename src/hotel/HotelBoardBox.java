@@ -1,6 +1,7 @@
 package hotel;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -25,22 +27,25 @@ public class HotelBoardBox extends StackPane {
 	private String tmpColor;
 
 	private Color c;
-//	private Image img;
+	private Image img;
+	private Image pawn;
+	private ImageView imgView;
+	private ImageView pawnView;
 
-	public HotelBoardBox(String input, int x, int y) throws IOException{
+	public HotelBoardBox(String input, int x, int y) throws IOException {
 		System.out.println("HotelBoardBox.java: Constructor");
 		this.x = x;
 		this.y = y;
 		this.id = input;
 
-		rect = new Rectangle(34, 44);
+		rect = new Rectangle(35, 45);
 		if (GUI.getFinalColors().containsKey(input))
 			tmpColor = GUI.getFinalColors().get(input);
 		else {
 			tmpColor = GUI.getColors().remove();
-			GUI.setFinalColors(input,tmpColor);
+			GUI.setFinalColors(input, tmpColor);
 		}
-	
+
 		c = Color.web(tmpColor, 0.9);
 		System.out.println("HotelBoardBox.java: Color picked is " + c);
 		rect.setFill(c);
@@ -78,5 +83,33 @@ public class HotelBoardBox extends StackPane {
 
 	public void printHotelBoardBox() {
 		System.out.print(this.id + " ");
+	}
+
+	public void setPawn(String i) {
+		pawn = HotelFileReader.getPawn(i);
+		pawnView = new ImageView(pawn);
+		pawnView.setFitHeight(25);
+		pawnView.setFitWidth(25);
+		getChildren().add(pawnView);
+	}
+
+	public void setArrow() {
+		img = HotelFileReader.getArrow();
+		imgView = new ImageView(img);
+		imgView.setFitHeight(20);
+		imgView.setFitWidth(20);
+		getChildren().add(imgView);
+		System.out.println("HotelBoardBox.java: Finish set arrow");
+	}
+
+	public void rotateImageView(int times) {
+		for(int i = 0; i < times; i++) imgView.setRotate(imgView.getRotate() + 90);
+	}
+
+	// returns true if box is available else false;
+	public boolean canGo() {
+		if (Character.isLetter(id.charAt(0)) && !id.equals("F")) 
+			return true;
+		return false;
 	}
 }
