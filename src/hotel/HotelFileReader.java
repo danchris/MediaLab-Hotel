@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import javafx.scene.image.Image;
@@ -17,7 +18,7 @@ import javafx.scene.image.Image;
 public class HotelFileReader {
 
 	private String[][] array;
-	private ArrayList<HotelCard> hotelsCards;
+	private static HashMap<Integer,HotelCard> hotelsCards;
 	private String gameDir;
 	private static Image arrow;
 	private static Image green;
@@ -44,15 +45,15 @@ public class HotelFileReader {
 			readBoard(reader);
 			readImages();
 			HotelCard tmpHotelCard;
-			hotelsCards = new ArrayList<HotelCard>();
+			hotelsCards = new HashMap<Integer,HotelCard>();
 			for (File tmp : listOfFiles) {
 				String n = tmp.getName();
 				System.out.println("TO onoma tou arxeiou einai " + n);
 				if (!tmp.getName().equals("board.txt")) {
 					file = new FileReader(gameBoardsFolder + "/" + folder.getName() +"/"+ n);
 					reader = new BufferedReader(file);
-					tmpHotelCard = new HotelCard(readHotelCards(reader));
-					hotelsCards.add(tmpHotelCard);
+					tmpHotelCard = new HotelCard(readHotelCards(reader),Integer.parseInt(n.substring(0, n.lastIndexOf('.'))));
+					hotelsCards.put(Integer.parseInt(n.substring(0, n.lastIndexOf('.'))),tmpHotelCard);
 				}
 			}
 
@@ -65,7 +66,7 @@ public class HotelFileReader {
 		return array;
 	}
 
-	public ArrayList<HotelCard> getHotelsCards() {
+	public static HashMap<Integer,HotelCard> getHotelsCards() {
 		return hotelsCards;
 	}
 

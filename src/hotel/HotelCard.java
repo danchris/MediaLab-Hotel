@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 public class HotelCard {
 
+	private int id;
 	private String name;
 	private int plotCost;
 	private int mandatoryPurchaseCost;
@@ -16,8 +17,9 @@ public class HotelCard {
 	private int exteriorBuildCost = -1;
 	private int exteriorDailyCost = -1;
 
-	public HotelCard(ArrayList<String> lines) {
+	public HotelCard(ArrayList<String> lines, int id) {
 
+		this.id = id;
 		this.name = lines.get(0);
 		this.plotCost = Integer.parseInt(lines.get(1));
 		this.mandatoryPurchaseCost = Integer.parseInt(lines.get(2));
@@ -54,6 +56,10 @@ public class HotelCard {
 			System.out.println("Ekswterikos xwros kostos: " + this.exteriorBuildCost + " , Daily ekswterikos "
 					+ this.exteriorDailyCost);
 		}
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }

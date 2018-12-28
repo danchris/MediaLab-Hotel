@@ -5,14 +5,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -31,6 +36,7 @@ public class HotelBoardBox extends StackPane {
 	private Image pawn;
 	private ImageView imgView;
 	private ImageView pawnView;
+	EventHandler<MouseEvent> clickBoxHandler;
 
 	public HotelBoardBox(String input, int x, int y) throws IOException {
 		System.out.println("HotelBoardBox.java: Constructor");
@@ -50,15 +56,28 @@ public class HotelBoardBox extends StackPane {
 		System.out.println("HotelBoardBox.java: Color picked is " + c);
 		rect.setFill(c);
 		rect.setStroke(Color.BLACK);
-		// img = new Image(new FileInputStream("/home/daniel/Sxolh/ROH Y/7o
-		// eksamino/MediaLab/project/Hotel/imgs/green.png"));
-		// ImageView imageView = new ImageView(img);
-		// imageView.setFitHeight(20);
-		// imageView.setFitWidth(20);
 		getChildren().add(rect);
-		// getChildren().add(imageView);
 		setTranslateX(y * 36);
 		setTranslateY(x * 46);
+
+		// Creating the mouse event handler
+		clickBoxHandler = new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Hotel Box Information");
+				if (Character.isDigit(id.charAt(0))) alert.setHeaderText("Hotel Name " + HotelFileReader.getHotelsCards().get(Integer.parseInt(id)).getName());
+				else alert.setHeaderText(id);
+				GridPane info = new GridPane();
+				Text t = new Text("x = " + x + " , y = " + y);
+				info.add(t, 0, 0);
+				alert.getDialogPane().setContent(info);
+				alert.showAndWait();
+			}
+		};
+		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
+
 	}
 
 	public int _getX() {
@@ -103,12 +122,13 @@ public class HotelBoardBox extends StackPane {
 	}
 
 	public void rotateImageView(int times) {
-		for(int i = 0; i < times; i++) imgView.setRotate(imgView.getRotate() + 90);
+		for (int i = 0; i < times; i++)
+			imgView.setRotate(imgView.getRotate() + 90);
 	}
 
 	// returns true if box is available else false;
 	public boolean canGo() {
-		if (Character.isLetter(id.charAt(0)) && !id.equals("F")) 
+		if (Character.isLetter(id.charAt(0)) && !id.equals("F"))
 			return true;
 		return false;
 	}

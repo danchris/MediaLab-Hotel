@@ -131,12 +131,12 @@ public class GUI extends Application {
 			topContainer = new VBox();
 			HotelFileReader fileReader = new HotelFileReader();
 			String[][] board = fileReader.getBoard();
-			ArrayList<HotelCard> cards = new ArrayList<HotelCard>();
-			cards = fileReader.getHotelsCards();
-			for (HotelCard tmp : cards) {
-				System.out.println("GUI.java: Tupwnw tis cards");
-				tmp.printHotelCard();
-			}
+			//HashMap<Integer,HotelCard> cards = new ArrayList<HotelCard>();
+			//cards = fileReader.getHotelsCards();
+			//for (HotelCard tmp : cards) {
+		//		System.out.println("GUI.java: Tupwnw tis cards");
+		//		tmp.printHotelCard();
+		//	}
 			menuBar = new HotelMenuBar(primaryStage, timer);
 			InfoBar = new HotelInfoBar();
 			Boards = new HotelBoards(board);
