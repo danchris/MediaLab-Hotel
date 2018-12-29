@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import javafx.scene.image.Image;
@@ -34,7 +33,6 @@ public class HotelFileReader {
 			BufferedReader reader;
 			// gameBoardsFolder o fakelos me tous fakelous twn boards
 			File gameBoardsFolder = new File(gameDir + "/boards");
-			File[] listOfFolders = gameBoardsFolder.listFiles();
 			
 			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
 			//File folder = getRandom(listOfFolders);
