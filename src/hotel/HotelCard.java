@@ -2,6 +2,10 @@ package hotel;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class HotelCard {
@@ -57,13 +61,71 @@ public class HotelCard {
 					+ this.exteriorDailyCost);
 		}
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public int getID() {
 		return id;
 	}
 
+	public int getPlotCost() {
+		return plotCost;
+	}
+
+	public int getMandatoryPurchaseCost() {
+		return mandatoryPurchaseCost;
+	}
+
+	public int getEntranceCost() {
+		return entranceCost;
+	}
+
+	public int getMainBuildingCost() {
+		return mainBuildingCost;
+	}
+
+	public int getOnlyMainBuildingDailyCost() {
+		return onlyMainBuildingDailyCost;
+	}
+
+	public ArrayList<Pair<Integer, Integer>> getUpgrades() {
+		return upgrades;
+	}
+
+	public int getExteriorBuildCost() {
+		return exteriorBuildCost;
+	}
+
+	public int getExteriorDailyCost() {
+		return exteriorDailyCost;
+	}
+
+	public void hotelCardDialogBox() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Hotel Box Information");		
+		alert.setHeaderText(name + " Hotel");
+		GridPane info = new GridPane();
+
+		info.add(new Text("Name: " + name), 0, 0);
+		info.add(new Text("oikopedou: " + plotCost), 0, 1);
+		info.add(new Text("Upoxrewtiko : " + mandatoryPurchaseCost), 1, 1);
+		info.add(new Text("eisodou : " + entranceCost), 0, 2);
+		info.add(new Text("main ktiriou : " + mainBuildingCost), 0, 3);
+		info.add(new Text("Daily : " + onlyMainBuildingDailyCost), 1, 3);
+		int j = 4;
+		for (Pair<Integer, Integer> tmp : upgrades) {
+			info.add(new Text("Upgrade : " + tmp.getKey()), 0, j);
+			info.add(new Text("Daily upgrade : " + tmp.getValue()), 1, j);
+			j++;
+		}
+		if (exteriorBuildCost != -1) {
+			info.add(new Text("Ekswterikos xwros: " + exteriorBuildCost), 0, j);
+			info.add(new Text("Daily ekswterikos: " + exteriorDailyCost), 1, j);
+		}
+		alert.getDialogPane().setContent(info);
+		alert.showAndWait();
+
+	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -27,6 +28,7 @@ public class HotelBoardBox extends StackPane {
 	private String id;
 	private HotelBoardBox next = null;
 	private String tmpColor;
+	private HotelCard hotelCard = null;
 
 	private Color c;
 	private Image img;
@@ -62,15 +64,17 @@ public class HotelBoardBox extends StackPane {
 			@Override
 			public void handle(MouseEvent e) {
 				System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Hotel Box Information");
-				if (Character.isDigit(id.charAt(0))) alert.setHeaderText("Hotel Name " + HotelFileReader.get(Integer.parseInt(id)).getName());
-				else alert.setHeaderText(id);
-				GridPane info = new GridPane();
-				Text t = new Text("x = " + x + " , y = " + y);
-				info.add(t, 0, 0);
-				alert.getDialogPane().setContent(info);
-				alert.showAndWait();
+
+				if (hotelCard != null) {
+					hotelCard.hotelCardDialogBox();
+				}
+				else {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Hotel Box Information");
+					alert.setHeaderText(id);
+					alert.showAndWait();
+				}
+				
 			}
 		};
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
@@ -132,5 +136,13 @@ public class HotelBoardBox extends StackPane {
 	
 	public void setLabel(String i) {
 		getChildren().add(new Label(i));
+	}
+	
+	public void setHotelCard(HotelCard h) {
+		this.hotelCard = h;
+	}
+	
+	public HotelCard getHotelCard() {
+		return hotelCard;
 	}
 }

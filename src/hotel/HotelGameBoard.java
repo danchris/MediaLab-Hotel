@@ -21,6 +21,7 @@ public class HotelGameBoard extends Pane{
 				a = new HotelBoardBox(file[i][j], i, j);
 				if (file[i][j].equals("S"))
 					startBox = a;
+				if(Character.isDigit(file[i][j].charAt(0))) a.setHotelCard(HotelFileReader.get(Integer.parseInt(file[i][j])));
 				gridBoard[i][j] = a;
 				this.getChildren().add(a);
 			}
