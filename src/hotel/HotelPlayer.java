@@ -5,11 +5,9 @@ import java.io.IOException;
 
 import javafx.scene.image.Image;
 
-
 /*
  * @author Daniel Christodoulopoulos
  */
-
 
 public class HotelPlayer {
 
@@ -24,30 +22,28 @@ public class HotelPlayer {
 		this.x = x;
 		this.y = y;
 		this.mls = mls;
-		try {
-			if (name.equals("Player 1")) {
-				img = new Image(new FileInputStream(
-						"/home/daniel/Sxolh/ROH Y/7o eksamino/MediaLab/project/Hotel/imgs/blue.png"));
-			}
-			else if (name.equals("Player 2")) {
-				img = new Image(new FileInputStream(
-						"/home/daniel/Sxolh/ROH Y/7o eksamino/MediaLab/project/Hotel/imgs/red.png"));
-			}
-			else if (name.equals("Player 3")) {
-				img = new Image(new FileInputStream(
-						"/home/daniel/Sxolh/ROH Y/7o eksamino/MediaLab/project/Hotel/imgs/green.png"));
-			}
-			else {
-				throw new IOException("Player.java: Error Name");
-			}
-		} catch (IOException e) {
-			System.out.println("Player.java: IOException Image Error");
-			e.printStackTrace();
+		if (name.equals("Player 1")) {
+			img = HotelFileReader.getPawn("blue");
+		} else if (name.equals("Player 2")) {
+			img = HotelFileReader.getPawn("red");
+		} else if (name.equals("Player 3")) {
+			img = HotelFileReader.getPawn("green");
+		} else {
+			throw new IOException("Player.java: Error Name");
 		}
+
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public Image getImg() {
+		return img;
+	}
+
+	public void setImg(Image i) {
+		this.img = i;
 	}
 
 	public void setName(String name) {

@@ -24,6 +24,7 @@ public class HotelFileReader {
 	private static Image blue;
 	private static Image red;
 	private int hotelsCount;
+	private File folder;
 
 	public HotelFileReader() throws IOException {
 
@@ -37,7 +38,7 @@ public class HotelFileReader {
 			
 			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
 			//File folder = getRandom(listOfFolders);
-			File folder = new File(gameBoardsFolder + "/default");
+			folder = new File(gameBoardsFolder + "/default");
 			File[] listOfFiles = folder.listFiles();
 			hotelsCount = listOfFiles.length - 1;
 			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");
@@ -150,5 +151,9 @@ public class HotelFileReader {
 	
 	public int getHotelsCount() {
 		return hotelsCount;
+	}
+	
+	public String getFolderName() {
+		return folder.getName();
 	}
 }

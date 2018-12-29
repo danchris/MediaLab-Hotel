@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -41,11 +42,11 @@ public class HotelBoardBox extends StackPane {
 		this.id = input;
 
 		rect = new Rectangle(35, 45);
-		if (GUI.getFinalColors().containsKey(input))
-			tmpColor = GUI.getFinalColors().get(input);
+		if (HotelGUI.getFinalColors().containsKey(input))
+			tmpColor = HotelGUI.getFinalColors().get(input);
 		else {
-			tmpColor = GUI.getColors().remove();
-			GUI.setFinalColors(input, tmpColor);
+			tmpColor = HotelGUI.getColors().remove();
+			HotelGUI.setFinalColors(input, tmpColor);
 		}
 
 		c = Color.web(tmpColor, 0.9);
@@ -100,8 +101,8 @@ public class HotelBoardBox extends StackPane {
 		System.out.print(this.id + " ");
 	}
 
-	public void setPawn(String i) {
-		pawn = HotelFileReader.getPawn(i);
+	public void setPawn(Image i) {
+		pawn = i;
 		pawnView = new ImageView(pawn);
 		pawnView.setFitHeight(25);
 		pawnView.setFitWidth(25);
@@ -127,5 +128,9 @@ public class HotelBoardBox extends StackPane {
 		if (Character.isLetter(id.charAt(0)) && !id.equals("F"))
 			return true;
 		return false;
+	}
+	
+	public void setLabel(String i) {
+		getChildren().add(new Label(i));
 	}
 }

@@ -34,8 +34,16 @@ public class HotelGameBoard extends Pane{
 		int y;
 		Pair<Integer,Integer> next;
 		HotelBoardBox curr = startBox;
+		startBox.setLabel("Start");
 		visited = new ArrayList<HotelBoardBox>();
-
+		
+		next = findNextBox(curr._getX(),curr._getY());
+		if(next != null) 
+			curr = gridBoard[next.getKey()][next.getValue()];
+		else {
+			System.out.println("HotelBoards.java: Return null find next Box");
+			return ;
+		}
 		do {
 			System.out.println("HotelGameBoard.java: Do while");
 			x = curr._getX();

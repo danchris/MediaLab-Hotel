@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  */
 
 
-public class GUI {
+public class HotelGUI {
 
 	private static Scene scene;
 	private static BorderPane rootPane;
@@ -30,6 +30,7 @@ public class GUI {
 	private HotelInfoBar InfoBar;
 	private HotelBoards Boards;
 	private  HotelFileReader fileReader;
+	private String[][] board;
 	private static Map<String,String> finalColors;
 	 
 	static {
@@ -84,7 +85,7 @@ public class GUI {
 	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis create
 	 * menuber, create infobar kai create board, episis ksekinaei to scene
 	 */
-	public GUI(Stage primaryStage) throws IOException {
+	public HotelGUI(Stage primaryStage) throws IOException {
 		try {
 			// TODO Copy gui creation here maybe in init...
 			System.out.println("GUI.java: Create GUI");
@@ -93,11 +94,10 @@ public class GUI {
 			rootPane = new BorderPane();
 			topContainer = new VBox();
 			fileReader = new HotelFileReader();
-			String[][] board = fileReader.getBoard();
-
+			board = fileReader.getBoard();
+			Boards = new HotelBoards(board);
 			menuBar = new HotelMenuBar(primaryStage, timer);
 			InfoBar = new HotelInfoBar();
-			Boards = new HotelBoards(board);
 			
 			topContainer.getChildren().addAll(menuBar, InfoBar);
 		//	System.out.println("Ela");
@@ -115,6 +115,7 @@ public class GUI {
 			e.printStackTrace();
 		}
 	}
+
 
 
 	/*
