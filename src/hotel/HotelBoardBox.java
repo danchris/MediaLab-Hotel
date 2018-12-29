@@ -67,7 +67,7 @@ public class HotelBoardBox extends StackPane {
 				System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Hotel Box Information");
-				if (Character.isDigit(id.charAt(0))) alert.setHeaderText("Hotel Name " + HotelFileReader.getHotelsCards().get(Integer.parseInt(id)).getName());
+				if (Character.isDigit(id.charAt(0))) alert.setHeaderText("Hotel Name " + HotelFileReader.get(Integer.parseInt(id)).getName());
 				else alert.setHeaderText(id);
 				GridPane info = new GridPane();
 				Text t = new Text("x = " + x + " , y = " + y);

@@ -18,7 +18,7 @@ import javafx.scene.image.Image;
 public class HotelFileReader {
 
 	private String[][] array;
-	private static HashMap<Integer,HotelCard> hotelsCards;
+	private static ArrayList<HotelCard> hotelsCards;
 	private String gameDir;
 	private static Image arrow;
 	private static Image green;
@@ -45,7 +45,7 @@ public class HotelFileReader {
 			readBoard(reader);
 			readImages();
 			HotelCard tmpHotelCard;
-			hotelsCards = new HashMap<Integer,HotelCard>();
+			hotelsCards = new ArrayList<HotelCard>();
 			for (File tmp : listOfFiles) {
 				String n = tmp.getName();
 				System.out.println("TO onoma tou arxeiou einai " + n);
@@ -53,7 +53,7 @@ public class HotelFileReader {
 					file = new FileReader(gameBoardsFolder + "/" + folder.getName() +"/"+ n);
 					reader = new BufferedReader(file);
 					tmpHotelCard = new HotelCard(readHotelCards(reader),Integer.parseInt(n.substring(0, n.lastIndexOf('.'))));
-					hotelsCards.put(Integer.parseInt(n.substring(0, n.lastIndexOf('.'))),tmpHotelCard);
+					hotelsCards.add(tmpHotelCard);
 				}
 			}
 
@@ -66,7 +66,7 @@ public class HotelFileReader {
 		return array;
 	}
 
-	public static HashMap<Integer,HotelCard> getHotelsCards() {
+	public static ArrayList<HotelCard> getHotelsCards() {
 		return hotelsCards;
 	}
 
@@ -134,5 +134,13 @@ public class HotelFileReader {
 
 	public static Image getArrow() {
 		return arrow;
+	}
+	
+	public static HotelCard get(int id) {
+		for (HotelCard i : hotelsCards) {
+			if (i.getID()==id) return i;
+		}
+		
+		return null;
 	}
 }
