@@ -13,7 +13,7 @@ public class HotelGameBoard extends Pane{
 	private static ArrayList<HotelBoardBox> visited;
 
 	public HotelGameBoard(String[][] file) throws IOException {
-		this.setPrefSize(600, 600);
+		this.setMaxSize(600, 600);
 		HotelBoardBox a;
 
 		for (int i = 0; i < 12; i++) {

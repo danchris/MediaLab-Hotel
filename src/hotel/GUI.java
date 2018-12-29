@@ -146,6 +146,8 @@ public class GUI extends Application {
 			rootPane.setTop(topContainer);
 			rootPane.setCenter(Boards);
 			scene = new Scene(rootPane, 800, 600);
+	        Boards.prefWidthProperty().bind(scene.widthProperty());
+	        Boards.prefHeightProperty().bind(scene.heightProperty());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setResizable(false);

@@ -1,7 +1,10 @@
 package hotel;
 
 import java.io.IOException;
+
+import javafx.collections.ObservableList;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.VBox;
 
 
 /*
@@ -10,7 +13,7 @@ import javafx.scene.control.SplitPane;
 public class HotelBoards extends SplitPane {
 
 	private static HotelGameBoard GameBoard;
-	private static HotelToolBar toolBar;
+	private static HotelToolBox toolBox;
 
 
 	public HotelBoards(String[][] file) throws IOException {
@@ -18,8 +21,8 @@ public class HotelBoards extends SplitPane {
 		// Boards
 
 		GameBoard = new HotelGameBoard(file);
-		toolBar = new HotelToolBar();
-		this.getItems().addAll(GameBoard, toolBar);
+    	toolBox = new HotelToolBox();
+		this.getItems().addAll(GameBoard, toolBox);
 	}
 
 	public HotelBoardBox getStartBox() {
@@ -32,8 +35,8 @@ public class HotelBoards extends SplitPane {
 		return GameBoard;
 	}
 	
-	public HotelToolBar getToolBar() {
-		return toolBar;
+	public HotelToolBox getToolBox() {
+		return toolBox;
 	}
 
 }
