@@ -24,7 +24,6 @@ public class HotelGUI {
 
 	private static Scene scene;
 	private static BorderPane rootPane;
-	private AnimationTimer timer;
 	private VBox topContainer;
 	private HotelMenuBar menuBar;
 	private HotelInfoBar InfoBar;
@@ -96,17 +95,16 @@ public class HotelGUI {
 			fileReader = new HotelFileReader();
 			board = fileReader.getBoard();
 			Boards = new HotelBoards(board);
-			menuBar = new HotelMenuBar(primaryStage, timer);
+			menuBar = new HotelMenuBar();
 			InfoBar = new HotelInfoBar();
-			
 			topContainer.getChildren().addAll(menuBar, InfoBar);
 		//	System.out.println("Ela");
 		//	System.out.println("Start is " + Boards.getStartBox()._getX() + " " + Boards.getStartBox()._getY());
 			rootPane.setTop(topContainer);
 			rootPane.setCenter(Boards);
 			scene = new Scene(rootPane, 800, 600);
-	        Boards.prefWidthProperty().bind(scene.widthProperty());
-	        Boards.prefHeightProperty().bind(scene.heightProperty());
+	      //  Boards.prefWidthProperty().bind(scene.widthProperty());
+	      //  Boards.prefHeightProperty().bind(scene.heightProperty());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setResizable(false);

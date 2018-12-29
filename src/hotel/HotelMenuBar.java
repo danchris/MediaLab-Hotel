@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.ChoiceDialog;
-import javafx.stage.Stage;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -29,9 +28,8 @@ public class HotelMenuBar extends MenuBar{
 	private static MenuItem Entrances;
 	private static MenuItem Profits;
 
-	public HotelMenuBar (Stage primaryStage, AnimationTimer timer){
+	public HotelMenuBar (){
 		System.out.println("HotelMenuBar.java: Create Menu Bar");
-	//	menuBar = new MenuBar();
 		Game = new Menu("Game");
 		Statistics = new Menu("Statistics");
 		Start = new MenuItem("Start");
@@ -41,22 +39,24 @@ public class HotelMenuBar extends MenuBar{
 		Hotels = new MenuItem("Hotels");
 		Entrances = new MenuItem("Entrances");
 		Profits = new MenuItem("Profits");
+	
 		Game.getItems().addAll(Start, Stop, Cards, Exit);
 		Statistics.getItems().addAll(Hotels, Entrances, Profits);
-		this.getMenus().add(Game);
-		this.getMenus().add(Statistics);
-	
+		getMenus().add(Game);
+		getMenus().add(Statistics);
+		//Game.addEventHandler(Menu.ON_HIDDEN, event -> Game.show());
+		//Game.addEventHandler(Menu.ON_SHOWN, event -> Game.hide());
 		Start.setOnAction(actionEvent -> {
 			try {
 				System.out.println("HotelMenuBar.java: Start new Game");
-				startGame(primaryStage,timer);
+				HotelGame.startNewGame();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				System.out.println("HotelMenuBar.java: Start Button Pressed Exception");
 				e.printStackTrace();
 			}
 		});
-		Stop.setOnAction(actionEvent -> stopGame(primaryStage,timer));
+		Stop.setOnAction(actionEvent -> HotelGame.stopGame());
 		Exit.setOnAction(actionEvent -> Platform.exit());
 		// Creating the mouse event handler
 		Hotels.setOnAction(new EventHandler<ActionEvent>() {
@@ -75,20 +75,7 @@ public class HotelMenuBar extends MenuBar{
 			}
 		});
 	}
-	/*
-	 * ksekinaei to game me to button
-	 */
-	public void startGame(Stage primaryStage,AnimationTimer timer) {
-		//TODO Start new game Timer etc.
-		System.out.println("startGame > HotelMenuBar.java: Start New Game");
-		timer.stop();
-		timer.start();
-	}
-	public void stopGame(Stage primaryStage, AnimationTimer timer) {
-		//TODO Stop Game stop timer etc.
-		System.out.println("startGame > HotelMenuBar.java: Stop Game");
-		timer.stop();
-	}
+
 	public Menu getGame() {
 		return Game;
 	}

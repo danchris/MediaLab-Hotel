@@ -6,7 +6,13 @@
 
 [*] na kanw class gia ta hotels, kai na diavazw apo ta arxeia me ton file reader
 
-[ ] na kanw class gia ton paikti
+[*] na kanw class gia ton paikti
 
-[ ] na diavasw pali ta rules 
+[ ] na diavasw pali ta rules
+
+[ ] change alert boxes with popups, bookmark geeksforgeeks
+
+[ ] na olokliroso to menu, na einai etoimo
+
+[ ] na kanw ena aplo koumpi na rixnei to zari, kai na kinw ta pionia mesa sto board na dw ti ginetai 
 

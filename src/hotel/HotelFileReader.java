@@ -117,6 +117,10 @@ public class HotelFileReader {
 
 		return lines;
 	}
+	
+	public String getGameLocation() {
+		return gameDir;
+	}
 
 	// Pick a random element from array
 	public static File getRandom(File[] array) {

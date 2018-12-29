@@ -22,6 +22,7 @@ public class HotelBoards extends SplitPane {
 
 		GameBoard = new HotelGameBoard(file);
     	toolBox = new HotelToolBox();
+
 		this.getItems().addAll(GameBoard, toolBox);
 	}
 
