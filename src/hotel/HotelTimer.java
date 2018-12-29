@@ -14,6 +14,11 @@ public class HotelTimer extends AnimationTimer{
 	
 	private static final long STOPPED = -1;
 	private long startTime = STOPPED;
+	private HotelInfoBar infoBar;
+	
+	public HotelTimer(HotelInfoBar i) {
+		this.infoBar = i;
+	}
 	
 	@Override
 	public void handle(long timestamp) {
@@ -22,7 +27,7 @@ public class HotelTimer extends AnimationTimer{
 		}
 		long elapsedNanos = timestamp - startTime;
 		long elapsedMillis = elapsedNanos / 1_000_000;
-		GUI.getInfoBar().getTotalTime().setText("Total Time: " + String.format("%02d : %02d",
+		infoBar.getTotalTime().setText("Total Time: " + String.format("%02d : %02d",
 				TimeUnit.MILLISECONDS.toHours(elapsedMillis), TimeUnit.MILLISECONDS.toMinutes(elapsedMillis)
 						- TimeUnit.MINUTES.toMinutes(TimeUnit.MILLISECONDS.toHours(elapsedMillis))));		
 	}

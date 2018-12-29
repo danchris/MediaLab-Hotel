@@ -12,8 +12,8 @@ import javafx.scene.layout.VBox;
  */
 public class HotelBoards extends SplitPane {
 
-	private static HotelGameBoard GameBoard;
-	private static HotelToolBox toolBox;
+	private HotelGameBoard GameBoard;
+	private HotelToolBox toolBox;
 
 
 	public HotelBoards(String[][] file) throws IOException {

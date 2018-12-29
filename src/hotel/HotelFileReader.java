@@ -23,6 +23,7 @@ public class HotelFileReader {
 	private static Image green;
 	private static Image blue;
 	private static Image red;
+	private int hotelsCount;
 
 	public HotelFileReader() throws IOException {
 
@@ -38,6 +39,7 @@ public class HotelFileReader {
 			//File folder = getRandom(listOfFolders);
 			File folder = new File(gameBoardsFolder + "/default");
 			File[] listOfFiles = folder.listFiles();
+			hotelsCount = listOfFiles.length - 1;
 			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");
 			reader = new BufferedReader(file);
 			readBoard(reader);
@@ -140,5 +142,13 @@ public class HotelFileReader {
 		}
 		
 		return null;
+	}
+	
+	public void setHotelsCount(int c) {
+		hotelsCount = c;
+	}
+	
+	public int getHotelsCount() {
+		return hotelsCount;
 	}
 }

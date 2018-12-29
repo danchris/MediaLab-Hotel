@@ -22,14 +22,16 @@ import javafx.stage.Stage;
 
 public class GUI {
 
-	private AnimationTimer timer;
-	private static BorderPane rootPane;
-	private static VBox topContainer;
-	private static HotelMenuBar menuBar;
-	private static HotelInfoBar InfoBar;
-	private static HotelBoards Boards;
 	private static Scene scene;
+	private static BorderPane rootPane;
+	private AnimationTimer timer;
+	private VBox topContainer;
+	private HotelMenuBar menuBar;
+	private HotelInfoBar InfoBar;
+	private HotelBoards Boards;
+	private  HotelFileReader fileReader;
 	private static Map<String,String> finalColors;
+	 
 	static {
 		finalColors = new HashMap<String,String>();
 		finalColors.put("S", "#fffac8");
@@ -66,11 +68,17 @@ public class GUI {
 	}
 	
 
-	public static HotelInfoBar getInfoBar() {
+	public HotelInfoBar getInfoBar() {
 		return InfoBar;
 	}
 
+	public HotelFileReader getFileReader() {
+		return fileReader;
+	}
 
+	public HotelBoards getHotelBoards() {
+		return Boards;
+	}
 
 	/*
 	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis create
@@ -84,7 +92,7 @@ public class GUI {
 			primaryStage.setTitle("MediaLab Hotel");
 			rootPane = new BorderPane();
 			topContainer = new VBox();
-			HotelFileReader fileReader = new HotelFileReader();
+			fileReader = new HotelFileReader();
 			String[][] board = fileReader.getBoard();
 
 			menuBar = new HotelMenuBar(primaryStage, timer);
@@ -107,6 +115,7 @@ public class GUI {
 			e.printStackTrace();
 		}
 	}
+
 
 	/*
 	public void startGame(Stage primaryStage) {

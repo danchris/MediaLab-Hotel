@@ -22,9 +22,9 @@ public class HotelInfoBar extends TilePane{
 		this.setOrientation(Orientation.HORIZONTAL);
 		this.setTileAlignment(Pos.CENTER);
 		this.setHgap(40);
-		Player1 = new Text("Player 1: ");
-		Player2 = new Text("Player 2: ");
-		Player3 = new Text("Player 3: ");
+		Player1 = new Text("Player 1: 12000");
+		Player2 = new Text("Player 2: 12000");
+		Player3 = new Text("Player 3: 12000");
 		AvailableHotels = new Text("Available Hotels: ");
 		TotalTime = new Text("Total Time: ");
 		Player1.setFill(Color.BLUE);
@@ -40,4 +40,28 @@ public class HotelInfoBar extends TilePane{
 	public Text getTotalTime() {
 		return TotalTime;
 	}
+	
+	public Text getPlayer1() {
+		return Player1;
+	}
+	
+	public Text getPlayer2() {
+		return Player1;
+	}
+	
+	public Text getPlayer3() {
+		return Player1;
+	}
+	
+	public Text getAvailableHotels() {
+		return AvailableHotels;
+	}
+	/*
+	public void setPlayerName(int id, String s) {
+		if ( id == 1) Player1.setText(s);
+		else if ( id == 2) Player2.setText(s);
+		else if (id == 3) Player3.setText(s);
+		else System.out.println("HotelInfoBar.java: Error id player");
+	}
+	*/
 }

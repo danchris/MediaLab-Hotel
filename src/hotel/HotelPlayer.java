@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  */
 
 
-public class Player {
+public class HotelPlayer {
 
 	private String name;
 	private int x;
@@ -19,7 +19,7 @@ public class Player {
 	private int mls;
 	private Image img;
 
-	public Player(String name, int x, int y, int mls) throws IOException {
+	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
 		this.name = name;
 		this.x = x;
 		this.y = y;

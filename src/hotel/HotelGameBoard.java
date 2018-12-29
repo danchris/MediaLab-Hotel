@@ -9,7 +9,7 @@ import javafx.util.Pair;
 public class HotelGameBoard extends Pane{
 	
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];
-	private static HotelBoardBox startBox = null;
+	private HotelBoardBox startBox = null;
 	private static ArrayList<HotelBoardBox> visited;
 
 	public HotelGameBoard(String[][] file) throws IOException {
@@ -37,7 +37,7 @@ public class HotelGameBoard extends Pane{
 		visited = new ArrayList<HotelBoardBox>();
 
 		do {
-			System.out.println("HotelBoards.java: Do while");
+			System.out.println("HotelGameBoard.java: Do while");
 			x = curr._getX();
 			y = curr._getY();
 			curr.setArrow();
@@ -62,7 +62,7 @@ public class HotelGameBoard extends Pane{
 	// Returns a pair of integers of next box of path
 	public Pair<Integer, Integer> findNextBox(int x, int y) {
 
-		System.out.println("HotelBoards.java: FindNExtBox eimai o " + x + " " + y);
+		System.out.println("HotelGameBoard.java: FindNExtBox eimai o " + x + " " + y);
 		if (y + 1 <= 14 && gridBoard[x][y + 1].canGo() && !visited.contains(gridBoard[x][y+1]))
 			return new Pair<Integer, Integer>(x, y + 1);
 		else if (x + 1 <= 11 && gridBoard[x + 1][y].canGo() && !visited.contains(gridBoard[x+1][y]))
