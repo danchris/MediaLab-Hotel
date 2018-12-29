@@ -5,6 +5,12 @@ import java.io.IOException;
 
 import javafx.scene.image.Image;
 
+
+/*
+ * @author Daniel Christodoulopoulos
+ */
+
+
 public class Player {
 
 	private String name;
