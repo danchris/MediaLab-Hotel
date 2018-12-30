@@ -17,7 +17,7 @@ import javafx.scene.control.ChoiceDialog;
  * @author Daniel Christodoulopoulos
  */
 
-public class HotelMenuBar extends MenuBar{
+public class HotelMenuBar extends MenuBar {
 	private static Menu Game;
 	private static Menu Statistics;
 	private static MenuItem Start;
@@ -28,7 +28,7 @@ public class HotelMenuBar extends MenuBar{
 	private static MenuItem Entrances;
 	private static MenuItem Profits;
 
-	public HotelMenuBar (){
+	public HotelMenuBar() {
 		System.out.println("HotelMenuBar.java: Create Menu Bar");
 		Game = new Menu("Game");
 		Statistics = new Menu("Statistics");
@@ -39,7 +39,7 @@ public class HotelMenuBar extends MenuBar{
 		Hotels = new MenuItem("Hotels");
 		Entrances = new MenuItem("Entrances");
 		Profits = new MenuItem("Profits");
-	
+
 		Game.getItems().addAll(Start, Stop, Cards, Exit);
 		Statistics.getItems().addAll(Hotels, Entrances, Profits);
 		getMenus().add(Game);
@@ -58,7 +58,7 @@ public class HotelMenuBar extends MenuBar{
 		Stop.setOnAction(actionEvent -> HotelGame.stopGame());
 		Exit.setOnAction(actionEvent -> Platform.exit());
 		// Creating the mouse event handler
-		Hotels.setOnAction(new EventHandler<ActionEvent>() {
+		Cards.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				List<String> choices = new ArrayList<String>();
@@ -70,7 +70,13 @@ public class HotelMenuBar extends MenuBar{
 				dialog.setHeaderText("Look, a Choice Dialog");
 				dialog.setContentText("Choose your letter:");
 				Optional<String> result = dialog.showAndWait();
-				result.ifPresent(letter -> System.out.println("Your choice: " + letter));
+				result.ifPresent(option -> {
+					for (HotelCard i : HotelFileReader.getHotelsCards()) {
+						if(i.getName().equals(option)) {
+							i.hotelCardDialogBox();
+						}
+					}
+				});
 			}
 		});
 
@@ -79,19 +85,19 @@ public class HotelMenuBar extends MenuBar{
 	public Menu getGame() {
 		return Game;
 	}
-	
+
 	public Menu getStatistics() {
 		return Statistics;
 	}
-	
+
 	public MenuItem getStart() {
 		return Start;
 	}
-	
+
 	public MenuItem getStop() {
 		return Stop;
 	}
-	
+
 	public MenuItem getExit() {
 		return Exit;
 	}
