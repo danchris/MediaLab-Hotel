@@ -44,8 +44,7 @@ public class HotelMenuBar extends MenuBar{
 		Statistics.getItems().addAll(Hotels, Entrances, Profits);
 		getMenus().add(Game);
 		getMenus().add(Statistics);
-		//Game.addEventHandler(Menu.ON_HIDDEN, event -> Game.show());
-		//Game.addEventHandler(Menu.ON_SHOWN, event -> Game.hide());
+
 		Start.setOnAction(actionEvent -> {
 			try {
 				System.out.println("HotelMenuBar.java: Start new Game");

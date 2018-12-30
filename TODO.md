@@ -10,8 +10,6 @@
 
 [ ] na diavasw pali ta rules
 
-[ ] change alert boxes with popups, bookmark geeksforgeeks
-
 [ ] na olokliroso to menu, na einai etoimo
 
 [ ] na kanw ena aplo koumpi na rixnei to zari, kai na kinw ta pionia mesa sto board na dw ti ginetai 
