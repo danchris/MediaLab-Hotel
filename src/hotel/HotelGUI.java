@@ -101,7 +101,9 @@ public class HotelGUI {
 		//	System.out.println("Ela");
 		//	System.out.println("Start is " + Boards.getStartBox()._getX() + " " + Boards.getStartBox()._getY());
 			rootPane.setTop(topContainer);
-			rootPane.setCenter(Boards);
+			rootPane.setLeft(Boards.getGameBoard());
+			rootPane.setRight(Boards.getToolBox());
+		//	rootPane.setCenter(Boards);
 			scene = new Scene(rootPane, 800, 600);
 	      //  Boards.prefWidthProperty().bind(scene.widthProperty());
 	      //  Boards.prefHeightProperty().bind(scene.heightProperty());

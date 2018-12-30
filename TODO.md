@@ -16,3 +16,5 @@
 
 [ ] na kanw ena aplo koumpi na rixnei to zari, kai na kinw ta pionia mesa sto board na dw ti ginetai 
 
+[ ] pithanon alagi tou split pane 
+
