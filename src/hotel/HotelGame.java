@@ -92,15 +92,16 @@ public class HotelGame extends Application{
 	        }
 	    });
         label.setStyle(" -fx-background-color: white; -fx-font-size: 40px; -fx-font-color: black;"); 
-        label.getStyleClass().add("popup");
 	    popup.getContent().add(label);
 	    popup.setOnShown(new EventHandler<WindowEvent>() {
 	        @Override
 	        public void handle(WindowEvent e) {
-	        	popup.centerOnScreen();
+	        	//popup.centerOnScreen();
+	        	popup.setX(300);
+	        	popup.setY(350);
 	        	//popup.sizeToScene();
-	            popup.setX(primaryStage.getX() + primaryStage.getWidth()/2 - popup.getWidth());
-	            popup.setY(primaryStage.getY()/2 + primaryStage.getHeight()/2 + popup.getHeight()/2);
+	          //  popup.setX(primaryStage.getX() + primaryStage.getWidth()/2 - popup.getWidth());
+	          //  popup.setY(primaryStage.getY()/2 + primaryStage.getHeight()/2 + popup.getHeight()/2);
 	        }
 	    });        
 	    popup.show(primaryStage);
