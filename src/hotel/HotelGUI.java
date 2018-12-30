@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -108,8 +109,8 @@ public class HotelGUI {
 	      //  Boards.prefWidthProperty().bind(scene.widthProperty());
 	      //  Boards.prefHeightProperty().bind(scene.heightProperty());
 			primaryStage.setScene(scene);
-			primaryStage.show();
 			primaryStage.setResizable(false);
+			primaryStage.show();
 		} catch (IOException e) {
 			System.out.println("EEEE");
 			e.printStackTrace();
