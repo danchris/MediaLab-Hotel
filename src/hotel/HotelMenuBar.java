@@ -73,6 +73,7 @@ public class HotelMenuBar extends MenuBar{
 				result.ifPresent(letter -> System.out.println("Your choice: " + letter));
 			}
 		});
+
 	}
 
 	public Menu getGame() {

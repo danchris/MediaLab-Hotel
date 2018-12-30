@@ -32,6 +32,7 @@ public class HotelGUI {
 	private  HotelFileReader fileReader;
 	private String[][] board;
 	private static Map<String,String> finalColors;
+	
 	 
 	static {
 		finalColors = new HashMap<String,String>();
@@ -85,39 +86,56 @@ public class HotelGUI {
 	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis create
 	 * menuber, create infobar kai create board, episis ksekinaei to scene
 	 */
-	public HotelGUI(Stage primaryStage) throws IOException {
-		try {
-			// TODO Copy gui creation here maybe in init...
-			System.out.println("GUI.java: Create GUI");
+	/*
+	public HotelGUI(Stage primaryStage){
+		// TODO Copy gui creation here maybe in init...
+		System.out.println("GUI.java: Create GUI");
 
-			primaryStage.setTitle("MediaLab Hotel");
-			rootPane = new BorderPane();
-			topContainer = new VBox();
+	}
+	*/
+
+	public void fileReaderTurnOn() {
+		try {
 			fileReader = new HotelFileReader();
-			board = fileReader.getBoard();
-			Boards = new HotelBoards(board);
-			menuBar = new HotelMenuBar();
-			InfoBar = new HotelInfoBar();
-			topContainer.getChildren().addAll(menuBar, InfoBar);
-		//	System.out.println("Ela");
-		//	System.out.println("Start is " + Boards.getStartBox()._getX() + " " + Boards.getStartBox()._getY());
-			rootPane.setTop(topContainer);
-			rootPane.setLeft(Boards.getGameBoard());
-			rootPane.setRight(Boards.getToolBox());
-		//	rootPane.setCenter(Boards);
-			scene = new Scene(rootPane, 800, 600);
-	      //  Boards.prefWidthProperty().bind(scene.widthProperty());
-	      //  Boards.prefHeightProperty().bind(scene.heightProperty());
-			primaryStage.setScene(scene);
-			primaryStage.setResizable(false);
-			primaryStage.show();
 		} catch (IOException e) {
-			System.out.println("EEEE");
+			// TODO Auto-generated catch block
+			System.out.println("HotelGUI.java : file reader error ");
 			e.printStackTrace();
-		}
+		}	
 	}
 
+	public void createMainWindow(Stage primaryStage) {
+		primaryStage.setTitle("MediaLab Hotel");
+		rootPane = new BorderPane();
+		topContainer = new VBox();
+		menuBar = new HotelMenuBar();
+		topContainer.getChildren().add(menuBar);
+		//topContainer.getChildren().addAll(menuBar, InfoBar);
+		rootPane.setTop(topContainer);
+		
+		scene = new Scene(rootPane, 800, 600);
 
+
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.show();
+
+	}
+	
+	public void createBoards() {
+		InfoBar = new HotelInfoBar();
+		topContainer.getChildren().add(InfoBar);
+		board = fileReader.getBoard();
+		try {
+			Boards = new HotelBoards(board);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("HotelGUI.java : board reader error createBoards");
+			e.printStackTrace();
+		}
+		rootPane.setLeft(Boards.getGameBoard());
+		rootPane.setRight(Boards.getToolBox());
+	}
 
 	/*
 	public void startGame(Stage primaryStage) {

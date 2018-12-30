@@ -47,26 +47,38 @@ public class HotelGame extends Application {
 
 	
 	public static void prepareGame() throws IOException {
-		gui = new HotelGUI(primaryStage);
-		gui.getInfoBar().getAvailableHotels().setText("Available Hotels: 0");
-		startX = gui.getHotelBoards().getGameBoard().getStartBox()._getX();
-		startY = gui.getHotelBoards().getGameBoard().getStartBox()._getY();
-		timer = new HotelTimer(gui.getInfoBar());
+		gui = new HotelGUI();
+		gui.fileReaderTurnOn();
+		gui.createMainWindow(primaryStage);
+
 		playerList = new ArrayList<HotelPlayer>();
 		for (int i = 1; i <= 3; i++)
 			playerList.add(new HotelPlayer("Player " + i, startX, startY, 12000));
 		Collections.shuffle(playerList);
+
 		System.out.println("HotelGame.java: Tha arxisei prwtos o " + playerList.get(0).getName());
 		hotelMessenger = new HotelMessenger();
 		hotelMessenger.showMessagesAndStart(gui.getFileReader().getFolderName());
+
+		
+	}
+	
+	public void decidePlayersTurn() {
 		
 	}
 	public static void playGame() {
 		System.out.println("HotelGame.java: Game Starting...");
 		
 		// Set starting pawn in the star box
+		gui.createBoards();
+		
+		gui.getInfoBar().getAvailableHotels().setText("Available Hotels: 0");
+		startX = gui.getHotelBoards().getGameBoard().getStartBox()._getX();
+		startY = gui.getHotelBoards().getGameBoard().getStartBox()._getY();
+		
 		gui.getHotelBoards().getGameBoard().getGridBoard()[startX][startY].setPawn(playerList.get(0).getImg());
-
+		
+		timer = new HotelTimer(gui.getInfoBar());
 		timer.start();
 		
 	}
