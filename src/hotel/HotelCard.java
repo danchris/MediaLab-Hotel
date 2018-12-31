@@ -2,6 +2,7 @@ package hotel;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
@@ -104,10 +105,13 @@ public class HotelCard {
 
 	public void hotelCardDialogBox() {
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Hotel Box Information");		
+		alert.setTitle("Hotel Box Information");
+		alert.setGraphic(null);
 		alert.setHeaderText(name + " Hotel");
 		GridPane info = new GridPane();
-
+		info.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+		info.setVgap(10); //vertical gap in pixels
+		info.setPadding(new Insets(10, 10, 10, 10));
 		info.add(new Text("Name: " + name), 0, 0);
 		info.add(new Text("oikopedou: " + plotCost), 0, 1);
 		info.add(new Text("Upoxrewtiko : " + mandatoryPurchaseCost), 1, 1);

@@ -26,7 +26,7 @@ public class HotelMessenger {
 		dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initStyle(StageStyle.UNDECORATED);
-		Button playButton = new Button("Play!");
+		Button playButton = new Button("OK");
 		playButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -35,6 +35,7 @@ public class HotelMessenger {
 			}
 		});
 		VBox vbox = new VBox(new Text("Welcome to Medialab Hotel"), playButton);
+		vbox.setSpacing(10);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setPadding(new Insets(50));
 
@@ -48,18 +49,21 @@ public class HotelMessenger {
 		dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initStyle(StageStyle.UNDECORATED);
-		Button continueButton = new Button("Continue");
+		Button continueButton = new Button("Play");
 		continueButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				dialogStage.hide();
-				playerTurn(HotelGame.getPlayerList().get(0).getName());
+				HotelGame.playGame();
+		//		playerTurn(HotelGame.getPlayerList().get(0).getName());
 			}
 		});
 		VBox vbox = new VBox(new Text("Board Selected Randomly"),
 				new Text("Name of Board : " + board), continueButton);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setPadding(new Insets(50));
+		vbox.setSpacing(10);
+
 
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();
@@ -71,18 +75,20 @@ public class HotelMessenger {
 		dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initStyle(StageStyle.UNDECORATED);
-		Button continueButton = new Button("Continue");
+		Button continueButton = new Button("OK");
 		continueButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				dialogStage.hide();
-				HotelGame.playGame();
+				HotelGame.continueToGame();
 			}
 		});
 		
 		VBox vbox = new VBox(new Text("Player turn : " + name), continueButton);
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setPadding(new Insets(50));
+		vbox.setSpacing(10);
+
 
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();

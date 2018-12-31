@@ -14,6 +14,7 @@ public class HotelPlayer {
 	private int x;
 	private int y;
 	private int mls;
+	private int maxMLS;
 	private Image img;
 	private HotelBoardBox box;
 	private int startYet;
@@ -23,6 +24,7 @@ public class HotelPlayer {
 		this.x = x;
 		this.y = y;
 		this.mls = mls;
+		this.maxMLS = mls; 
 		if (name.equals("Player 1")) {
 			img = HotelFileReader.getPawn("blue");
 		} else if (name.equals("Player 2")) {
@@ -54,10 +56,15 @@ public class HotelPlayer {
 
 	public void setMLS(int mls) {
 		this.mls = mls;
+		if (mls > maxMLS) maxMLS = mls;
 	}
 
 	public int getMLS() {
 		return mls;
+	}
+	
+	public int getMaxMLS() {
+		return maxMLS;
 	}
 	
 	public void setBox(HotelBoardBox b) {

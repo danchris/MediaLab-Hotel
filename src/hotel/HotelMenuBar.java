@@ -7,9 +7,14 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceDialog;
 
 /*
@@ -65,9 +70,10 @@ public class HotelMenuBar extends MenuBar {
 						choices.add(i.getName());
 					}
 					ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
-					dialog.setTitle("Choice Dialog");
-					dialog.setHeaderText("Look, a Choice Dialog");
-					dialog.setContentText("Choose your letter:");
+					dialog.setGraphic(null);
+					dialog.setTitle("Hotel Cards");
+					dialog.setHeaderText("Hotel Cards");
+					dialog.setContentText("Choose a Hotel:");
 					Optional<String> result = dialog.showAndWait();
 					result.ifPresent(option -> {
 						for (HotelCard i : HotelFileReader.getHotelsCards()) {
@@ -77,6 +83,27 @@ public class HotelMenuBar extends MenuBar {
 						}
 
 					});
+				}
+			}
+		});
+		
+		Profits.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (HotelGame.getStopFlag() == 0) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setGraphic(null);
+					alert.setTitle("Profits");
+					alert.setHeaderText("Profits");
+					GridPane info = new GridPane();
+					info.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+					info.setVgap(10); //vertical gap in pixels
+					info.setPadding(new Insets(10, 10, 10, 10));
+					info.add(new Text("Player 1: "+HotelGame.getPlayerList().get(0).getMaxMLS() + " mls"),0,0);
+					info.add(new Text("Player 2: "+HotelGame.getPlayerList().get(0).getMaxMLS()+ " mls"),0,1);
+					info.add(new Text("Player 3: "+HotelGame.getPlayerList().get(0).getMaxMLS()+ " mls"),0,2);
+					alert.getDialogPane().setContent(info);
+					alert.showAndWait();
 				}
 			}
 		});
