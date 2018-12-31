@@ -4,9 +4,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -25,12 +31,37 @@ public class HotelGame extends Application {
 	private static HotelPlayer currentPlayer;
 	private static HotelBoardBox currentBox;
 	private static HotelBoardBox nextBox;
+	private static PauseTransition pause;
+	private static PauseTransition pause1;
+
 	// private static int popupFlag = 0;
 	// private static PauseTransition delay = new
 	// PauseTransition(Duration.seconds(2));
 	/*
 	 * static { delay.setOnFinished(e -> { popup.hide(); popupFlag = 1; }); }
 	 */
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+			try {
+				primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				    @Override
+				    public void handle(WindowEvent t) {
+				        Platform.exit();
+				        System.exit(0);
+				    }
+				});
+				System.out.println("HotelGame.java: Start Application");
+				this.primaryStage = primaryStage;
+				prepareGame();
+
+			} catch (Exception ex) {
+				System.out.println("HotelGame.java: Exception throw");
+				System.out.println(ex);
+			}
+
+	}
+	/*
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -47,9 +78,19 @@ public class HotelGame extends Application {
 		});
 
 	}
-
+*/
 	public static void prepareGame() throws IOException {
 		stopFlag = 0;
+		 pause = new PauseTransition(
+		        Duration.seconds(1)
+		    );
+	    pause.setOnFinished(event -> {continueToGame();}
+	        );
+		 pause1 = new PauseTransition(
+			        Duration.seconds(5)
+			    );
+		    //pause.setOnFinished(event -> {continueToGame();}
+		      //  );
 		gui = new HotelGUI();
 		gui.fileReaderTurnOn();
 		gui.createMainWindow(primaryStage);
@@ -76,26 +117,36 @@ public class HotelGame extends Application {
 			startY = gui.getGameBoard().getStartBox()._getY();
 			for(HotelPlayer i : playerList) {
 				i.setBox(gui.getStartBox());
-			//	i.setCurrentBoxX(startX);
-				//i.setCurrentBoxY(startY);
 			}
-
-			gui.getStartBox().setPawn(playerList.get(0).getImg());
+			
 			// Set starting pawn in the start box
-		//	gui.getGameBoard().getGridBoard()[startX][startY].setPawn(playerList.get(0).getImg());
+			gui.getStartBox().setPawn(playerList.get(0).getImg());
+
 			currentPlayer = playerList.get(0);
 			
 			currentPlayer = playerList.get(0);
 			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
 			nextBox = gui.getGameBoard().getGridBoard()[startX+1][startY];
 			timer = new HotelTimer(gui.getInfoBar());
-			timer.start();
+			pause.play();
+			//continueToGame();
+	
+
 		}
 		else {
 			System.out.println("HotelGame.java : Game is stopped playGame function");
 		}
 	}
+	
 
+	public static void continueToGame() {
+		System.out.println("Eimai sto continue");
+	//	timer.start();
+		
+			currentPlayer.move(currentPlayer.getCurrentBox().getNext(), currentPlayer.getCurrentBox());
+			pause.play();
+		System.out.println("Stamatisa");
+	}
 	@Override
 	public void stop() {
 		if (timer != null)
@@ -143,4 +194,19 @@ public class HotelGame extends Application {
 	public static HotelBoardBox getNextBoardBox() {
 		return nextBox;
 	}
+	
+	 private static void pressAnyKeyToContinue()
+	 { 
+	        System.out.println("Press Enter key to continue...");
+	        try
+	        {
+	            System.in.read();
+	        }  
+	        catch(Exception e)
+	        {}  
+	 }
+	 
+	 public static Stage getStage() {
+		 return primaryStage;
+	 }
 }

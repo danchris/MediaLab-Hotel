@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 /*
@@ -131,7 +135,7 @@ public class HotelGUI {
 	}
 	
 	public HotelBoardBox getStartBox() {
-		System.out.println("Edw");
+		System.out.println("HotelGUI.java: getStartBox");
 		// System.out.println(startBox._getX());
 		return GameBoard.getStartBox();
 	}

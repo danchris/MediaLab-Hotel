@@ -16,6 +16,7 @@ public class HotelPlayer {
 	private int mls;
 	private Image img;
 	private HotelBoardBox box;
+	private int startYet;
 
 	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
 		this.name = name;
@@ -31,6 +32,7 @@ public class HotelPlayer {
 		} else {
 			throw new IOException("Player.java: Error Name");
 		}
+		this.startYet = 0;
 
 	}
 
@@ -85,9 +87,17 @@ public class HotelPlayer {
 	}
 	
 	public void move(HotelBoardBox to, HotelBoardBox from) {
+		System.out.println("HotelPlayer.java : Eimai sthn move apo to "+ from.getID() +" sto " + to.getID());
 		to.setPawn(img);
 		from.removePawn();
 		this.box = to;
-		//from.getChildren().remove(from.getPawn());
+	}
+	
+	public int getStartYet() {
+		return startYet;
+	}
+	
+	public void setStartYet() {
+		this.startYet = 1;
 	}
 }
