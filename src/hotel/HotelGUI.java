@@ -5,14 +5,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.TimeUnit;
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -137,19 +132,4 @@ public class HotelGUI {
 		rootPane.setRight(Boards.getToolBox());
 	}
 
-	/*
-	public void startGame(Stage primaryStage) {
-		// TODO Start new game Timer etc.
-		System.out.println("GUI.java: Start New Game");
-		timer.stop();
-		timer.start();
-	}
-
-	@Override
-	public void stop() {
-		timer.stop();
-		System.out.println("GUI.java: Hotel Application Exiting...");
-		Platform.exit();
-	}
-*/
 }

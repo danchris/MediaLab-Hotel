@@ -56,12 +56,5 @@ public class HotelInfoBar extends TilePane{
 	public Text getAvailableHotels() {
 		return AvailableHotels;
 	}
-	/*
-	public void setPlayerName(int id, String s) {
-		if ( id == 1) Player1.setText(s);
-		else if ( id == 2) Player2.setText(s);
-		else if (id == 3) Player3.setText(s);
-		else System.out.println("HotelInfoBar.java: Error id player");
-	}
-	*/
+
 }

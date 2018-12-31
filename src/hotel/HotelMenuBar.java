@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.ChoiceDialog;
 
 /*
@@ -57,26 +56,28 @@ public class HotelMenuBar extends MenuBar {
 		});
 		Stop.setOnAction(actionEvent -> HotelGame.stopGame());
 		Exit.setOnAction(actionEvent -> Platform.exit());
-		// Creating the mouse event handler
 		Cards.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				List<String> choices = new ArrayList<String>();
-				for (HotelCard i : HotelFileReader.getHotelsCards()) {
-					choices.add(i.getName());
-				}
-				ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
-				dialog.setTitle("Choice Dialog");
-				dialog.setHeaderText("Look, a Choice Dialog");
-				dialog.setContentText("Choose your letter:");
-				Optional<String> result = dialog.showAndWait();
-				result.ifPresent(option -> {
+				if (HotelGame.getStopFlag() == 0) {
+					List<String> choices = new ArrayList<String>();
 					for (HotelCard i : HotelFileReader.getHotelsCards()) {
-						if(i.getName().equals(option)) {
-							i.hotelCardDialogBox();
-						}
+						choices.add(i.getName());
 					}
-				});
+					ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+					dialog.setTitle("Choice Dialog");
+					dialog.setHeaderText("Look, a Choice Dialog");
+					dialog.setContentText("Choose your letter:");
+					Optional<String> result = dialog.showAndWait();
+					result.ifPresent(option -> {
+						for (HotelCard i : HotelFileReader.getHotelsCards()) {
+							if (i.getName().equals(option)) {
+								i.hotelCardDialogBox();
+							}
+						}
+
+					});
+				}
 			}
 		});
 

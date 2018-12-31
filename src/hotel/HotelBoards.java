@@ -2,9 +2,7 @@ package hotel;
 
 import java.io.IOException;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.VBox;
 
 
 /*

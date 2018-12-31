@@ -1,6 +1,5 @@
 package hotel;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 
 import javafx.scene.image.Image;
@@ -72,5 +71,10 @@ public class HotelPlayer {
 
 	public void setCurrentBoxY(int y) {
 		this.y = y;
+	}
+	
+	public void move(HotelBoardBox b) {
+		b.setPawn(img);
+		b.resetView();
 	}
 }

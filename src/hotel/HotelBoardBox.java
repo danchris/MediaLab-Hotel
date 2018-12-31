@@ -1,6 +1,5 @@
 package hotel;
 
-
 import java.io.IOException;
 
 import javafx.scene.control.Alert;
@@ -8,12 +7,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import javafx.util.Pair;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -33,8 +29,9 @@ public class HotelBoardBox extends StackPane {
 	private Color c;
 	private Image img;
 	private Image pawn;
-	private ImageView imgView;
-	private ImageView pawnView;
+	private HotelImageView imgView;
+	private HotelImageView pawnView;
+	private HotelImageView resetView;
 	EventHandler<MouseEvent> clickBoxHandler;
 
 	public HotelBoardBox(String input, int x, int y) throws IOException {
@@ -63,18 +60,19 @@ public class HotelBoardBox extends StackPane {
 		clickBoxHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
+				if (HotelGame.getStopFlag() == 0) {
+					System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
 
-				if (hotelCard != null) {
-					hotelCard.hotelCardDialogBox();
+					if (hotelCard != null) {
+						hotelCard.hotelCardDialogBox();
+					} else {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Hotel Box Information");
+						alert.setHeaderText(id);
+						alert.showAndWait();
+					}
+
 				}
-				else {
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Hotel Box Information");
-					alert.setHeaderText(id);
-					alert.showAndWait();
-				}
-				
 			}
 		};
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
@@ -107,7 +105,8 @@ public class HotelBoardBox extends StackPane {
 
 	public void setPawn(Image i) {
 		pawn = i;
-		pawnView = new ImageView(pawn);
+		pawnView = new HotelImageView();
+		pawnView.setImage(pawn);
 		pawnView.setFitHeight(25);
 		pawnView.setFitWidth(25);
 		getChildren().add(pawnView);
@@ -115,7 +114,8 @@ public class HotelBoardBox extends StackPane {
 
 	public void setArrow() {
 		img = HotelFileReader.getArrow();
-		imgView = new ImageView(img);
+		imgView = new HotelImageView();
+		imgView.setImage(img);
 		imgView.setFitHeight(20);
 		imgView.setFitWidth(20);
 		getChildren().add(imgView);
@@ -125,6 +125,16 @@ public class HotelBoardBox extends StackPane {
 	public void rotateImageView(int times) {
 		for (int i = 0; i < times; i++)
 			imgView.setRotate(imgView.getRotate() + 90);
+		System.out.println("ELAAAAAAAAAAAAAAAAA"+imgView);
+		try {
+			resetView = new HotelImageView();
+			resetView = (HotelImageView) imgView.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("ELAAAAAAAAAAAAAAAAA"+resetView);
+
 	}
 
 	// returns true if box is available else false;
@@ -133,16 +143,26 @@ public class HotelBoardBox extends StackPane {
 			return true;
 		return false;
 	}
-	
+
 	public void setLabel(String i) {
 		getChildren().add(new Label(i));
 	}
-	
+
 	public void setHotelCard(HotelCard h) {
 		this.hotelCard = h;
 	}
-	
+
 	public HotelCard getHotelCard() {
 		return hotelCard;
+	}
+	
+	public void movePlayer() {
+		
+	}
+	
+	public void resetView() {
+		System.out.println("EEEEEEEEEEEEEEEEEE+"+resetView);
+		getChildren().clear();
+		getChildren().add(resetView);
 	}
 }
