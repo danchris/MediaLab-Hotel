@@ -73,8 +73,10 @@ public class HotelPlayer {
 		this.y = y;
 	}
 	
-	public void move(HotelBoardBox b) {
-		b.setPawn(img);
-		b.resetView();
+	@SuppressWarnings("unlikely-arg-type")
+	public void move(HotelBoardBox to, HotelBoardBox from) {
+		to.setPawn(img);
+		from.removePawn();
+		//from.getChildren().remove(from.getPawn());
 	}
 }

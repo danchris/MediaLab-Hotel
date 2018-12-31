@@ -72,17 +72,17 @@ public class HotelGame extends Application {
 			gui.createBoards();
 
 			gui.getInfoBar().getAvailableHotels().setText("Available Hotels: 0");
-			startX = gui.getHotelBoards().getGameBoard().getStartBox()._getX();
-			startY = gui.getHotelBoards().getGameBoard().getStartBox()._getY();
+			startX = gui.getGameBoard().getStartBox()._getX();
+			startY = gui.getGameBoard().getStartBox()._getY();
 			for(HotelPlayer i : playerList) {
 				i.setCurrentBoxX(startX);
 				i.setCurrentBoxY(startY);
 			}
 			// Set starting pawn in the start box
-			gui.getHotelBoards().getGameBoard().getGridBoard()[startX][startY].setPawn(playerList.get(0).getImg());
+			gui.getGameBoard().getGridBoard()[startX][startY].setPawn(playerList.get(0).getImg());
 			currentPlayer = playerList.get(0);
-			currentBox = gui.getHotelBoards().getGameBoard().getGridBoard()[startX][startY];
-			nextBox = gui.getHotelBoards().getGameBoard().getGridBoard()[startX][startY+1];
+			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
+			nextBox = gui.getGameBoard().getGridBoard()[startX+1][startY];
 			timer = new HotelTimer(gui.getInfoBar());
 			timer.start();
 		}

@@ -23,9 +23,9 @@ public class HotelGUI {
 	private VBox topContainer;
 	private HotelMenuBar menuBar;
 	private HotelInfoBar InfoBar;
-	private HotelBoards Boards;
 	private  HotelFileReader fileReader;
-	private String[][] board;
+	private HotelGameBoard GameBoard;
+	private HotelToolBox toolBox;
 	private static Map<String,String> finalColors;
 	
 	 
@@ -73,9 +73,6 @@ public class HotelGUI {
 		return fileReader;
 	}
 
-	public HotelBoards getHotelBoards() {
-		return Boards;
-	}
 
 	/*
 	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis create
@@ -120,16 +117,31 @@ public class HotelGUI {
 	public void createBoards() {
 		InfoBar = new HotelInfoBar();
 		topContainer.getChildren().add(InfoBar);
-		board = fileReader.getBoard();
 		try {
-			Boards = new HotelBoards(board);
+			GameBoard = new HotelGameBoard(fileReader.getBoard());
+	    	toolBox = new HotelToolBox();
+			//Boards = new HotelBoards(board);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("HotelGUI.java : board reader error createBoards");
 			e.printStackTrace();
 		}
-		rootPane.setLeft(Boards.getGameBoard());
-		rootPane.setRight(Boards.getToolBox());
+		rootPane.setLeft(GameBoard);
+		rootPane.setRight(toolBox);
+	}
+	
+	public HotelBoardBox getStartBox() {
+		System.out.println("Edw");
+		// System.out.println(startBox._getX());
+		return GameBoard.getStartBox();
+	}
+	
+	public HotelGameBoard getGameBoard() {
+		return GameBoard;
+	}
+	
+	public HotelToolBox getToolBox() {
+		return toolBox;
 	}
 
 }

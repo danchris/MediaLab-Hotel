@@ -29,9 +29,8 @@ public class HotelBoardBox extends StackPane {
 	private Color c;
 	private Image img;
 	private Image pawn;
-	private HotelImageView imgView;
-	private HotelImageView pawnView;
-	private HotelImageView resetView;
+	private ImageView imgView;
+	private ImageView pawnView;
 	EventHandler<MouseEvent> clickBoxHandler;
 
 	public HotelBoardBox(String input, int x, int y) throws IOException {
@@ -39,6 +38,11 @@ public class HotelBoardBox extends StackPane {
 		this.x = x;
 		this.y = y;
 		this.id = input;
+		
+		if(Character.isLetter(input.charAt(0)) && !input.equals("F")) {
+			imgView = new ImageView();
+			pawnView = new ImageView();
+		}
 
 		rect = new Rectangle(35, 45);
 		if (HotelGUI.getFinalColors().containsKey(input))
@@ -105,7 +109,6 @@ public class HotelBoardBox extends StackPane {
 
 	public void setPawn(Image i) {
 		pawn = i;
-		pawnView = new HotelImageView();
 		pawnView.setImage(pawn);
 		pawnView.setFitHeight(25);
 		pawnView.setFitWidth(25);
@@ -114,7 +117,6 @@ public class HotelBoardBox extends StackPane {
 
 	public void setArrow() {
 		img = HotelFileReader.getArrow();
-		imgView = new HotelImageView();
 		imgView.setImage(img);
 		imgView.setFitHeight(20);
 		imgView.setFitWidth(20);
@@ -125,15 +127,6 @@ public class HotelBoardBox extends StackPane {
 	public void rotateImageView(int times) {
 		for (int i = 0; i < times; i++)
 			imgView.setRotate(imgView.getRotate() + 90);
-		System.out.println("ELAAAAAAAAAAAAAAAAA"+imgView);
-		try {
-			resetView = new HotelImageView();
-			resetView = (HotelImageView) imgView.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("ELAAAAAAAAAAAAAAAAA"+resetView);
 
 	}
 
@@ -156,13 +149,11 @@ public class HotelBoardBox extends StackPane {
 		return hotelCard;
 	}
 	
-	public void movePlayer() {
-		
+	public ImageView getImageView() {
+		return imgView;
 	}
 	
-	public void resetView() {
-		System.out.println("EEEEEEEEEEEEEEEEEE+"+resetView);
-		getChildren().clear();
-		getChildren().add(resetView);
+	public void removePawn() {
+		getChildren().remove(pawnView);	
 	}
 }

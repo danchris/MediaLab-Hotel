@@ -23,7 +23,7 @@ public class HotelToolBox extends VBox{
 		button.setText("Click Me");
 		System.out.println(HotelGame.getCurrentPlayer());
 		System.out.println(HotelGame.getNextBoardBox());
-		button.setOnAction(actionEvent -> HotelGame.getCurrentPlayer().move(HotelGame.getNextBoardBox()));
+		button.setOnAction(actionEvent -> HotelGame.getCurrentPlayer().move(HotelGame.getNextBoardBox(),HotelGame.getCurrentBoardBox()));
 			
 		getChildren().add(button);
 		
