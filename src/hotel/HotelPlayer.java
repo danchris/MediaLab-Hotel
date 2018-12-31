@@ -15,6 +15,7 @@ public class HotelPlayer {
 	private int y;
 	private int mls;
 	private Image img;
+	private HotelBoardBox box;
 
 	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
 		this.name = name;
@@ -56,6 +57,16 @@ public class HotelPlayer {
 	public int getMLS() {
 		return mls;
 	}
+	
+	public void setBox(HotelBoardBox b) {
+		this.x = b._getX();
+		this.y = b._getY();
+		this.box = b;
+	}
+	
+	public HotelBoardBox getCurrentBox() {
+		return box;
+	}
 
 	public int getCurrentBoxX() {
 		return x;
@@ -73,10 +84,10 @@ public class HotelPlayer {
 		this.y = y;
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	public void move(HotelBoardBox to, HotelBoardBox from) {
 		to.setPawn(img);
 		from.removePawn();
+		this.box = to;
 		//from.getChildren().remove(from.getPawn());
 	}
 }

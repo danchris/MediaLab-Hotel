@@ -156,4 +156,5 @@ public class HotelBoardBox extends StackPane {
 	public void removePawn() {
 		getChildren().remove(pawnView);	
 	}
+	
 }

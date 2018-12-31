@@ -11,6 +11,7 @@ public class HotelGameBoard extends Pane{
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];
 	private HotelBoardBox startBox = null;
 	private static ArrayList<HotelBoardBox> visited;
+	private ArrayList<HotelBoardBox> path;
 
 	public HotelGameBoard(String[][] file) throws IOException {
 		this.setMaxSize(600, 600);
@@ -33,14 +34,19 @@ public class HotelGameBoard extends Pane{
 	private void findPath() {
 		int x;
 		int y;
+		int flag = 0;
 		Pair<Integer,Integer> next;
 		HotelBoardBox curr = startBox;
 		startBox.setLabel("Start");
 		visited = new ArrayList<HotelBoardBox>();
+		path = new ArrayList<HotelBoardBox>();
+		path.add(startBox);
 		
 		next = findNextBox(curr._getX(),curr._getY());
-		if(next != null) 
+		if(next != null) {
 			curr = gridBoard[next.getKey()][next.getValue()];
+			startBox.setNext(curr);
+		}
 		else {
 			System.out.println("HotelBoards.java: Return null find next Box");
 			return ;
@@ -49,21 +55,27 @@ public class HotelGameBoard extends Pane{
 			System.out.println("HotelGameBoard.java: Do while");
 			x = curr._getX();
 			y = curr._getY();
-			curr.setArrow();
+			path.add(curr);
 			visited.add(curr);
 			System.out.println(curr.getID());
 			next = findNextBox(x,y);
-			
-			if(next != null) {
+			if(curr.getID().equals("C")) {
+				curr.setLabel("Hall");
+				flag = 1;
+			}
+			if(curr.getID().equals("B")) {
+				curr.setLabel("Bank");
+				flag = 1;
+			}
+			if(next != null && flag == 0) {
+				curr.setArrow();
 				if(next.getValue() > y) curr.rotateImageView(2);
 				else if (next.getKey() > x) curr.rotateImageView(3);
 				else if (next.getKey() < x) curr.rotateImageView(1);
 			}
-			else {
-				System.out.println("HotelBoards.java: Return null find next Box");
-				return ;
-			}
+			curr.setNext(gridBoard[next.getKey()][next.getValue()]);
 			curr = gridBoard[next.getKey()][next.getValue()];
+			flag = 0;
 		} while (curr != startBox);
 
 	}
@@ -99,6 +111,10 @@ public class HotelGameBoard extends Pane{
 	
 	public HotelBoardBox[][] getGridBoard() {
 		return gridBoard;
+	}
+	
+	public ArrayList<HotelBoardBox> getPath(){
+		return path;
 	}
 
 }

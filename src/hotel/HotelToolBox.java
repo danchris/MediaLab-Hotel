@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 public class HotelToolBox extends VBox{
 	
 	private Button button;
+	private HotelPlayer curr;
 	
 	public HotelToolBox() {
 		
@@ -23,7 +24,10 @@ public class HotelToolBox extends VBox{
 		button.setText("Click Me");
 		System.out.println(HotelGame.getCurrentPlayer());
 		System.out.println(HotelGame.getNextBoardBox());
-		button.setOnAction(actionEvent -> HotelGame.getCurrentPlayer().move(HotelGame.getNextBoardBox(),HotelGame.getCurrentBoardBox()));
+		button.setOnAction(actionEvent -> {
+			curr = HotelGame.getCurrentPlayer();
+			curr.move(curr.getCurrentBox().getNext(), curr.getCurrentBox());
+		});
 			
 		getChildren().add(button);
 		
