@@ -23,8 +23,10 @@ public class HotelFileReader {
 	private static Image green;
 	private static Image blue;
 	private static Image red;
+	private static Image[] dice;
 	private int hotelsCount;
 	private File folder;
+	private static File imagesFolder;
 
 	public HotelFileReader() throws IOException {
 
@@ -89,12 +91,16 @@ public class HotelFileReader {
 	
 	private void readImages() throws IOException{
 		System.out.println("HotelFileReader.java: readImages");
-		File imagesFolder = new File(gameDir + "/imgs");
+		imagesFolder = new File(gameDir + "/imgs");
 		try {
 			green = new Image(new FileInputStream(imagesFolder+"/green.png"));
 			blue = new Image(new FileInputStream(imagesFolder+"/blue.png"));
 			red = new Image(new FileInputStream(imagesFolder+"/red.png"));
 			arrow = new Image(new FileInputStream(imagesFolder+"/arrow.png"));
+			dice = new Image[6];
+			for(int i = 0; i <6; i++) {
+				dice[i] = new Image(new FileInputStream(imagesFolder+"/dice"+(i+1)+".png"));
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("HotelFileReader.java: png error file not found");
 			e.printStackTrace();
@@ -159,5 +165,9 @@ public class HotelFileReader {
 	
 	public String getFolderName() {
 		return folder.getName();
+	}
+	
+	public static Image getDice(int n) {
+		return dice[n-1];
 	}
 }

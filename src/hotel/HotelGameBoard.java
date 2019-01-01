@@ -14,7 +14,8 @@ public class HotelGameBoard extends Pane{
 	private ArrayList<HotelBoardBox> path;
 
 	public HotelGameBoard(String[][] file) throws IOException {
-		this.setMaxSize(600, 600);
+		setPrefWidth(600);
+		//setPrefSize(600,600);
 		HotelBoardBox a;
 
 		for (int i = 0; i < 12; i++) {

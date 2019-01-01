@@ -118,10 +118,11 @@ public class HotelGame extends Application {
 
 			currentPlayer = playerList.get(0);
 			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
+			currentPlayer.setBox(currentBox);
 			nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
 			timer = new HotelTimer(gui.getInfoBar());
 			hotelMessenger.playerTurn(playerList.get(0).getName());
-		//	pause.play();
+			// pause.play();
 			// continueToGame();
 
 		} else {
@@ -133,10 +134,11 @@ public class HotelGame extends Application {
 		System.out.println("Eimai sto continue");
 		// timer.start();
 		if (stopFlag == 0) {
-			currentPlayer.move(currentPlayer.getCurrentBox().getNext(), currentPlayer.getCurrentBox());
-			pause.play();
+			//currentPlayer.move(currentPlayer.getCurrentBox().getNext(), currentPlayer.getCurrentBox());
 			System.out.println("Stamatisa");
 		}
+		pause.play();
+
 	}
 
 	@Override
@@ -175,6 +177,11 @@ public class HotelGame extends Application {
 		return stopFlag;
 	}
 
+	public static void setStopFlag(int n) {
+		System.out.println("HotelGame.java : Allazw to flag se " + n);
+		stopFlag = n;
+	}
+
 	public static HotelPlayer getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -197,5 +204,9 @@ public class HotelGame extends Application {
 
 	public static Stage getStage() {
 		return primaryStage;
+	}
+	
+	public static HotelFileReader getFileReader() {
+		return gui.getFileReader();
 	}
 }

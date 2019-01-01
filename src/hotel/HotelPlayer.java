@@ -2,7 +2,9 @@ package hotel;
 
 import java.io.IOException;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -18,6 +20,8 @@ public class HotelPlayer {
 	private Image img;
 	private HotelBoardBox box;
 	private int startYet;
+	private int dice;
+	private PauseTransition pause;
 
 	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
 		this.name = name;
@@ -35,6 +39,10 @@ public class HotelPlayer {
 			throw new IOException("Player.java: Error Name");
 		}
 		this.startYet = 0;
+		pause = new PauseTransition(Duration.seconds(1));
+		pause.setOnFinished(event -> {
+			transitionMove();
+		});
 
 	}
 
@@ -93,11 +101,11 @@ public class HotelPlayer {
 		this.y = y;
 	}
 	
-	public void move(HotelBoardBox to, HotelBoardBox from) {
-		System.out.println("HotelPlayer.java : Eimai sthn move apo to "+ from.getID() +" sto " + to.getID());
-		to.setPawn(img);
-		from.removePawn();
-		this.box = to;
+	public void move() {
+	//	System.out.println("HotelPlayer.java : Eimai sthn move apo to "+ from.getID() +" sto " + to.getID());
+		//to.setPawn(img);
+		//from.removePawn();
+	//	this.box = to;
 	}
 	
 	public int getStartYet() {
@@ -106,5 +114,19 @@ public class HotelPlayer {
 	
 	public void setStartYet() {
 		this.startYet = 1;
+	}
+	
+	public void transitionMove() {
+		if(dice>0) {
+			pause.play();
+			dice--;
+			box.getNext().setPawn(img);
+			box.removePawn();
+			this.box = box.getNext();
+		}
+	}
+	
+	public void setDice(int dice) {
+		this.dice = dice;
 	}
 }
