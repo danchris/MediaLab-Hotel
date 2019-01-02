@@ -19,3 +19,8 @@
 [*] otan patietai to menuitem stop, apagoreuetai na kaneis otidipote allo, mono start kai exit
 
 [*] otan patas panw se ena kouti sou lei info gia to kouti, an einai hotel h an einai aplo
+
+[] prepei na shmeiwsw ta koutia agoras me ena shma, as poume $ kai ta
+oikodomiis me ena allo sima as poume sfuri/askina
+
+

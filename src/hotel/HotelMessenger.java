@@ -1,6 +1,7 @@
 package hotel;
 
 import java.io.File;
+import java.util.Optional;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
@@ -155,4 +157,40 @@ public class HotelMessenger {
 		dialogStage.show();
 	}
 
+	public static void bankMessage() {
+		dialogStage = new Stage();
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initStyle(StageStyle.UNDECORATED);
+		Button yes = new Button("YES");
+		Button no = new Button("NO");
+		yes.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				dialogStage.hide();
+				System.out.println("HotelMessenger.java : Thelw lefta");
+				HotelGame.setStopFlag(0);
+				HotelGame.getCurrentPlayer().transitionMove();
+
+			}
+		});
+		no.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				dialogStage.hide();
+				System.out.println("HotelMessenger.java : Den Thelw lefta");
+				HotelGame.setStopFlag(0);
+				HotelGame.getCurrentPlayer().transitionMove();
+			}
+		});
+
+		VBox vbox = new VBox(new Text("Thes Lefta"));
+		vbox.setSpacing(10);
+		vbox.setAlignment(Pos.CENTER);
+		vbox.setPadding(new Insets(50));
+		vbox.getChildren().addAll(yes,no);
+
+		// Optional<ButtonType> result = dialogStage.showAndWait();
+		dialogStage.setScene(new Scene(vbox));
+		dialogStage.show();
+	}
 }

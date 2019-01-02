@@ -117,12 +117,17 @@ public class HotelPlayer {
 	}
 	
 	public void transitionMove() {
+		if(HotelGame.getStopFlag()==1) return ;
 		if(dice>0) {
 			pause.play();
 			dice--;
 			box.getNext().setPawn(img);
 			box.removePawn();
 			this.box = box.getNext();
+			if(box.getID().equals("B")) {
+				HotelGame.setStopFlag(1);
+				HotelMessenger.bankMessage();
+			}
 		}
 	}
 	

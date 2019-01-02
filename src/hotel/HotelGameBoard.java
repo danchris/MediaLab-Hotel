@@ -33,18 +33,21 @@ public class HotelGameBoard extends Pane{
 	}
 	
 	private void findPath() {
-		int x;
-		int y;
-		int flag = 0;
 		Pair<Integer,Integer> next;
 		HotelBoardBox curr = startBox;
-		startBox.setLabel("Start");
 		visited = new ArrayList<HotelBoardBox>();
 		path = new ArrayList<HotelBoardBox>();
 		path.add(startBox);
 		
 		next = findNextBox(curr._getX(),curr._getY());
 		if(next != null) {
+			curr.setArrow();
+			if (next.getValue() > curr._getY())
+				curr.rotateImageView(curr.getImageView(),2);
+			else if (next.getKey() > curr._getX())
+				curr.rotateImageView(curr.getImageView(),3);
+			else if (next.getKey() < curr._getX())
+				curr.rotateImageView(curr.getImageView(),1);
 			curr = gridBoard[next.getKey()][next.getValue()];
 			startBox.setNext(curr);
 		}
@@ -54,29 +57,24 @@ public class HotelGameBoard extends Pane{
 		}
 		do {
 			System.out.println("HotelGameBoard.java: Do while");
-			x = curr._getX();
-			y = curr._getY();
 			path.add(curr);
 			visited.add(curr);
 			System.out.println(curr.getID());
-			next = findNextBox(x,y);
+			next = findNextBox(curr._getX(),curr._getY());
 			if(curr.getID().equals("C")) {
 				curr.setLabel("Hall");
-				flag = 1;
 			}
-			if(curr.getID().equals("B")) {
+			else if(curr.getID().equals("B")) {
 				curr.setLabel("Bank");
-				flag = 1;
 			}
-			if(next != null && flag == 0) {
-				curr.setArrow();
-				if(next.getValue() > y) curr.rotateImageView(2);
-				else if (next.getKey() > x) curr.rotateImageView(3);
-				else if (next.getKey() < x) curr.rotateImageView(1);
+			else if(curr.getID().equals("H")) {
+				curr.setLabel("$");
+			}
+			else if(curr.getID().equals("E")) {
+				curr.setHammer();
 			}
 			curr.setNext(gridBoard[next.getKey()][next.getValue()]);
 			curr = gridBoard[next.getKey()][next.getValue()];
-			flag = 0;
 		} while (curr != startBox);
 
 	}

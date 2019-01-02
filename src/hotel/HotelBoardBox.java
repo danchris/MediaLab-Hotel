@@ -29,8 +29,10 @@ public class HotelBoardBox extends StackPane {
 	private Color c;
 	private Image img;
 	private Image pawn;
+	private Image hammer;
 	private ImageView imgView;
 	private ImageView pawnView;
+	private ImageView hammerView;
 	EventHandler<MouseEvent> clickBoxHandler;
 
 	public HotelBoardBox(String input, int x, int y) throws IOException {
@@ -40,8 +42,12 @@ public class HotelBoardBox extends StackPane {
 		this.id = input;
 		
 		if(Character.isLetter(input.charAt(0)) && !input.equals("F")) {
-			imgView = new ImageView();
 			pawnView = new ImageView();
+			if(input.equals("S")) 
+				imgView = new ImageView();
+			else if(input.equals("E")){
+				hammerView = new ImageView();
+			}
 		}
 
 		rect = new Rectangle(35, 45);
@@ -112,6 +118,18 @@ public class HotelBoardBox extends StackPane {
 		pawnView.setImage(pawn);
 		pawnView.setFitHeight(25);
 		pawnView.setFitWidth(25);
+		if (getNext()._getX() < _getX()) {
+			pawnView.setScaleY(1);
+			rotateImageView(pawnView,3);
+		}
+		else if (getNext()._getX() > _getX()) {
+			pawnView.setScaleY(-1);
+			rotateImageView(pawnView,1);
+		}
+		else if (getNext()._getY() <_getY()) {
+			pawnView.setScaleY(-1);
+			rotateImageView(pawnView,2);
+		}
 		getChildren().add(pawnView);
 	}
 
@@ -124,12 +142,20 @@ public class HotelBoardBox extends StackPane {
 		System.out.println("HotelBoardBox.java: Finish set arrow");
 	}
 
-	public void rotateImageView(int times) {
+	public void rotateImageView(ImageView view, int times) {
+		System.out.println("HotelBoardBox.java : Kanw rotate");
 		for (int i = 0; i < times; i++)
-			imgView.setRotate(imgView.getRotate() + 90);
+			view.setRotate(view.getRotate() + 90);
 
 	}
-
+	
+	public void setHammer() {
+		hammer = HotelFileReader.getHammer();
+		hammerView.setImage(hammer);
+		hammerView.setFitHeight(20);
+		hammerView.setFitWidth(20);
+		getChildren().add(hammerView);
+	}
 	// returns true if box is available else false;
 	public boolean canGo() {
 		if (Character.isLetter(id.charAt(0)) && !id.equals("F"))
@@ -151,6 +177,10 @@ public class HotelBoardBox extends StackPane {
 	
 	public ImageView getImageView() {
 		return imgView;
+	}
+	
+	public ImageView getPawnView() {
+		return pawnView;
 	}
 	
 	public void removePawn() {

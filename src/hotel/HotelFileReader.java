@@ -23,6 +23,7 @@ public class HotelFileReader {
 	private static Image green;
 	private static Image blue;
 	private static Image red;
+	private static Image hammer;
 	private static Image[] dice;
 	private int hotelsCount;
 	private File folder;
@@ -93,10 +94,11 @@ public class HotelFileReader {
 		System.out.println("HotelFileReader.java: readImages");
 		imagesFolder = new File(gameDir + "/imgs");
 		try {
-			green = new Image(new FileInputStream(imagesFolder+"/green.png"));
-			blue = new Image(new FileInputStream(imagesFolder+"/blue.png"));
-			red = new Image(new FileInputStream(imagesFolder+"/red.png"));
+			green = new Image(new FileInputStream(imagesFolder+"/greencar.png"));
+			blue = new Image(new FileInputStream(imagesFolder+"/bluecar.png"));
+			red = new Image(new FileInputStream(imagesFolder+"/redcar.png"));
 			arrow = new Image(new FileInputStream(imagesFolder+"/arrow.png"));
+			hammer = new Image(new FileInputStream(imagesFolder+"/hammer.png"));
 			dice = new Image[6];
 			for(int i = 0; i <6; i++) {
 				dice[i] = new Image(new FileInputStream(imagesFolder+"/dice"+(i+1)+".png"));
@@ -145,6 +147,10 @@ public class HotelFileReader {
 
 	public static Image getArrow() {
 		return arrow;
+	}
+	
+	public static Image getHammer() {
+		return hammer;
 	}
 	
 	public static HotelCard get(int id) {
