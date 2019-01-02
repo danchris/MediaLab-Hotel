@@ -169,7 +169,8 @@ public class HotelMessenger {
 				dialogStage.hide();
 				System.out.println("HotelMessenger.java : Thelw lefta");
 				HotelGame.setStopFlag(0);
-				HotelGame.getCurrentPlayer().transitionMove();
+				//HotelGame.getCurrentPlayer().transitionMove();
+				HotelGame.getCurrentPlayer().move();
 
 			}
 		});

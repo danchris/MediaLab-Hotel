@@ -36,6 +36,8 @@ public class HotelToolBox extends Pane{
 		System.out.println(HotelGame.getCurrentPlayer());
 		System.out.println(HotelGame.getNextBoardBox());
 		button.setOnAction(actionEvent -> {
+			HotelGame.getCurrentPlayer().setDice(1);
+			HotelGame.getCurrentPlayer().move();
 			//curr = HotelGame.getCurrentPlayer();
 		//	curr.move(curr.getCurrentBox().getNext(), curr.getCurrentBox());
 		});
@@ -61,6 +63,7 @@ public class HotelToolBox extends Pane{
 
 		
 		getChildren().add(grid);
+		getChildren().add(button);
 		
 	}
 	

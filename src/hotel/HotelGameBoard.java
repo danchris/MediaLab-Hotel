@@ -61,18 +61,15 @@ public class HotelGameBoard extends Pane{
 			visited.add(curr);
 			System.out.println(curr.getID());
 			next = findNextBox(curr._getX(),curr._getY());
-			if(curr.getID().equals("C")) {
+			if(curr.getID().equals("C")) 
 				curr.setLabel("Hall");
-			}
-			else if(curr.getID().equals("B")) {
+			else if(curr.getID().equals("B")) 
 				curr.setLabel("Bank");
-			}
-			else if(curr.getID().equals("H")) {
+			else if(curr.getID().equals("H"))
 				curr.setLabel("$");
-			}
-			else if(curr.getID().equals("E")) {
+			else if(curr.getID().equals("E"))
 				curr.setHammer();
-			}
+			
 			curr.setNext(gridBoard[next.getKey()][next.getValue()]);
 			curr = gridBoard[next.getKey()][next.getValue()];
 		} while (curr != startBox);

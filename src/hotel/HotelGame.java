@@ -23,6 +23,7 @@ public class HotelGame extends Application {
 	private static HotelGUI gui;
 	private static HotelTimer timer;
 	private static ArrayList<HotelPlayer> playerList;
+	private static ArrayList<HotelBoardBox> path;
 	private static int startX;
 	private static int startY;
 	private static HotelMessenger hotelMessenger;
@@ -101,6 +102,7 @@ public class HotelGame extends Application {
 	public static void playGame() {
 		if (stopFlag == 0) {
 			System.out.println("HotelGame.java: Game Starting...");
+			currentPlayer = playerList.get(0);
 
 			gui.createBoards();
 
@@ -113,11 +115,8 @@ public class HotelGame extends Application {
 
 			// Set starting pawn in the start box
 			gui.getStartBox().setPawn(playerList.get(0).getImg());
-
-			currentPlayer = playerList.get(0);
-
-			currentPlayer = playerList.get(0);
 			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
+			
 			currentPlayer.setBox(currentBox);
 			nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
 			timer = new HotelTimer(gui.getInfoBar());
@@ -209,4 +208,6 @@ public class HotelGame extends Application {
 	public static HotelFileReader getFileReader() {
 		return gui.getFileReader();
 	}
+	
+	
 }

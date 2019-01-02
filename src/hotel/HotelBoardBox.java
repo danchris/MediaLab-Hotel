@@ -25,6 +25,7 @@ public class HotelBoardBox extends StackPane {
 	private HotelBoardBox next = null;
 	private String tmpColor;
 	private HotelCard hotelCard = null;
+	private HotelPlayer player = null;
 
 	private Color c;
 	private Image img;
@@ -187,4 +188,16 @@ public class HotelBoardBox extends StackPane {
 		getChildren().remove(pawnView);	
 	}
 	
+	public boolean hasPlayer() {
+		if(player == null ) return false;
+		return true;
+	}
+	
+	public void setPlayer(HotelPlayer p) {
+		player = p;
+	}
+	
+	public HotelPlayer getPlayer() {
+		return player;
+	}
 }
