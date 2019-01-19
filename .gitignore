@@ -10,4 +10,7 @@
 *.bin
 *bin
 
-TODO
+TODO.md
+
+.classpath
+.project
