@@ -34,6 +34,7 @@ public class HotelGame extends Application {
 	private static HotelBoardBox nextBox;
 	private static PauseTransition pause;
 	private static PauseTransition pause1;
+	private static int playerActive;			//id of player if its active or 0 if player turn ends
 
 	// private static int popupFlag = 0;
 	// private static PauseTransition delay = new
@@ -112,15 +113,18 @@ public class HotelGame extends Application {
 			for (HotelPlayer i : playerList) {
 				i.setBox(gui.getStartBox());
 			}
-
+/*
 			// Set starting pawn in the start box
 			gui.getStartBox().setPawn(playerList.get(0).getImg());
+			currentPlayer.setIsSet(1);
 			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
 			
 			currentPlayer.setBox(currentBox);
 			nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
-			timer = new HotelTimer(gui.getInfoBar());
-			hotelMessenger.playerTurn(playerList.get(0).getName());
+*/			timer = new HotelTimer(gui.getInfoBar());
+			completeATurn(0);
+			
+
 			// pause.play();
 			// continueToGame();
 
@@ -181,6 +185,14 @@ public class HotelGame extends Application {
 		stopFlag = n;
 	}
 
+	public static int getPlayerActive() {
+		return playerActive;
+	}
+
+	public static void setPlayerActive(int n) {
+		System.out.println("HotelGame.java : Allazw to playerActive se " + n);
+		playerActive = n;
+	}
 	public static HotelPlayer getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -209,5 +221,24 @@ public class HotelGame extends Application {
 		return gui.getFileReader();
 	}
 	
+	public static void completeATurn(int id) {
+		if(id==3) id = 0;
+		currentPlayer = playerList.get(id);
+		if(playerList.get(id).getIsSet()==0) {
+			System.out.println("HotelGame.java: Den exw paiksei akomi eimai o "+id);
+			gui.getStartBox().setPawn(playerList.get(id).getImg());
+			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
+			currentPlayer.setBox(currentBox);
+		//	nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
+			playerList.get(id).setIsSet(1);
+		}
+		
+		playerActive = id;
+		hotelMessenger.playerTurn(playerList.get(id).getName());
+	}
 	
+	public static void finishMove() {
+		System.out.println("HotelGame.java: Teleiwsa to transmove epomeno active"+ (playerActive+1));
+		completeATurn(playerActive+1);
+	}
 }

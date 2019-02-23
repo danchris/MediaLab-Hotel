@@ -8,19 +8,17 @@
 
 [*] na kanw class gia ton paikti
 
-[ ] na diavasw pali ta rules
+[*] na kanw ena aplo koumpi na rixnei to zari, kai na kinw ta pionia mesa sto board na dw ti ginetai 
 
-[ ] na olokliroso to menu, na einai etoimo
-
-[ ] na kanw ena aplo koumpi na rixnei to zari, kai na kinw ta pionia mesa sto board na dw ti ginetai 
-
-[ ] pithanon alagi tou split pane 
+[*] pithanon alagi tou split pane 
 
 [*] otan patietai to menuitem stop, apagoreuetai na kaneis otidipote allo, mono start kai exit
 
 [*] otan patas panw se ena kouti sou lei info gia to kouti, an einai hotel h an einai aplo
 
-[] prepei na shmeiwsw ta koutia agoras me ena shma, as poume $ kai ta
+[*] prepei na shmeiwsw ta koutia agoras me ena shma, as poume $ kai ta
 oikodomiis me ena allo sima as poume sfuri/askina
 
+[ ] na diavasw pali ta rules
 
+[ ] na olokliroso to menu, na einai etoimo

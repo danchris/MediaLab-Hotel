@@ -37,7 +37,7 @@ public class HotelGameBoard extends Pane{
 		HotelBoardBox curr = startBox;
 		visited = new ArrayList<HotelBoardBox>();
 		path = new ArrayList<HotelBoardBox>();
-		path.add(startBox);
+
 		
 		next = findNextBox(curr._getX(),curr._getY());
 		if(next != null) {
@@ -50,6 +50,7 @@ public class HotelGameBoard extends Pane{
 				curr.rotateImageView(curr.getImageView(),1);
 			curr = gridBoard[next.getKey()][next.getValue()];
 			startBox.setNext(curr);
+			path.add(startBox);
 		}
 		else {
 			System.out.println("HotelBoards.java: Return null find next Box");
@@ -69,7 +70,9 @@ public class HotelGameBoard extends Pane{
 				curr.setLabel("$");
 			else if(curr.getID().equals("E"))
 				curr.setHammer();
-			
+			if(next.getKey()==10 && next.getValue()==12) {
+				System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEE" + curr._getX() + curr._getY());
+			}
 			curr.setNext(gridBoard[next.getKey()][next.getValue()]);
 			curr = gridBoard[next.getKey()][next.getValue()];
 		} while (curr != startBox);

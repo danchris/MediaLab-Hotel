@@ -21,6 +21,7 @@ public class HotelPlayer {
 	private HotelBoardBox box;
 	private int startYet;
 	private int dice;
+	private int isSet;
 	private PauseTransition pause;
 
 	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
@@ -29,6 +30,7 @@ public class HotelPlayer {
 		this.y = y;
 		this.mls = mls;
 		this.maxMLS = mls;
+		this.isSet = 0;
 		if (name.equals("Player 1")) {
 			img = HotelFileReader.getPawn("blue");
 		} else if (name.equals("Player 2")) {
@@ -41,11 +43,19 @@ public class HotelPlayer {
 		this.startYet = 0;
 		pause = new PauseTransition(Duration.seconds(1));
 		pause.setOnFinished(event -> {
+			System.out.println("HotelPlayer.java: Pause finished");
 			transitionMove();
 		});
 
 	}
+	
+	public int getIsSet() {
+		return isSet;
+	}
 
+	public void setIsSet(int a) {
+		this.isSet = a;
+	}
 	public String getName() {
 		return name;
 	}
@@ -136,6 +146,7 @@ public class HotelPlayer {
 	public void transitionMove() {
 		if (HotelGame.getStopFlag() == 1)
 			return;
+		System.out.println("HotelPlayer.java: Dice " + dice);
 		if (dice > 0) {
 			if (!box.getNext().hasPlayer()) {
 				dice--;
@@ -149,15 +160,46 @@ public class HotelPlayer {
 					HotelMessenger.bankMessage();
 				}
 			} else {
+				System.out.println("HotelPlayer.java: Einai allos mprosta mou");
 				HotelBoardBox tmp = box;
-				while (tmp.getNext().hasPlayer() && dice-- > 0)
-					tmp = tmp.getNext();
+				int c = 1;
+				// most dummy solution for not conflict the cars in same box i know it's bad...
+				// my English too :P
+				if(tmp.getNext().hasPlayer()) {
+					tmp = tmp.getNext().getNext();
+					c++;
+					if(tmp.hasPlayer()) {
+						tmp = tmp.getNext();
+						c++;
+					}
+				}
+				/*
+				while (tmp.getNext().hasPlayer()) {
+					System.out.println("HotelPlayer.java: Pernaw to box " + tmp.getNext().getID());
+					if(tmp.getNext().getNext().hasPlayer()) {
+						tmp = tmp.getNext().getNext().getNext();
+						c+=2;
+					}
+					else {
+						tmp.getNext().getNext();
+						c++;
+					}
+				}
+				*/
+				System.out.println("HotelPlayer.java: Prosperasa " + c + " koutia");
+				dice-=c;
 				tmp.setPawn(img);
 				box.removePawn();
 				box.setPlayer(null);
 				this.box = tmp;
+				tmp.setPlayer(this);
 			}
+			pause.play();
 		}
+		else {
+			HotelGame.finishMove();
+		}
+
 	}
 
 	public void setDice(int dice) {
