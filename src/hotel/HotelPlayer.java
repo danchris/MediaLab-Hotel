@@ -166,9 +166,17 @@ public class HotelPlayer {
 				// most dummy solution for not conflict the cars in same box i know it's bad...
 				// my English too :P
 				if(tmp.getNext().hasPlayer()) {
+					if(tmp.getNext().getID().equals("B")) {
+						HotelGame.setStopFlag(1);
+						HotelMessenger.bankMessage();
+					}
 					tmp = tmp.getNext().getNext();
 					c++;
 					if(tmp.hasPlayer()) {
+						if(tmp.equals("B")) {
+							HotelGame.setStopFlag(1);
+							HotelMessenger.bankMessage();
+						}
 						tmp = tmp.getNext();
 						c++;
 					}
