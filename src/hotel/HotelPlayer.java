@@ -1,6 +1,7 @@
 package hotel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.animation.PauseTransition;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.util.Duration;
 public class HotelPlayer {
 
 	private String name;
+	private int id;
 	private int x;
 	private int y;
 	private int mls;
@@ -23,9 +25,11 @@ public class HotelPlayer {
 	private int dice;
 	private int isSet;
 	private PauseTransition pause;
+	private ArrayList<HotelCard> hotels;
 
-	public HotelPlayer(String name, int x, int y, int mls) throws IOException {
+	public HotelPlayer(String name, int id, int x, int y, int mls) throws IOException {
 		this.name = name;
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.mls = mls;
@@ -71,9 +75,15 @@ public class HotelPlayer {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getID() {
+		return id;
+	}
 
 	public void setMLS(int mls) {
 		this.mls = mls;
+		System.out.println("HotelPlayer.java: Eimai o " + name + " kai ta nea moy lefta einai " + mls);
+		HotelInfoBar.setMLS(id,this.mls);
 		if (mls > maxMLS)
 			maxMLS = mls;
 	}
@@ -156,8 +166,10 @@ public class HotelPlayer {
 				this.box = box.getNext();
 				box.setPlayer(this);
 				if (box.getID().equals("B")) {
-					HotelGame.setStopFlag(1);
-					HotelMessenger.bankMessage();
+					System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
+					HotelToolBox.disableButton(5, false);	//enable bank button
+					//HotelGame.setStopFlag(1);
+					//HotelMessenger.bankMessage();
 				}
 			} else {
 				System.out.println("HotelPlayer.java: Einai allos mprosta mou");
@@ -167,15 +179,19 @@ public class HotelPlayer {
 				// my English too :P
 				if(tmp.getNext().hasPlayer()) {
 					if(tmp.getNext().getID().equals("B")) {
-						HotelGame.setStopFlag(1);
-						HotelMessenger.bankMessage();
+						System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
+						HotelToolBox.disableButton(5, false);	//enable bank button
+						//HotelGame.setStopFlag(1);
+						//HotelMessenger.bankMessage();
 					}
 					tmp = tmp.getNext().getNext();
 					c++;
 					if(tmp.hasPlayer()) {
 						if(tmp.equals("B")) {
-							HotelGame.setStopFlag(1);
-							HotelMessenger.bankMessage();
+							System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
+							HotelToolBox.disableButton(5, false);	//enable bank button
+							//HotelGame.setStopFlag(1);
+							//HotelMessenger.bankMessage();
 						}
 						tmp = tmp.getNext();
 						c++;
@@ -200,5 +216,18 @@ public class HotelPlayer {
 
 	public void setDice(int dice) {
 		this.dice = dice;
+	}
+	
+	public ArrayList<HotelCard> getHotels(){
+		return hotels;
+	}
+	
+	public void addHotel(HotelCard h) {
+		if(hotels==null) hotels = new ArrayList<HotelCard>();
+		this.hotels.add(h);
+	}
+	
+	public void removeHotel(HotelCard h) {
+		this.hotels.remove(h);
 	}
 }

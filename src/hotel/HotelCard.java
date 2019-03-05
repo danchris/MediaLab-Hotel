@@ -21,6 +21,8 @@ public class HotelCard {
 	private ArrayList<Pair<Integer, Integer>> upgrades = null;
 	private int exteriorBuildCost = -1;
 	private int exteriorDailyCost = -1;
+	private HotelPlayer owner = null;
+	private int buildStatus = 0;		//0 if its not build yet | 1 if its build
 
 	public HotelCard(ArrayList<String> lines, int id) {
 
@@ -101,6 +103,22 @@ public class HotelCard {
 
 	public int getExteriorDailyCost() {
 		return exteriorDailyCost;
+	}
+	
+	public HotelPlayer getOwner() {
+		return owner;
+	}
+	
+	public void setOwner(HotelPlayer p) {
+		this.owner = p;
+	}
+	
+	int getBuildStatus() {
+		return buildStatus;
+	}
+	
+	private void setBuildStatus(int i) {
+		this.buildStatus = i;
 	}
 
 	public void hotelCardDialogBox() {

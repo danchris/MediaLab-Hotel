@@ -1,6 +1,7 @@
 package hotel;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.animation.PauseTransition;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
@@ -193,5 +195,52 @@ public class HotelMessenger {
 		// Optional<ButtonType> result = dialogStage.showAndWait();
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();
+	}
+	
+	public static void showToBuyHotels(List<String> choices) {
+		if(choices.isEmpty()) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setGraphic(null);
+			alert.setTitle("Choices of Hotels");
+			alert.setHeaderText("Hotels");
+			alert.setContentText("You don't have enough money or not for sale.");
+			alert.showAndWait();
+		}
+		else {
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+			dialog.setGraphic(null);
+			dialog.setTitle("Choices of Hotels");
+			dialog.setHeaderText("Hotels");
+			dialog.setContentText("Choose a Hotel:");
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(option -> {
+				for (HotelCard h : HotelFileReader.getHotelsCards()) {
+					if (h.getName().equals(option)) {
+						System.out.println("HotelToolBox.java: Dialekses na agoraseis to " + option);
+						confirmBuyHotel(h);
+					}
+				}
+
+			});
+		}
+	}
+	
+	public static void confirmBuyHotel(HotelCard h) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Buy " + h.getName());
+		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost()) + " MLS.");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("HotelToolBox.java: Agora tou " + h.getName());
+			if(h.getOwner()!=null) {
+				h.getOwner().removeHotel(h);
+			}
+			h.setOwner(HotelGame.getCurrentPlayer());
+			HotelGame.getCurrentPlayer().addHotel(h);
+			HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost());
+			HotelToolBox.disableButton(3, true);	//disable buy hotel button
+		} 
 	}
 }
