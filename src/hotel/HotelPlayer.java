@@ -93,7 +93,7 @@ public class HotelPlayer {
 	}
 
 	public HotelBoardBox getCurrentBox() {
-		return box;
+		return this.box;
 	}
 
 	public int getCurrentBoxX() {
@@ -181,19 +181,6 @@ public class HotelPlayer {
 						c++;
 					}
 				}
-				/*
-				while (tmp.getNext().hasPlayer()) {
-					System.out.println("HotelPlayer.java: Pernaw to box " + tmp.getNext().getID());
-					if(tmp.getNext().getNext().hasPlayer()) {
-						tmp = tmp.getNext().getNext().getNext();
-						c+=2;
-					}
-					else {
-						tmp.getNext().getNext();
-						c++;
-					}
-				}
-				*/
 				System.out.println("HotelPlayer.java: Prosperasa " + c + " koutia");
 				dice-=c;
 				tmp.setPawn(img);
@@ -205,6 +192,7 @@ public class HotelPlayer {
 			pause.play();
 		}
 		else {
+			System.out.println("HotelPlayer.java: TransisionMove box " + box.getID());
 			HotelGame.finishMove();
 		}
 

@@ -22,15 +22,21 @@ import javafx.scene.text.Text;
 public class HotelToolBox extends Pane{
 	
 	private static Button button;
-	private Button dice;
+	private static Button dice;
+	private static Button reqBuilding;
+	private static Button buyHotel;
+	private static Button buyEntrance;
+	private static Button bank;
 	private HotelPlayer curr;
 	private GridPane grid;
 	private int diceNumber;
+	private Text diceRes;
+	private Text reqBuildingRes;
 	
 	public HotelToolBox() {
 		setPrefWidth(200);
-		//setPrefSize(256,768);
 		grid = new GridPane();
+		/*
 		button = new Button();
 		button.setText("Click Me");
 		System.out.println(HotelGame.getCurrentPlayer());
@@ -38,12 +44,19 @@ public class HotelToolBox extends Pane{
 		button.setOnAction(actionEvent -> {
 			HotelGame.getCurrentPlayer().setDice(1);
 			HotelGame.getCurrentPlayer().move();
-			//curr = HotelGame.getCurrentPlayer();
-		//	curr.move(curr.getCurrentBox().getNext(), curr.getCurrentBox());
 		});
-			
-		dice = new Button();
-		dice.setText("Roll Dice");
+			*/
+
+		dice = new Button("Roll Dice");
+		diceRes = new Text("Dice Result: ");
+
+		reqBuilding = new Button("Request Building");
+		reqBuildingRes = new Text("Request Result: ");
+		
+		buyHotel = new Button("Buy Hotel");
+		buyEntrance = new Button("Buy Entrance");
+		bank = new Button("Request 1000 MLS");
+		
 		
 		dice.setOnAction(actionEvent ->{
 			HotelGame.setStopFlag(1);
@@ -51,23 +64,36 @@ public class HotelToolBox extends Pane{
 			System.out.println("Dice selected is " + diceNumber);
 			HotelGame.getCurrentPlayer().setDice(diceNumber);
 			HotelMessenger.showDice(diceNumber);
-			//button.setDisable(true);
+			diceRes.setText("Dice Result: "+Integer.toString(diceNumber));
 		});
 		
-	//	grid.add(new Text("Move  "), 0, 0);
-	//	grid.add(button, 1, 0);
-		grid.add(new Text("Roll Dice  "), 0, 1);
-		grid.add(dice, 1, 1);
-		grid.setVgap(20);
-		grid.setPadding(new Insets(50,0,0,0));
+		grid.add(dice, 0, 0);
+		grid.add(diceRes, 0, 1);
+		grid.add(reqBuilding,0,2);
+		grid.add(reqBuildingRes, 0, 3);
+		grid.add(buyHotel, 0, 4);
+		grid.add(buyEntrance, 0, 5);
+		grid.add(bank, 0, 6);
+		grid.setVgap(15);
 
-		
 		getChildren().add(grid);
-		getChildren().add(button);
 		
 	}
 	
-	public static void enableButton() {
-		button.setDisable(false);
+	public static void enableDiceButton() {
+		dice.setDisable(false);
 	}
+	
+	public static void disableDiceButton() {
+		dice.setDisable(true);
+	}
+	public static void enableBuyHotelButton() {
+		buyHotel.setDisable(false);
+	}
+	
+	public static void disableBuyHotelButton() {
+		buyHotel.setDisable(true);
+	}
+	
+	
 }

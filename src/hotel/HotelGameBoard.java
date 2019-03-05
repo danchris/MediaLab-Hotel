@@ -115,5 +115,27 @@ public class HotelGameBoard extends Pane{
 	public ArrayList<HotelBoardBox> getPath(){
 		return path;
 	}
+	
+	public static Pair<HotelCard,HotelCard> getNeighborHotels(HotelBoardBox curr){
+		int currx = curr._getX();
+		int curry = curr._getY();
+		
+		HotelCard a, b;
+		// panw
+		if(gridBoard[currx-1][curry].getHotelCard()!=null && gridBoard[currx+1][curry]!=null) {
+			a = gridBoard[currx-1][curry].getHotelCard();
+			b = gridBoard[currx+1][curry].getHotelCard();
+		}
+		else if(gridBoard[currx][curry-1].getHotelCard()!=null && gridBoard[currx][curry+1]!=null) {
+			a = gridBoard[currx][curry-1].getHotelCard();
+			b = gridBoard[currx][curry+1].getHotelCard();
+		}
+		else return null;
+		
+		if(a!=null && b!=null) System.out.println("HotelGameBoard.java: getNeighborHotels tha epistrepsw ta eksis a = " + a.getName() + " b ="+ b.getName());
+		else System.out.println("HotelGameBoard.java: getNeighborHotels Tha epistrepsw kako pragma");
+		
+		return new Pair<HotelCard,HotelCard>(a,b);
+	}
 
 }

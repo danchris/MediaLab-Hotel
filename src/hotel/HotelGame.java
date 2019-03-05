@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -24,6 +25,7 @@ public class HotelGame extends Application {
 	private static HotelTimer timer;
 	private static ArrayList<HotelPlayer> playerList;
 	private static ArrayList<HotelBoardBox> path;
+	private static ArrayList<HotelCard> hotelsCards;
 	private static int startX;
 	private static int startY;
 	private static HotelMessenger hotelMessenger;
@@ -88,6 +90,7 @@ public class HotelGame extends Application {
 		gui = new HotelGUI();
 		gui.fileReaderTurnOn();
 		gui.createMainWindow(primaryStage);
+		hotelsCards = HotelFileReader.getHotelsCards();
 
 		playerList = new ArrayList<HotelPlayer>();
 		for (int i = 1; i <= 3; i++)
@@ -107,7 +110,7 @@ public class HotelGame extends Application {
 
 			gui.createBoards();
 
-			gui.getInfoBar().getAvailableHotels().setText("Available Hotels: 0");
+			gui.getInfoBar().getAvailableHotels().setText("Available Hotels: "+HotelFileReader.getHotelsCards().size());
 			startX = gui.getGameBoard().getStartBox()._getX();
 			startY = gui.getGameBoard().getStartBox()._getY();
 			for (HotelPlayer i : playerList) {
@@ -122,6 +125,7 @@ public class HotelGame extends Application {
 			currentPlayer.setBox(currentBox);
 			nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
 */			timer = new HotelTimer(gui.getInfoBar());
+			timer.start();
 			completeATurn(0);
 			
 
@@ -204,7 +208,6 @@ public class HotelGame extends Application {
 	public static HotelBoardBox getNextBoardBox() {
 		return nextBox;
 	}
-
 	private static void pressAnyKeyToContinue() {
 		System.out.println("Press Enter key to continue...");
 		try {
@@ -226,6 +229,7 @@ public class HotelGame extends Application {
 		currentPlayer = playerList.get(id);
 		if(playerList.get(id).getIsSet()==0) {
 			System.out.println("HotelGame.java: Den exw paiksei akomi eimai o "+id);
+			// vazw sto gui to pioni 
 			gui.getStartBox().setPawn(playerList.get(id).getImg());
 			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
 			currentPlayer.setBox(currentBox);
@@ -238,7 +242,35 @@ public class HotelGame extends Application {
 	}
 	
 	public static void finishMove() {
-		System.out.println("HotelGame.java: Teleiwsa to transmove epomeno active"+ (playerActive+1));
-		completeATurn(playerActive+1);
+		System.out.println("HotelGame.java: finishMove Teleiwsa to transmove epomeno active"+ (playerActive+1));
+		currentBox = currentPlayer.getCurrentBox();
+		System.out.println("HotelGame.java: finishMove to currentBox einai id = " + currentBox.getID()+"  x = " + currentBox._getX() + "  y = "+currentBox._getY());
+		if (currentBox.getID().equals("H")) {
+			System.out.println("HotelGame.java: finishMove stamatises se dollario ara mporeis na kaneis aitisi gia agora");
+			Pair<HotelCard,HotelCard> neighbors = HotelGameBoard.getNeighborHotels(currentBox);
+			if (neighbors != null) {
+				System.out.println("HotelGame.java: To currentBox einai x = " + currentBox._getX() + " y = " + currentBox._getY());
+				System.out.println("HotelGame.java: Geitones exw to " + neighbors.getKey().getName() + " kai to " + neighbors.getValue().getName());
+			}
+			else {
+				System.out.println("HotelGame.java: FinishMove kati pige lathos me thn getneighborshotels");
+			}	
+		}
+		else if (currentBox.getID().equals("E")) {
+			System.out.println("HotelGame.java: finishMove eisai se aksina mporeis na xtiseis");
+		}
+		else if (currentBox.getID().equals("B")) {
+			System.out.println("HotelGame.java: finishMove eisai sthn trapeza mporeis na pareis lefta");
+		}
+		else if (currentBox.getID().equals("C")) {
+			System.out.println("HotelGame.java: finishMove eisai sto dimarxeio mporeis na agoraseis eisodo");
+		}
+		else if (currentBox.getID().equals("S")) {
+			System.out.println("HotelGame.java: finishMove eisai sthn afetiria");
+		}
+
+		// uncomment line to play all players
+		//completeATurn(playerActive+1);
+		completeATurn(playerActive); //only first player plays
 	}
 }

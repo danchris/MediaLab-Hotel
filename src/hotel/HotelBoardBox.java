@@ -119,21 +119,24 @@ public class HotelBoardBox extends StackPane {
 		pawnView.setImage(pawn);
 		pawnView.setFitHeight(25);
 		pawnView.setFitWidth(25);
-		/*
+		
 		if (getNext()._getX() < _getX()) {
-			pawnView.setScaleY(-1);
+			//pawnView.setScaleY(-1);
+			System.out.println("HotelBoardBox.java: 1o if");
 			rotateImageView(pawnView,3);
 		}
-		else if (getNext()._getX() > _getX()) {
+		if (getNext()._getX() > _getX()) {
 		//	pawnView.setScaleY(-1);
+			System.out.println("HotelBoardBox.java: 2o if");
 			rotateImageView(pawnView,1);
 		}
-		else if (getNext()._getY() <_getY()) {
+		if (getNext()._getY() <_getY()) {
 			System.out.println("Next y = "+getNext()._getY() + " curr y = " + _getY());
-			//pawnView.setScaleY(-1);
+			System.out.println("HotelBoardBox.java: 3o if");
+			pawnView.setScaleY(-1);
 			rotateImageView(pawnView,2);
 		}
-		*/
+		
 		getChildren().add(pawnView);
 	}
 
@@ -147,7 +150,8 @@ public class HotelBoardBox extends StackPane {
 	}
 
 	public void rotateImageView(ImageView view, int times) {
-		System.out.println("HotelBoardBox.java : Kanw rotate " + times +" fores");
+		System.out.println("HotelBoardBox.java : Kanw rotate " + times +" fores kai view rotate " + view.getRotate());
+		if(view.getRotate()!=0.0) return;
 		for (int i = 0; i < times; i++)
 			view.setRotate(view.getRotate() + 90);
 
@@ -187,6 +191,9 @@ public class HotelBoardBox extends StackPane {
 		return pawnView;
 	}
 	
+	public void setPawnview(ImageView v) {
+		this.pawnView = v;
+	}
 	public void removePawn() {
 		getChildren().remove(pawnView);	
 	}

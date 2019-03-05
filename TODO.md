@@ -22,3 +22,7 @@ oikodomiis me ena allo sima as poume sfuri/askina
 [ ] na diavasw pali ta rules
 
 [ ] na olokliroso to menu, na einai etoimo
+
+[ ] na valw na dialegei poia pista thelei
+
+[ ] na kanw disable ta buttons pou dn prepei na pataei otan kapoios paizei
