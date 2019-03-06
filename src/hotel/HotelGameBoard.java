@@ -2,6 +2,8 @@ package hotel;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -9,9 +11,9 @@ import javafx.util.Pair;
 public class HotelGameBoard extends Pane{
 	
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];
-	private HotelBoardBox startBox = null;
+	private static HotelBoardBox startBox = null;
 	private static ArrayList<HotelBoardBox> visited;
-	private ArrayList<HotelBoardBox> path;
+	private static ArrayList<HotelBoardBox> path;
 
 	public HotelGameBoard(String[][] file) throws IOException {
 		setPrefWidth(600);
@@ -152,4 +154,44 @@ public class HotelGameBoard extends Pane{
 		
 		return ret;
 	}
+	
+	public static HotelBoardBox getRandomEntranceBox(HotelCard hotel) {
+		System.out.println("HotelGameBoard.java: getRandomEntranceBox gia to hotel " + hotel.getName());
+		
+		List<HotelBoardBox> random = new ArrayList<HotelBoardBox>();
+		
+		for(HotelBoardBox i : path) {
+			System.out.println("HotelGameBoard.java: Testarw to " + i._getX() + " y = " + i._getY());
+			// an o panw mou einai to idio hotel pou dialekse o tupas
+			if(checkIfHasHotel(i,hotel)) {
+				random.add(i);
+				System.out.println("HotelGameBoard.java: Possible box x = " + i._getX() + " y = " + i._getY());
+			}
+		}
+		// return random box
+		if (random.isEmpty()) return null;
+	    return random.get(new Random().nextInt(random.size()));
+	}
+	
+	
+	public static boolean checkIfHasHotel(HotelBoardBox curr, HotelCard hotel) {
+		
+		System.out.println("HotelGameBoard.java: Eimai sthn checkifHashotel " );
+		int currx = curr._getX();
+		int curry = curr._getY();
+		
+		if(gridBoard[currx-1][curry].isThis(hotel)) return true;
+		if(gridBoard[currx][curry+1].isThis(hotel)) return true;
+		if(gridBoard[currx+1][curry].isThis(hotel)) return true;
+		if(gridBoard[currx][curry-1].isThis(hotel)) return true;
+		/*
+		if(gridBoard[currx-1][curry].getHotelCard().getName().equals(hotel.getName())) return true;
+		if(gridBoard[currx][curry+1].getHotelCard().getName().equals(hotel.getName())) return true;
+		if(gridBoard[currx+1][curry].getHotelCard().getName().equals(hotel.getName())) return true;
+		if(gridBoard[currx][curry-1].getHotelCard().getName().equals(hotel.getName())) return true;
+		*/
+		return false;
+	}
+	
+	
 }

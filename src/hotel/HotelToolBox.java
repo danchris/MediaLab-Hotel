@@ -105,6 +105,7 @@ public class HotelToolBox extends Pane {
 			System.out.println("HotelToolBox.java: buyEntrance Action");
 			curr = HotelGame.getCurrentPlayer();
 
+			/*
 			// allos exei hdh eisodo edw
 			if(curr.getCurrentBox().getHotelEntrance()!=null) {
 				System.out.println("HotelToolBox.java: Exei kapoios allos eisodo edw");
@@ -112,7 +113,7 @@ public class HotelToolBox extends Pane {
 				
 				return ;
 			}
-			
+			*/
 			System.out.println("HotelToolBox.java: Possible Entrances");
 			System.out.println(curr.getHotels());
 			
@@ -123,18 +124,23 @@ public class HotelToolBox extends Pane {
 				
 				return ;
 			} else {
-				ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
+				ArrayList<HotelCard> currHotels = curr.getHotels();
+				//ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
 
 				List<String> choices = new ArrayList<String>();
-				for (HotelBoardBox b : possibleEntrances) {
-					// an to exeis to hotel kai exeis ta lefta tote valto sto choices
-					if (curr.getHotels().contains(b.getHotelCard()) && (curr.getMLS()-b.getHotelCard().getEntranceCost()) >=0) {
-						System.out.println("Hotel: " + b.getHotelCard().getName() + " x = " + b._getX() + " y = " + b._getY());
-						choices.add(b.getHotelCard().getName());
+				for (HotelCard h : currHotels) {
+					// an exeis ta lefta tote valto sto choices kai exei to hotel to main building
+					if ((curr.getMLS()-h.getEntranceCost()) >=0 && h.getBuildStatus()==0) {
+						choices.add(h.getName());
 					}
 				}
 				HotelMessenger.showPossibleEntrances(choices);
 			}
+
+		});
+		
+		reqBuilding.setOnAction(actionEvent -> {
+			System.out.println("HotelToolBox.java: Request Building Action");
 
 		});
 

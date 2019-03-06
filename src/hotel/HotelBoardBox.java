@@ -69,6 +69,8 @@ public class HotelBoardBox extends StackPane {
 		getChildren().add(rect);
 		setTranslateX(y * 36);
 		setTranslateY(x * 46);
+
+
 		// Creating the mouse event handler
 		clickBoxHandler = new EventHandler<MouseEvent>() {
 			@Override
@@ -84,8 +86,9 @@ public class HotelBoardBox extends StackPane {
 						alert.setHeaderText(id);
 						alert.showAndWait();
 					}
-
 				//}
+
+
 			}
 		};
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
@@ -219,6 +222,11 @@ public class HotelBoardBox extends StackPane {
 	
 	public void setHotelEntrance(HotelCard h) {
 		this.entrance = h;
+		//prostiki sximatos
+		Circle cir = new Circle(0,0,16);
+		cir.setFill(Color.TRANSPARENT);
+		cir.setStroke(Color.BLACK);
+		getChildren().add(cir);
 	}
 	
 	public HotelPlayer getEntranceOwner() {
@@ -227,5 +235,13 @@ public class HotelBoardBox extends StackPane {
 	
 	public void setEntranceOwner(HotelPlayer p) {
 		this.entranceOwner = p;
+	}
+	
+	public boolean isThis(HotelCard h) {
+		System.out.println("HotelBoardBox.java: isThis");
+		if(this.hotelCard == null) return false;
+		if(this.hotelCard.equals(h)) return true;
+		
+		return false;
 	}
 }

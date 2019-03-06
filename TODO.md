@@ -26,3 +26,5 @@ oikodomiis me ena allo sima as poume sfuri/askina
 [ ] na valw na dialegei poia pista thelei
 
 [ ] na kanw disable ta buttons pou dn prepei na pataei otan kapoios paizei
+
+[ ] global var an perase apo to hall tote energopoiw koumpi gia buy entrance free kai meta sunartisi na psanxw sto path elefthero kouti gia entrance

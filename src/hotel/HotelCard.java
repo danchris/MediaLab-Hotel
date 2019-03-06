@@ -137,10 +137,11 @@ public class HotelCard {
 		info.add(new Text("eisodou : " + entranceCost), 0, 2);
 		info.add(new Text("main ktiriou : " + mainBuildingCost), 0, 3);
 		info.add(new Text("Daily : " + onlyMainBuildingDailyCost), 1, 3);
-		int j = 4;
+		int j = 4, counter = 1;
 		for (Pair<Integer, Integer> tmp : upgrades) {
-			info.add(new Text("Upgrade : " + tmp.getKey()), 0, j);
-			info.add(new Text("Daily upgrade : " + tmp.getValue()), 1, j);
+			info.add(new Text("Upgrade " + counter + " : " + tmp.getKey()), 0, j);
+			info.add(new Text("Daily upgrade "+counter+" : " + tmp.getValue()), 1, j);
+			counter++;
 			j++;
 		}
 		if (exteriorBuildCost != -1) {

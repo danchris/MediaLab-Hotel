@@ -269,6 +269,8 @@ public class HotelGame extends Application {
 		
 		currentBox = currentPlayer.getCurrentBox();
 		System.out.println("HotelGame.java: finishMove to currentBox einai id = " + currentBox.getID()+"  x = " + currentBox._getX() + "  y = "+currentBox._getY());
+		
+		// edw agorazeis hotels
 		if (currentBox.getID().equals("H")) {
 			System.out.println("HotelGame.java: finishMove stamatises se dollario ara mporeis na kaneis aitisi gia agora");
 			Pair<HotelCard,HotelCard> neighbors = HotelGameBoard.getNeighborHotels(currentBox);
@@ -282,20 +284,25 @@ public class HotelGame extends Application {
 				System.out.println("HotelGame.java: FinishMove kati pige lathos me thn getneighborshotels");
 			}	
 		}
+		// edw agorazeis eisodous kai kaneis aitiseis gia ktiria
 		else if (currentBox.getID().equals("E")) {
 			System.out.println("HotelGame.java: finishMove eisai se aksina mporeis na xtiseis h buy eisodo");
 			HotelToolBox.disableButton(2, false);	//enable request building button
 			HotelToolBox.disableButton(4, false);	//enable buy entrance button
 		//	setStopFlag(0);
 		}
+		// edw pairneis lefta apo tin trapeza
 		else if (currentBox.getID().equals("B")) {
 			System.out.println("HotelGame.java: finishMove eisai sthn trapeza mporeis na pareis lefta");
 			//setStopFlag(0);
 		}
+		// edw agorazeis tzampa eisodo gia opoio hotel exeis
 		else if (currentBox.getID().equals("C")) {
 			System.out.println("HotelGame.java: finishMove eisai sto dimarxeio mporeis na agoraseis eisodo");
+			HotelToolBox.disableButton(4, false);	//enable buy entrance button
 		//	setStopFlag(0);
 		}
+		// afetiria dn kanies tipota
 		else if (currentBox.getID().equals("S")) {
 			System.out.println("HotelGame.java: finishMove eisai sthn afetiria");
 			//setStopFlag(0);

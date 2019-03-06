@@ -253,7 +253,7 @@ public class HotelMessenger {
 	
 	public static void showPossibleEntrances(List<String> choices) {
 		if(choices.isEmpty()) {
-			generalInfoMessage("Choices of Hotels", "Error", "You don't own any of closest lands here \n or you need more money");
+			generalInfoMessage("Choices of Hotels", "Error", "You need more money \n or you need to build main building first");
 		}
 		else {
 			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
@@ -285,12 +285,23 @@ public class HotelMessenger {
 		if (result.get() == ButtonType.OK){
 			System.out.println("HotelToolBox.java: Agora eisodo gia to " + h.getName());
 			
+			
+			
+			// choose a box to put entrance random
+			HotelBoardBox tmp = HotelGameBoard.getRandomEntranceBox(h);
+			//add hotel card entrance to board box
+			System.out.println("HotelMessenger.java: Dialextike gia eisodo to " + tmp._getX() + " y = "+tmp._getY());
+			tmp.setHotelEntrance(h);
+			
+			generalInfoMessage("Entrance Info", "New Entrance", "New Entrance at x = " +tmp._getX() + " y = " +tmp._getY());
+			/*
+			HotelBoardBox currBox = HotelGame.getCurrentBoardBox();
 			//add entrance to hotel card
-			h.addEntrance(HotelGame.getCurrentBoardBox());
+			h.addEntrance(currBox);
 			
 			//add hotel card entrance to board box
-			HotelGame.getCurrentBoardBox().setHotelEntrance(h);
-			
+			currBox.setHotelEntrance(h);
+			 */
 			HotelToolBox.disableButton(4, true);	//disable buy entrance button
 			
 		} 
