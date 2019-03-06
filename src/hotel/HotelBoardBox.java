@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +28,8 @@ public class HotelBoardBox extends StackPane {
 	private String tmpColor;
 	private HotelCard hotelCard = null;
 	private HotelPlayer player = null;
-
+	private HotelCard entrance = null;
+	private HotelPlayer entranceOwner = null;
 	private Color c;
 	private Image img;
 	private Image pawn;
@@ -66,12 +69,11 @@ public class HotelBoardBox extends StackPane {
 		getChildren().add(rect);
 		setTranslateX(y * 36);
 		setTranslateY(x * 46);
-
 		// Creating the mouse event handler
 		clickBoxHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				if (HotelGame.getStopFlag() == 0) {
+			//	if (HotelGame.getStopFlag() == 0) {
 					System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
 
 					if (hotelCard != null) {
@@ -83,7 +85,7 @@ public class HotelBoardBox extends StackPane {
 						alert.showAndWait();
 					}
 
-				}
+				//}
 			}
 		};
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
@@ -209,5 +211,21 @@ public class HotelBoardBox extends StackPane {
 	
 	public HotelPlayer getPlayer() {
 		return player;
+	}
+	
+	public HotelCard getHotelEntrance() {
+		return entrance;
+	}
+	
+	public void setHotelEntrance(HotelCard h) {
+		this.entrance = h;
+	}
+	
+	public HotelPlayer getEntranceOwner() {
+		return entranceOwner;
+	}
+	
+	public void setEntranceOwner(HotelPlayer p) {
+		this.entranceOwner = p;
 	}
 }

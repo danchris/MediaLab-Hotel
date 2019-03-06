@@ -138,4 +138,18 @@ public class HotelGameBoard extends Pane{
 		return new Pair<HotelCard,HotelCard>(a,b);
 	}
 
+	public static ArrayList<HotelBoardBox> getPossibleBoxesForBuildOrEntrance(HotelBoardBox currBox){
+		
+		int currx = currBox._getX();
+		int curry = currBox._getY();
+		ArrayList<HotelBoardBox> ret = new ArrayList<HotelBoardBox>();
+		
+		
+		if(gridBoard[currx-1][curry].getHotelCard()!=null) ret.add(gridBoard[currx-1][curry]);
+		if(gridBoard[currx][curry+1].getHotelCard()!=null) ret.add(gridBoard[currx][curry+1]);
+		if(gridBoard[currx+1][curry].getHotelCard()!=null) ret.add(gridBoard[currx+1][curry]);
+		if(gridBoard[currx][curry-1].getHotelCard()!=null) ret.add(gridBoard[currx][curry-1]);
+		
+		return ret;
+	}
 }

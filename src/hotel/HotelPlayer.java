@@ -25,7 +25,7 @@ public class HotelPlayer {
 	private int dice;
 	private int isSet;
 	private PauseTransition pause;
-	private ArrayList<HotelCard> hotels;
+	private ArrayList<HotelCard> hotels = null;
 
 	public HotelPlayer(String name, int id, int x, int y, int mls) throws IOException {
 		this.name = name;
@@ -219,6 +219,8 @@ public class HotelPlayer {
 	}
 	
 	public ArrayList<HotelCard> getHotels(){
+		System.out.println("HotelPlayer.java: Get Hotels");
+		
 		return hotels;
 	}
 	

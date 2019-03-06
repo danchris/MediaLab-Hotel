@@ -283,7 +283,9 @@ public class HotelGame extends Application {
 			}	
 		}
 		else if (currentBox.getID().equals("E")) {
-			System.out.println("HotelGame.java: finishMove eisai se aksina mporeis na xtiseis");
+			System.out.println("HotelGame.java: finishMove eisai se aksina mporeis na xtiseis h buy eisodo");
+			HotelToolBox.disableButton(2, false);	//enable request building button
+			HotelToolBox.disableButton(4, false);	//enable buy entrance button
 		//	setStopFlag(0);
 		}
 		else if (currentBox.getID().equals("B")) {

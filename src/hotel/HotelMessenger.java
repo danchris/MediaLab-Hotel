@@ -23,6 +23,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import sun.security.x509.GeneralNameInterface;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -197,14 +198,18 @@ public class HotelMessenger {
 		dialogStage.show();
 	}
 	
+	public static void generalInfoMessage(String title, String header, String Content) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setGraphic(null);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(Content);
+		alert.showAndWait();
+	}
+	
 	public static void showToBuyHotels(List<String> choices) {
 		if(choices.isEmpty()) {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setGraphic(null);
-			alert.setTitle("Choices of Hotels");
-			alert.setHeaderText("Hotels");
-			alert.setContentText("You don't have enough money or not for sale.");
-			alert.showAndWait();
+			generalInfoMessage("Choices of Hotels","Hotels","You don't have enough money or not for sale");
 		}
 		else {
 			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
@@ -234,13 +239,60 @@ public class HotelMessenger {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			System.out.println("HotelToolBox.java: Agora tou " + h.getName());
-			if(h.getOwner()!=null) {
-				h.getOwner().removeHotel(h);
-			}
+			
+			// an to exei hdh kapoios to hotel kanw remove to hotel apo tin lista tou
+			if(h.getOwner()!=null) h.getOwner().removeHotel(h);
+			
 			h.setOwner(HotelGame.getCurrentPlayer());
 			HotelGame.getCurrentPlayer().addHotel(h);
 			HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost());
 			HotelToolBox.disableButton(3, true);	//disable buy hotel button
+			
+		} 
+	}
+	
+	public static void showPossibleEntrances(List<String> choices) {
+		if(choices.isEmpty()) {
+			generalInfoMessage("Choices of Hotels", "Error", "You don't own any of closest lands here \n or you need more money");
+		}
+		else {
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+			dialog.setGraphic(null);
+			dialog.setTitle("Choices of Hotels");
+			dialog.setHeaderText("Hotels");
+			dialog.setContentText("Choose a Hotel for entrance:");
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(option -> {
+				for (HotelCard h : HotelFileReader.getHotelsCards()) {
+					if (h.getName().equals(option)) {
+						System.out.println("HotelToolBox.java: Dialekses na valeis eisodo gia to " + option);
+						confirmBuyEntrance(h);
+					}
+				}
+
+			});
+		}
+	}
+	
+	
+	public static void confirmBuyEntrance(HotelCard h) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Buy Entrance for " + h.getName());
+		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost()) + " MLS.");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("HotelToolBox.java: Agora eisodo gia to " + h.getName());
+			
+			//add entrance to hotel card
+			h.addEntrance(HotelGame.getCurrentBoardBox());
+			
+			//add hotel card entrance to board box
+			HotelGame.getCurrentBoardBox().setHotelEntrance(h);
+			
+			HotelToolBox.disableButton(4, true);	//disable buy entrance button
+			
 		} 
 	}
 }

@@ -23,6 +23,7 @@ public class HotelCard {
 	private int exteriorDailyCost = -1;
 	private HotelPlayer owner = null;
 	private int buildStatus = 0;		//0 if its not build yet | 1 if its build
+	private ArrayList<HotelBoardBox> entrances = null;
 
 	public HotelCard(ArrayList<String> lines, int id) {
 
@@ -149,5 +150,15 @@ public class HotelCard {
 		alert.getDialogPane().setContent(info);
 		alert.showAndWait();
 
+	}
+	
+	public ArrayList<HotelBoardBox> getEntrances(){
+		return entrances;
+	}
+	
+	public void addEntrance(HotelBoardBox b) {
+		System.out.println("HotelCard.java: Prosthetw stis eisodous mou to kouti x = "+b._getX() + " y = "+b._getY());
+		if(entrances==null) entrances = new ArrayList<HotelBoardBox>();
+		entrances.add(b);
 	}
 }

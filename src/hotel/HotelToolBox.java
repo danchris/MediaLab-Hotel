@@ -20,15 +20,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
-
 /*
  * @author Daniel Christodoulopoulos
  */
 
+public class HotelToolBox extends Pane {
 
-public class HotelToolBox extends Pane{
-	
-	private static Button button;
 	private static Button dice;
 	private static Button reqBuilding;
 	private static Button buyHotel;
@@ -40,93 +37,121 @@ public class HotelToolBox extends Pane{
 	private int diceNumber;
 	private Text diceRes;
 	private Text reqBuildingRes;
-	
+
 	public HotelToolBox() {
 		setPrefWidth(200);
 		grid = new GridPane();
-		/*
-		button = new Button();
-		button.setText("Click Me");
-		System.out.println(HotelGame.getCurrentPlayer());
-		System.out.println(HotelGame.getNextBoardBox());
-		button.setOnAction(actionEvent -> {
-			HotelGame.getCurrentPlayer().setDice(1);
-			HotelGame.getCurrentPlayer().move();
-		});
-			*/
 
 		dice = new Button("Roll Dice");
 		diceRes = new Text("Dice Result: ");
 
 		reqBuilding = new Button("Request Building");
 		reqBuildingRes = new Text("Request Result: ");
-		
+
 		buyHotel = new Button("Buy Hotel");
 		buyEntrance = new Button("Buy Entrance");
 		bank = new Button("Request 1000 MLS");
 		pass = new Button("Pass");
-		
-		
-		dice.setOnAction(actionEvent ->{
+
+		dice.setOnAction(actionEvent -> {
 			HotelGame.setStopFlag(1);
 			diceNumber = new Random().nextInt(6) + 1;
 			System.out.println("Dice selected is " + diceNumber);
-			HotelGame.getCurrentPlayer().setDice(diceNumber);
+			curr = HotelGame.getCurrentPlayer();
+			curr.setDice(diceNumber);
 			HotelMessenger.showDice(diceNumber);
-			diceRes.setText("Dice Result: "+Integer.toString(diceNumber));
+			diceRes.setText("Dice Result: " + Integer.toString(diceNumber));
 		});
-		
-		buyHotel.setOnAction(actionEvent ->{
+
+		buyHotel.setOnAction(actionEvent -> {
 			HotelGame.setStopFlag(1);
-			
+
 			System.out.println("HotelToolBox.java: BuyHotel Action");
-			Pair<HotelCard,HotelCard> neighbors = HotelGameBoard.getNeighborHotels(HotelGame.getCurrentBoardBox());
-			List<String> choices = new ArrayList();
-			
+			Pair<HotelCard, HotelCard> neighbors = HotelGameBoard.getNeighborHotels(HotelGame.getCurrentBoardBox());
+			List<String> choices = new ArrayList<String>();
+			curr = HotelGame.getCurrentPlayer();
 			// check if have enough money for hotels and hotels are still available
 			int tmp = neighbors.getKey().getPlotCost();
-			if (HotelGame.getCurrentPlayer().getMLS()>=tmp && neighbors.getKey().getBuildStatus()==0) choices.add(neighbors.getKey().getName());
+			if (curr.getMLS() >= tmp && neighbors.getKey().getBuildStatus() == 0)
+				choices.add(neighbors.getKey().getName());
 			tmp = neighbors.getValue().getPlotCost();
-			if (HotelGame.getCurrentPlayer().getMLS()>=tmp && neighbors.getValue().getBuildStatus()==0) choices.add(neighbors.getValue().getName());
-			
+			if (curr.getMLS() >= tmp && neighbors.getValue().getBuildStatus() == 0)
+				choices.add(neighbors.getValue().getName());
+
 			HotelMessenger.showToBuyHotels(choices);
-		//	HotelGame.setStopFlag(0);
 		});
-		
-		pass.setOnAction(actionEvent ->{
-			//HotelGame.setStopFlag(1);
-			
+
+		pass.setOnAction(actionEvent -> {
+
 			System.out.println("HotelToolBox.java: Pass Action");
 			HotelGame.setStopFlag(0);
-			//uncomment for play all players
-			//HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
+			// uncomment for play all players
+			// HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
 			HotelGame.completeATurn(HotelGame.getPlayerActive());
-			
+
 		});
-		
-		
-		bank.setOnAction(actionEvent ->{
+
+		bank.setOnAction(actionEvent -> {
 			HotelGame.setStopFlag(1);
 			System.out.println("HotelToolBox.java: Bank button Action");
-			System.out.println("HotelToolBox.java: o " + HotelGame.getCurrentPlayer().getName() + " tha parei +1000 MLS");
-			HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()+1000);
-			bank.setDisable(true);		
+			curr = HotelGame.getCurrentPlayer();
+			System.out.println("HotelToolBox.java: o " + curr.getName() + " tha parei +1000 MLS");
+			curr.setMLS(curr.getMLS() + 1000);
+			bank.setDisable(true);
 		});
-		
+
+		buyEntrance.setOnAction(actionEvent -> {
+			HotelGame.setStopFlag(1);
+			System.out.println("HotelToolBox.java: buyEntrance Action");
+			curr = HotelGame.getCurrentPlayer();
+
+			// allos exei hdh eisodo edw
+			if(curr.getCurrentBox().getHotelEntrance()!=null) {
+				System.out.println("HotelToolBox.java: Exei kapoios allos eisodo edw");
+				HotelMessenger.generalInfoMessage("Buy Entrance", "Error", "You can not buy entrance here. "+curr.getCurrentBox().getEntranceOwner().getName() + " has already one");
+				
+				return ;
+			}
+			
+			System.out.println("HotelToolBox.java: Possible Entrances");
+			System.out.println(curr.getHotels());
+			
+			// den exeis kanena hotel
+			if (curr.getHotels() == null || curr.getHotels().isEmpty()) {
+				System.out.println("HotelToolBox.java: Den exeis kanena hotel");
+				HotelMessenger.generalInfoMessage("Buy Entrance", "Error", "You don't own any hotel");
+				
+				return ;
+			} else {
+				ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
+
+				List<String> choices = new ArrayList<String>();
+				for (HotelBoardBox b : possibleEntrances) {
+					// an to exeis to hotel kai exeis ta lefta tote valto sto choices
+					if (curr.getHotels().contains(b.getHotelCard()) && (curr.getMLS()-b.getHotelCard().getEntranceCost()) >=0) {
+						System.out.println("Hotel: " + b.getHotelCard().getName() + " x = " + b._getX() + " y = " + b._getY());
+						choices.add(b.getHotelCard().getName());
+					}
+				}
+				HotelMessenger.showPossibleEntrances(choices);
+			}
+
+		});
+
 		grid.add(dice, 0, 0);
 		grid.add(diceRes, 0, 1);
-		grid.add(reqBuilding,0,2);
+		grid.add(reqBuilding, 0, 2);
 		grid.add(reqBuildingRes, 0, 3);
 		grid.add(buyHotel, 0, 4);
 		grid.add(buyEntrance, 0, 5);
 		grid.add(bank, 0, 6);
-		grid.add(pass, 0,7);
+		grid.add(pass, 0, 7);
 		grid.setVgap(15);
 
 		getChildren().add(grid);
-		
+
 	}
-	
+
 	// f = true -> disable
 	// f = false -> enable
 	// i = 1 -> dice
@@ -136,12 +161,18 @@ public class HotelToolBox extends Pane{
 	// i = 5 -> bank
 	// i = 6 -> pass
 	public static void disableButton(int i, boolean f) {
-		if (i==1) dice.setDisable(f);
-		else if (i==2) reqBuilding.setDisable(f);
-		else if (i==3) buyHotel.setDisable(f);
-		else if (i==4) buyEntrance.setDisable(f);
-		else if (i==5) bank.setDisable(f);
-		else if (i==6) pass.setDisable(f);
+		if (i == 1)
+			dice.setDisable(f);
+		else if (i == 2)
+			reqBuilding.setDisable(f);
+		else if (i == 3)
+			buyHotel.setDisable(f);
+		else if (i == 4)
+			buyEntrance.setDisable(f);
+		else if (i == 5)
+			bank.setDisable(f);
+		else if (i == 6)
+			pass.setDisable(f);
 		else {
 			System.out.println("HotelToolBox.java: disableButton wrong input");
 		}
