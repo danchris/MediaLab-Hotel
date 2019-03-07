@@ -19,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
+import sun.security.x509.GeneralNameInterface;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -110,6 +111,7 @@ public class HotelToolBox extends Pane {
 			System.out.println("HotelToolBox.java: buyEntrance Action");
 			curr = HotelGame.getCurrentPlayer();
 
+
 			/*
 			// allos exei hdh eisodo edw
 			if(curr.getCurrentBox().getHotelEntrance()!=null) {
@@ -129,13 +131,17 @@ public class HotelToolBox extends Pane {
 				
 				return ;
 			} else {
+				// enimerose ton paikti oti perase apo hall ara exei free buy entrance
+				if(HotelGame.getPassHall()==1) {
+					HotelMessenger.generalInfoMessage("Info", "Free Entrance", "You pass from City Hall, you have a free entrance");
+				}
 				currHotels = curr.getHotels();
 				//ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
 
 				List<String> choices = new ArrayList<String>();
 				for (HotelCard h : currHotels) {
-					// an exeis ta lefta tote valto sto choices kai exei to hotel to main building
-					if ((curr.getMLS()-h.getEntranceCost()) >=0 && h.getBuildStatus()==1) {
+					// an exeis ta lefta h exeis free eisodo tote valto sto choices kai exei to hotel to main building
+					if (((curr.getMLS()-h.getEntranceCost()) >=0 || HotelGame.getPassHall()==1) && h.getBuildStatus()==1) {
 						choices.add(h.getName());
 					}
 				}
@@ -204,7 +210,7 @@ public class HotelToolBox extends Pane {
 		}
 	}
 	
-	public static void setRequsetBuildingResult(String res) {
+	public static void setRequestBuildingResult(String res) {
 		reqBuildingRes.setText("Request Result: "+res);
 	}
 

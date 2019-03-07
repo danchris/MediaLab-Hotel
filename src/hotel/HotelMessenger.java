@@ -298,13 +298,18 @@ public class HotelMessenger {
 		alert.setResizable(true);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText("Buy Entrance for " + h.getName());
-		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost()) + " MLS.");
+		
+		// an dn exeis freee entrance tha plirwseis
+		if(HotelGame.getPassHall()==0) {
+			alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost()) + " MLS.");
+		}
+		else {
+			alert.setContentText("Free entrance");
+		}
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
 			System.out.println("HotelMessenger.java: Agora eisodo gia to " + h.getName());
-			
-			
 			
 			// choose a box to put entrance random
 			HotelBoardBox tmp = HotelGameBoard.getRandomEntranceBox(h);
@@ -312,8 +317,16 @@ public class HotelMessenger {
 			System.out.println("HotelMessenger.java: Dialextike gia eisodo to " + tmp._getX() + " y = "+tmp._getY());
 			tmp.setHotelEntrance(h);
 			
+			// plirwse gia to entrance an dn einai free
+			if(HotelGame.getPassHall()==0){
+				HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost());
+			}
+			
 			generalInfoMessage("Entrance Info", "New Entrance", "New Entrance at x = " +tmp._getX() + " y = " +tmp._getY());
 
+			// restore default times gia hall
+			HotelGame.setPassHall(0);
+			
 			HotelToolBox.disableButton(4, true);	//disable buy entrance button
 			
 		} 
@@ -363,7 +376,7 @@ public class HotelMessenger {
 			else msg = "Double Fee";
 			
 			generalInfoMessage("Request Building", "Request result", msg);
-			HotelToolBox.setRequsetBuildingResult(msg);
+			HotelToolBox.setRequestBuildingResult(msg);
 			HotelToolBox.setReqDone(1); // egine to req
 			
 			// Decline

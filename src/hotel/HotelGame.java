@@ -38,6 +38,7 @@ public class HotelGame extends Application {
 	private static PauseTransition pause;
 	private static PauseTransition pause1;
 	private static int playerActive;			//id of player if its active or 0 if player turn ends
+	private static int passHall = 0;			// 0 if not pass hall | 1 if pass hall
 
 	// private static int popupFlag = 0;
 	// private static PauseTransition delay = new
@@ -247,7 +248,7 @@ public class HotelGame extends Application {
 			HotelToolBox.disableButton(5, true);	//disable bank button
 			HotelToolBox.disableButton(6, true);	//disable pass button
 			
-			if(index==3) index = 0;
+			if(index==playerList.size()) index = 0;
 			currentPlayer = playerList.get(index);
 			if(playerList.get(index).getIsSet()==0) {
 				System.out.println("HotelGame.java: Den exw paiksei akomi eimai o "+index);
@@ -326,5 +327,13 @@ public class HotelGame extends Application {
 		}
 		
 		return null;
+	}
+	
+	public static void setPassHall(int f) {
+		passHall = f;
+	}
+	
+	public static int getPassHall() {
+		return passHall;
 	}
 }

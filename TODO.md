@@ -21,6 +21,8 @@ oikodomiis me ena allo sima as poume sfuri/askina
 
 [*] na diavasw pali ta rules
 
+[*] exw valei na agorazei mono main building prepei nna ananewwnw lista me ti exei xtisei gia na tou dinw tis katalliles epiloges
+
 [ ] na olokliroso to menu, na einai etoimo statistics, entrances klp
 
 [ ] na valw na dialegei poia pista thelei
@@ -29,4 +31,3 @@ oikodomiis me ena allo sima as poume sfuri/askina
 
 [ ] global var an perase apo to hall tote energopoiw koumpi gia buy entrance free kai meta sunartisi na psanxw sto path elefthero kouti gia entrance
 
-[ ] exw valei na agorazei mono main building prepei nna ananewwnw lista me ti exei xtisei gia na tou dinw tis katalliles epiloges
