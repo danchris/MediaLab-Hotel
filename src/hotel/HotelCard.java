@@ -118,7 +118,7 @@ public class HotelCard {
 		return buildStatus;
 	}
 	
-	private void setBuildStatus(int i) {
+	void setBuildStatus(int i) {
 		this.buildStatus = i;
 	}
 

@@ -26,7 +26,7 @@ public class HotelGame extends Application {
 	private static ArrayList<HotelPlayer> playerList;
 	private static ArrayList<HotelBoardBox> path;
 	private static ArrayList<HotelCard> hotelsCards;
-	private static ArrayList<HotelCard> buildedHotels;
+	private static ArrayList<HotelCard> buildedHotels = null;
 	private static int startX;
 	private static int startY;
 	private static HotelMessenger hotelMessenger;
@@ -111,7 +111,7 @@ public class HotelGame extends Application {
 
 			gui.createBoards();
 
-			gui.getInfoBar().getAvailableHotels().setText("Available Hotels: "+HotelFileReader.getHotelsCards().size());
+			gui.getInfoBar().setAvailableHotels(HotelFileReader.getHotelsCards().size());
 			startX = gui.getGameBoard().getStartBox()._getX();
 			startY = gui.getGameBoard().getStartBox()._getY();
 			for (HotelPlayer i : playerList) {
@@ -229,6 +229,13 @@ public class HotelGame extends Application {
 		return gui.getFileReader();
 	}
 	
+	public static void addToBuildedHotels(HotelCard h) {
+		if(buildedHotels == null) buildedHotels = new ArrayList<HotelCard>();
+		buildedHotels.add(h);
+		// update info bar
+		gui.getInfoBar().setAvailableHotels(gui.getInfoBar().getAvailableHotels()-1);
+	}
+
 	public static void completeATurn(int id) {
 		if(stopFlag==0) {
 			System.out.println("HotelGame.java: completeATurn arxh kanw disable ta buttons ReqBuild,BuyHotel,BuyEntrance kai Bank kai enable to dice");

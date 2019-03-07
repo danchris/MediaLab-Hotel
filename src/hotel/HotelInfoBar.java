@@ -15,6 +15,7 @@ public class HotelInfoBar extends TilePane{
 	private static Text Player3;
 	private static Text AvailableHotels;
 	private static Text TotalTime;
+	private static int availableH;
 	
 	public HotelInfoBar() {
 		System.out.println("HotelInfoBar.java: Constructor Create Info Bar");
@@ -52,10 +53,14 @@ public class HotelInfoBar extends TilePane{
 		return Player1;
 	}
 	
-	public Text getAvailableHotels() {
-		return AvailableHotels;
+	public int getAvailableHotels() {
+		return availableH;
 	}
 	
+	public void setAvailableHotels(int i) {
+		this.availableH = i;
+		AvailableHotels.setText("Available Hotels: "+availableH); // set new text
+	}
 	// p for player
 	// m for mls
 	public static void setMLS(int p, int m) {

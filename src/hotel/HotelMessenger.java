@@ -1,8 +1,10 @@
 package hotel;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -23,7 +25,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import sun.security.x509.GeneralNameInterface;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -35,6 +36,7 @@ public class HotelMessenger {
 	private static Image img;
 	private static ImageView imgView;
 	private static PauseTransition pause = new PauseTransition(Duration.seconds(10));
+	
 
 	public void showMessagesAndStart(String board) {
 		dialogStage = new Stage();
@@ -201,12 +203,14 @@ public class HotelMessenger {
 	public static void generalInfoMessage(String title, String header, String Content) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setGraphic(null);
+		alert.setResizable(true);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(Content);
 		alert.showAndWait();
 	}
 	
+	// an patihei to buy hotel
 	public static void showToBuyHotels(List<String> choices) {
 		if(choices.isEmpty()) {
 			generalInfoMessage("Choices of Hotels","Hotels","You don't have enough money or not for sale");
@@ -214,6 +218,7 @@ public class HotelMessenger {
 		else {
 			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
 			dialog.setGraphic(null);
+			dialog.setResizable(true);
 			dialog.setTitle("Choices of Hotels");
 			dialog.setHeaderText("Hotels");
 			dialog.setContentText("Choose a Hotel:");
@@ -232,6 +237,7 @@ public class HotelMessenger {
 	
 	public static void confirmBuyHotel(HotelCard h) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setResizable(true);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText("Buy " + h.getName());
 		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost()) + " MLS.");
@@ -240,17 +246,24 @@ public class HotelMessenger {
 		if (result.get() == ButtonType.OK){
 			System.out.println("HotelToolBox.java: Agora tou " + h.getName());
 			
-			// an to exei hdh kapoios to hotel kanw remove to hotel apo tin lista tou
-			if(h.getOwner()!=null) h.getOwner().removeHotel(h);
+			// an to exei hdh kapoios to hotel kanw remove to hotel apo tin lista tou kai ton plirwnw
+			if(h.getOwner()!=null) {
+				// plirwnw thn upoxrewtiki aksia oikopedou ston palio idioktiki
+				generalInfoMessage("Buy " + h.getName(), "Buy from " + h.getOwner(), "You will buy " + h.getName() + " from " + h.getOwner());
+				h.getOwner().setMLS(h.getOwner().getMLS()+h.getMandatoryPurchaseCost());
+				h.getOwner().removeHotel(h);
+			}
 			
 			h.setOwner(HotelGame.getCurrentPlayer());
 			HotelGame.getCurrentPlayer().addHotel(h);
+			// afairw ta mls pou plirwsa
 			HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost());
 			HotelToolBox.disableButton(3, true);	//disable buy hotel button
 			
 		} 
 	}
 	
+	// an patihei to buy entrance
 	public static void showPossibleEntrances(List<String> choices) {
 		if(choices.isEmpty()) {
 			generalInfoMessage("Choices of Hotels", "Error", "You need more money \n or you need to build main building first");
@@ -258,6 +271,7 @@ public class HotelMessenger {
 		else {
 			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
 			dialog.setGraphic(null);
+			dialog.setResizable(true);
 			dialog.setTitle("Choices of Hotels");
 			dialog.setHeaderText("Hotels");
 			dialog.setContentText("Choose a Hotel for entrance:");
@@ -265,7 +279,7 @@ public class HotelMessenger {
 			result.ifPresent(option -> {
 				for (HotelCard h : HotelFileReader.getHotelsCards()) {
 					if (h.getName().equals(option)) {
-						System.out.println("HotelToolBox.java: Dialekses na valeis eisodo gia to " + option);
+						System.out.println("HotelMessenger.java: Dialekses na valeis eisodo gia to " + option);
 						confirmBuyEntrance(h);
 					}
 				}
@@ -277,13 +291,14 @@ public class HotelMessenger {
 	
 	public static void confirmBuyEntrance(HotelCard h) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setResizable(true);
 		alert.setTitle("Confirmation Dialog");
 		alert.setHeaderText("Buy Entrance for " + h.getName());
 		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost()) + " MLS.");
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-			System.out.println("HotelToolBox.java: Agora eisodo gia to " + h.getName());
+			System.out.println("HotelMessenger.java: Agora eisodo gia to " + h.getName());
 			
 			
 			
@@ -294,16 +309,93 @@ public class HotelMessenger {
 			tmp.setHotelEntrance(h);
 			
 			generalInfoMessage("Entrance Info", "New Entrance", "New Entrance at x = " +tmp._getX() + " y = " +tmp._getY());
-			/*
-			HotelBoardBox currBox = HotelGame.getCurrentBoardBox();
-			//add entrance to hotel card
-			h.addEntrance(currBox);
-			
-			//add hotel card entrance to board box
-			currBox.setHotelEntrance(h);
-			 */
+
 			HotelToolBox.disableButton(4, true);	//disable buy entrance button
 			
 		} 
 	}
+	
+	
+	// an patithei to req building
+	public static void showHotelsForBuilding(List<String> choices) {
+		if(choices.isEmpty()) {
+			generalInfoMessage("Choices of Hotels", "Error", "No hotels");
+		}
+		else {
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+			dialog.setGraphic(null);
+			dialog.setResizable(true);
+			dialog.setTitle("Choices of Hotels");
+			dialog.setHeaderText("Hotels");
+			dialog.setContentText("Choose a Hotel for building:");
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(option -> {
+				for (HotelCard h : HotelFileReader.getHotelsCards()) {
+					if (h.getName().equals(option)) {
+						System.out.println("HotelMessenger.java: Dialekses na xtiseis gia to " + option);
+						showBuildingsForHotel(h);
+					}
+				}
+
+			});
+		}
+	}
+	
+	public static void showBuildingsForHotel(HotelCard h) {
+		
+		// prepei prwta na doume an h aitisi egrkinetai
+		Random rand = new Random();
+
+		// Obtain a number between [0 - 99].
+		int res = rand.nextInt(100);
+		String msg;
+		if(res<=49) msg = "Accept";
+		else if (res<=69) msg = "Decline";
+		else if (res<=84) msg = "Free";
+		else msg = "Double Fee";
+		
+		generalInfoMessage("Request Building", "Request result", msg);
+		
+		// Decline
+		if(res>=50 && res<=69) {
+			System.out.println("HotelMessenger.java Request Decline");
+			HotelToolBox.disableButton(2, true);	//disable req building button and return
+			return ;
+		}
+		
+		int mul = 1;
+		if (res>=70 && res<=84) mul = 0;
+		else if (res>=85 && res<=99) mul = 2;
+		
+		
+		List<String> choices = new ArrayList<String>();
+		
+		// an den exei xtistei akomi to main tote mono auto mporeis na xtiseis
+		if (h.getBuildStatus()==0) {
+			
+			int afterBuildMLS = HotelGame.getCurrentPlayer().getMLS() -h.getMainBuildingCost()*mul;
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setResizable(true);
+			alert.setTitle("Confirmation Dialog");
+			alert.setHeaderText("Buy Building for " + h.getName());
+			alert.setContentText("This is first building so your only choice is main building.\nAfter buy you will have " + afterBuildMLS);
+			
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK){
+				// buy
+				System.out.println("HotelMessenger.java: You buy main building ");
+				h.setBuildStatus(1);	// xtistike to main building change status
+				HotelGame.getCurrentPlayer().setMLS(afterBuildMLS); // plirwse thn trapeza
+				// update available hotels. afairese auto to hotel
+				HotelGame.addToBuildedHotels(h); // to vazw sto builded kai kanei update to info bar
+				
+				HotelToolBox.disableButton(2, true);
+			} 
+		}
+		else {
+			// epilogi gia alla ktiria upgrades klp
+		}
+	}
+	
 }

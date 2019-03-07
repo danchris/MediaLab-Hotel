@@ -37,6 +37,7 @@ public class HotelToolBox extends Pane {
 	private int diceNumber;
 	private Text diceRes;
 	private Text reqBuildingRes;
+	private ArrayList<HotelCard> currHotels;
 
 	public HotelToolBox() {
 		setPrefWidth(200);
@@ -70,12 +71,13 @@ public class HotelToolBox extends Pane {
 			Pair<HotelCard, HotelCard> neighbors = HotelGameBoard.getNeighborHotels(HotelGame.getCurrentBoardBox());
 			List<String> choices = new ArrayList<String>();
 			curr = HotelGame.getCurrentPlayer();
+			ArrayList<HotelCard> currH = curr.getHotels();
 			// check if have enough money for hotels and hotels are still available
 			int tmp = neighbors.getKey().getPlotCost();
-			if (curr.getMLS() >= tmp && neighbors.getKey().getBuildStatus() == 0)
+			if (curr.getMLS() >= tmp && neighbors.getKey().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(tmp)))
 				choices.add(neighbors.getKey().getName());
 			tmp = neighbors.getValue().getPlotCost();
-			if (curr.getMLS() >= tmp && neighbors.getValue().getBuildStatus() == 0)
+			if (curr.getMLS() >= tmp && neighbors.getValue().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(tmp)))
 				choices.add(neighbors.getValue().getName());
 
 			HotelMessenger.showToBuyHotels(choices);
@@ -97,6 +99,7 @@ public class HotelToolBox extends Pane {
 			curr = HotelGame.getCurrentPlayer();
 			System.out.println("HotelToolBox.java: o " + curr.getName() + " tha parei +1000 MLS");
 			curr.setMLS(curr.getMLS() + 1000);
+			HotelMessenger.generalInfoMessage("Bank", "You request 1000 MLS", "Now you have "+curr.getMLS()+ " MLS");
 			bank.setDisable(true);
 		});
 
@@ -124,13 +127,13 @@ public class HotelToolBox extends Pane {
 				
 				return ;
 			} else {
-				ArrayList<HotelCard> currHotels = curr.getHotels();
+				currHotels = curr.getHotels();
 				//ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
 
 				List<String> choices = new ArrayList<String>();
 				for (HotelCard h : currHotels) {
 					// an exeis ta lefta tote valto sto choices kai exei to hotel to main building
-					if ((curr.getMLS()-h.getEntranceCost()) >=0 && h.getBuildStatus()==0) {
+					if ((curr.getMLS()-h.getEntranceCost()) >=0 && h.getBuildStatus()==1) {
 						choices.add(h.getName());
 					}
 				}
@@ -141,7 +144,21 @@ public class HotelToolBox extends Pane {
 		
 		reqBuilding.setOnAction(actionEvent -> {
 			System.out.println("HotelToolBox.java: Request Building Action");
-
+			HotelGame.setStopFlag(1);
+			
+			curr = HotelGame.getCurrentPlayer();
+			currHotels = curr.getHotels();
+			if(currHotels == null || currHotels.isEmpty()) {
+				System.out.println("HotelToolBox.java: Den exeis kanena hotel");
+				HotelMessenger.generalInfoMessage("Buy Entrance", "Error", "You don't own any hotel");
+			}
+			else {
+				List<String> choices = new ArrayList<String>();
+				for (HotelCard h : currHotels) {
+						choices.add(h.getName());
+				}
+				HotelMessenger.showHotelsForBuilding(choices);
+			}
 		});
 
 		grid.add(dice, 0, 0);

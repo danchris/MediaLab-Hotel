@@ -19,12 +19,14 @@
 [*] prepei na shmeiwsw ta koutia agoras me ena shma, as poume $ kai ta
 oikodomiis me ena allo sima as poume sfuri/askina
 
-[ ] na diavasw pali ta rules
+[*] na diavasw pali ta rules
 
-[ ] na olokliroso to menu, na einai etoimo
+[ ] na olokliroso to menu, na einai etoimo statistics, entrances klp
 
 [ ] na valw na dialegei poia pista thelei
 
 [ ] na kanw disable ta buttons pou dn prepei na pataei otan kapoios paizei
 
 [ ] global var an perase apo to hall tote energopoiw koumpi gia buy entrance free kai meta sunartisi na psanxw sto path elefthero kouti gia entrance
+
+[ ] exw valei na agorazei mono main building prepei nna ananewwnw lista me ti exei xtisei gia na tou dinw tis katalliles epiloges
