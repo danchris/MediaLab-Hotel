@@ -90,7 +90,7 @@ public class HotelMenuBar extends MenuBar {
 		Profits.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				if (HotelGame.getStopFlag() == 0) {
+			//	if (HotelGame.getStopFlag() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setGraphic(null);
 					alert.setTitle("Profits");
@@ -99,12 +99,12 @@ public class HotelMenuBar extends MenuBar {
 					info.setHgap(10); //horizontal gap in pixels => that's what you are asking for
 					info.setVgap(10); //vertical gap in pixels
 					info.setPadding(new Insets(10, 10, 10, 10));
-					info.add(new Text("Player 1: "+HotelGame.getPlayerList().get(0).getMaxMLS() + " mls"),0,0);
-					info.add(new Text("Player 2: "+HotelGame.getPlayerList().get(0).getMaxMLS()+ " mls"),0,1);
-					info.add(new Text("Player 3: "+HotelGame.getPlayerList().get(0).getMaxMLS()+ " mls"),0,2);
+					info.add(new Text("Player 1: "+HotelGame.getById(1).getMaxMLS() + " mls"),0,0);
+					info.add(new Text("Player 2: "+HotelGame.getById(2).getMaxMLS()+ " mls"),0,1);
+					info.add(new Text("Player 3: "+HotelGame.getById(3).getMaxMLS()+ " mls"),0,2);
 					alert.getDialogPane().setContent(info);
 					alert.showAndWait();
-				}
+				//}
 			}
 		});
 

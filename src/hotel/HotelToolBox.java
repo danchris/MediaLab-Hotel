@@ -36,7 +36,9 @@ public class HotelToolBox extends Pane {
 	private GridPane grid;
 	private int diceNumber;
 	private Text diceRes;
-	private Text reqBuildingRes;
+	private static Text reqBuildingRes;
+	private static int reqDone = 0;
+	private static int buildMul = -1;
 	private ArrayList<HotelCard> currHotels;
 
 	public HotelToolBox() {
@@ -146,6 +148,7 @@ public class HotelToolBox extends Pane {
 			System.out.println("HotelToolBox.java: Request Building Action");
 			HotelGame.setStopFlag(1);
 			
+			
 			curr = HotelGame.getCurrentPlayer();
 			currHotels = curr.getHotels();
 			if(currHotels == null || currHotels.isEmpty()) {
@@ -200,5 +203,24 @@ public class HotelToolBox extends Pane {
 			System.out.println("HotelToolBox.java: disableButton wrong input");
 		}
 	}
+	
+	public static void setRequsetBuildingResult(String res) {
+		reqBuildingRes.setText("Request Result: "+res);
+	}
 
+	public static void setReqDone(int d) {
+		reqDone = d;
+	}
+	
+	public static int getReqDone() {
+		return reqDone;
+	}
+	
+	public static void setBuildMul(int m) {
+		buildMul = m;
+	}
+	
+	public static int getBuildMul() {
+		return buildMul;
+	}
 }

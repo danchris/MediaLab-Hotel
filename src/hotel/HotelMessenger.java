@@ -25,6 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -260,6 +261,8 @@ public class HotelMessenger {
 			HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getPlotCost());
 			HotelToolBox.disableButton(3, true);	//disable buy hotel button
 			
+			generalInfoMessage("Success Buy Hotel", "Success Purchase", "You are the owner of "+h.getName());
+			
 		} 
 	}
 	
@@ -281,6 +284,7 @@ public class HotelMessenger {
 					if (h.getName().equals(option)) {
 						System.out.println("HotelMessenger.java: Dialekses na valeis eisodo gia to " + option);
 						confirmBuyEntrance(h);
+						return ;
 					}
 				}
 
@@ -343,42 +347,55 @@ public class HotelMessenger {
 	
 	public static void showBuildingsForHotel(HotelCard h) {
 		
-		// prepei prwta na doume an h aitisi egrkinetai
-		Random rand = new Random();
+		
+		// an den exei aitithei akomi 
+		if(HotelToolBox.getReqDone()==0) {
+			System.out.println("HotelMessenger.java: Den exei ginei akomi aitisi");
+			// prepei prwta na doume an h aitisi egrkinetai
+			Random rand = new Random();
+	
+			// Obtain a number between [0 - 99].
+			int res = rand.nextInt(100);
+			String msg;
+			if(res<=49) msg = "Accept";
+			else if (res<=69) msg = "Decline";
+			else if (res<=84) msg = "Free";
+			else msg = "Double Fee";
+			
+			generalInfoMessage("Request Building", "Request result", msg);
+			HotelToolBox.setRequsetBuildingResult(msg);
+			HotelToolBox.setReqDone(1); // egine to req
+			
+			// Decline
+			if(res>=50 && res<=69) {
+				System.out.println("HotelMessenger.java Request Decline");
+				HotelToolBox.disableButton(2, true);	//disable req building button and return
+				// kanw restore tis default times afou egine decline
+				HotelToolBox.setReqDone(0);
+				HotelToolBox.setBuildMul(-1);
+				return ;
+			}
+			int mul = 1;
+			if (res>=70 && res<=84) mul = 0;
+			else if (res>=85 && res<=99) mul = 2;
+			HotelToolBox.setBuildMul(mul);
 
-		// Obtain a number between [0 - 99].
-		int res = rand.nextInt(100);
-		String msg;
-		if(res<=49) msg = "Accept";
-		else if (res<=69) msg = "Decline";
-		else if (res<=84) msg = "Free";
-		else msg = "Double Fee";
-		
-		generalInfoMessage("Request Building", "Request result", msg);
-		
-		// Decline
-		if(res>=50 && res<=69) {
-			System.out.println("HotelMessenger.java Request Decline");
-			HotelToolBox.disableButton(2, true);	//disable req building button and return
-			return ;
 		}
 		
-		int mul = 1;
-		if (res>=70 && res<=84) mul = 0;
-		else if (res>=85 && res<=99) mul = 2;
-		
-		
-		List<String> choices = new ArrayList<String>();
+		System.out.println("HotelMessenger.java: Exei ginei i aitisi proxwrame");
+			// an exw hdh parei aitisi alla prin ekana cancel
 		
 		// an den exei xtistei akomi to main tote mono auto mporeis na xtiseis
 		if (h.getBuildStatus()==0) {
+			System.out.println("HotelMessenger.java: Den exei xtistei akomi to main ara pame gia main");
+
 			
-			int afterBuildMLS = HotelGame.getCurrentPlayer().getMLS() -h.getMainBuildingCost()*mul;
+			int afterBuildMLS = HotelGame.getCurrentPlayer().getMLS() -h.getMainBuildingCost()*HotelToolBox.getBuildMul();
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setResizable(true);
 			alert.setTitle("Confirmation Dialog");
 			alert.setHeaderText("Buy Building for " + h.getName());
-			alert.setContentText("This is first building so your only choice is main building.\nAfter buy you will have " + afterBuildMLS);
+			alert.setContentText("This is first building so your only choice is main building.\nAfter buy you will have " + afterBuildMLS+" MLS");
 			
 
 			Optional<ButtonType> result = alert.showAndWait();
@@ -391,11 +408,120 @@ public class HotelMessenger {
 				HotelGame.addToBuildedHotels(h); // to vazw sto builded kai kanei update to info bar
 				
 				HotelToolBox.disableButton(2, true);
+				generalInfoMessage("Success Buy Building", "Success Purchase", "Build Main Building for "+h.getName());
+				
+				// kanw restore tis default times afou egine h agora
+				HotelToolBox.setBuildMul(-1);
+				HotelToolBox.setReqDone(0);
 			} 
 		}
 		else {
 			// epilogi gia alla ktiria upgrades klp
+			ArrayList<Upgrade> hotelUpgrades = h.getUpgrades();
+
+			List<String> choices = new ArrayList<String>();
+			for(Upgrade tmp : hotelUpgrades) {
+				if(tmp.getBuildStatus()==0)
+					choices.add(tmp.getID()+". "+tmp.getPurchase()+" MLS");
+			}
+			
+			// an ektos apo ta upgrades exeis kai exterior
+			if(h.getExteriorBuildCost()!=-1) {
+				choices.add("Exterior: "+h.getExteriorBuildCost()+" MLS");
+			}
+			
+			
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0),choices);
+			dialog.setResizable(true);
+			dialog.setTitle("Choose Building");
+			dialog.setHeaderText("Buy Upgrade for "+h.getName());
+			dialog.setContentText("Choose upgrade: ");
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(selected -> {System.out.println("HotelMessenger.java: Your choice: " + selected);
+			Upgrade sel;
+			
+			for(Upgrade tmp : hotelUpgrades) {
+				if(selected.equals(tmp.getID()+". "+tmp.getPurchase()+" MLS")) {
+					// an dialekses kati apo ta upgraades
+					confirmBuyUpgradeFor(tmp,h);
+					return ;
+				}
+			}
+			
+			// an den dialekses apo ta upgrades alla mporei na dialekses exterior
+			if(selected.equals("Exterior: "+h.getExteriorBuildCost()+" MLS")) {
+				System.out.println("HotelMessenger.java: Exterior build");
+				confirmExteriorFor(h);
+				return ;
+			}
+			
+				});
+				
+		
 		}
+	}
+	
+	// confirm buy upgrade
+	public static void confirmBuyUpgradeFor(Upgrade up, HotelCard h) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setResizable(true);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Buy Upgrade for " + h.getName());
+		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-up.getPurchase()*HotelToolBox.getBuildMul()) + " MLS.");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("HotelMessenger.java: Agora upgrade " + up.getID()+" gia to " + h.getName());
+			
+			// twra prepei na plirwsw to analogo
+			HotelPlayer curr = HotelGame.getCurrentPlayer();
+			
+			// afairw ta xrimata apo ton player
+			curr.setMLS(curr.getMLS()-up.getPurchase()*HotelToolBox.getBuildMul());
+			h.addUpgrade(up);	// prosthetw sto ksenodoxeio to upgrade
+			up.setBuildStatus(1); // enimerwnw to build status tou upgrade se 1 
+			
+			HotelToolBox.disableButton(2, true);	//disable reqBuild entrance button
+			
+			// kanw restore tis default times afou egine h agora
+			HotelToolBox.setBuildMul(-1);
+			HotelToolBox.setReqDone(0);
+			generalInfoMessage("Success Buy Upgrade", "Success Purchase", "Upgrade "+up.getID()+" ready for "+h.getName());
+			
+		} 
+	}
+	
+	
+	//confirm buy exterior
+	public static void confirmExteriorFor(HotelCard h) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setResizable(true);
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("Buy Exterior for " + h.getName());
+		alert.setContentText("After this purchase you will have " + (HotelGame.getCurrentPlayer().getMLS()-h.getExteriorBuildCost()*HotelToolBox.getBuildMul()) + " MLS.");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("HotelMessenger.java: Agora exterior gia to " + h.getName());
+			
+			// twra prepei na plirwsw to analogo
+			HotelPlayer curr = HotelGame.getCurrentPlayer();
+			
+			// afairw ta xrimata apo ton player
+			curr.setMLS(curr.getMLS()-h.getExteriorBuildCost()*HotelToolBox.getBuildMul());
+			
+			// enimerono tis times gia to exterior
+			h.setExteriorStatus(1);
+			
+			HotelToolBox.disableButton(2, true);	//disable reqBuild entrance button
+			
+			// kanw restore tis default times afou egine h agora
+			HotelToolBox.setBuildMul(-1);
+			HotelToolBox.setReqDone(0);
+			
+			generalInfoMessage("Success Buy Exterior", "Success Purchase", "Exterior ready for "+h.getName());
+			
+		} 
 	}
 	
 }

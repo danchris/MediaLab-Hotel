@@ -225,7 +225,14 @@ public class HotelBoardBox extends StackPane {
 		//prostiki sximatos
 		Circle cir = new Circle(0,0,16);
 		cir.setFill(Color.TRANSPARENT);
-		cir.setStroke(Color.BLACK);
+		
+		if(HotelGame.getCurrentPlayer().getName().equals("Player 1"))
+			cir.setStroke(Color.BLUE);
+		else if(HotelGame.getCurrentPlayer().getName().equals("Player 2"))
+			cir.setStroke(Color.RED);
+		else 
+			cir.setStroke(Color.GREEN);
+		
 		getChildren().add(cir);
 	}
 	

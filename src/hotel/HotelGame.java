@@ -236,7 +236,7 @@ public class HotelGame extends Application {
 		gui.getInfoBar().setAvailableHotels(gui.getInfoBar().getAvailableHotels()-1);
 	}
 
-	public static void completeATurn(int id) {
+	public static void completeATurn(int index) {
 		if(stopFlag==0) {
 			System.out.println("HotelGame.java: completeATurn arxh kanw disable ta buttons ReqBuild,BuyHotel,BuyEntrance kai Bank kai enable to dice");
 			
@@ -247,19 +247,19 @@ public class HotelGame extends Application {
 			HotelToolBox.disableButton(5, true);	//disable bank button
 			HotelToolBox.disableButton(6, true);	//disable pass button
 			
-			if(id==3) id = 0;
-			currentPlayer = playerList.get(id);
-			if(playerList.get(id).getIsSet()==0) {
-				System.out.println("HotelGame.java: Den exw paiksei akomi eimai o "+id);
+			if(index==3) index = 0;
+			currentPlayer = playerList.get(index);
+			if(playerList.get(index).getIsSet()==0) {
+				System.out.println("HotelGame.java: Den exw paiksei akomi eimai o "+index);
 				// vazw sto gui to pioni 
-				gui.getStartBox().setPawn(playerList.get(id).getImg());
+				gui.getStartBox().setPawn(playerList.get(index).getImg());
 				currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
 				currentPlayer.setBox(currentBox);
 			//	nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
-				playerList.get(id).setIsSet(1);
+				playerList.get(index).setIsSet(1);
 			}
-			playerActive = id;
-			hotelMessenger.playerTurn(playerList.get(id).getName());
+			playerActive = index;
+			hotelMessenger.playerTurn(playerList.get(index).getName());
 		}
 		else {
 			System.out.println("HotelGame.java: completeATurn flag==1 paused");
@@ -318,5 +318,13 @@ public class HotelGame extends Application {
 		// uncomment line to play all players
 		//completeATurn(playerActive+1);
 		//completeATurn(playerActive); //only first player plays
+	}
+	
+	public static HotelPlayer getById(int id) {
+		for (HotelPlayer p : playerList) {
+			if(p.getID()==id) return p;
+		}
+		
+		return null;
 	}
 }
