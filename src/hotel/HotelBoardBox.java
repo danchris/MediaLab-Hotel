@@ -39,6 +39,11 @@ public class HotelBoardBox extends StackPane {
 	EventHandler<MouseEvent> clickBoxHandler;
 	private Circle cirEntrance = null;
 
+	/*
+	 * @param input String from file reader to identify the box
+	 * @param x integer for x coor
+	 * @param y integer for y corr
+	 */
 	public HotelBoardBox(String input, int x, int y) throws IOException {
 		System.out.println("HotelBoardBox.java: Constructor");
 		this.x = x;
@@ -94,31 +99,56 @@ public class HotelBoardBox extends StackPane {
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
 
 	}
+	
+	/*
+	 * @return x coordinate
+	 */
 
 	public int _getX() {
 		return x;
 	}
 
+	/*
+	 * @return y coordinate
+	 */
+
 	public int _getY() {
 		return y;
 	}
+
+	/*
+	 * @return id of box
+	 */
 
 	public String getID() {
 		return id;
 	}
 
+	/*
+	 * @return next box 
+	 */
+
 	public HotelBoardBox getNext() {
 		return next;
 	}
 
+	/*
+	 * @param next box
+	 */
 	public void setNext(HotelBoardBox next) {
 		this.next = next;
 	}
 
+	/*
+	 * @return 
+	 */
 	public void printHotelBoardBox() {
 		System.out.print(this.id + " ");
 	}
 
+	/*
+	 * @param Image of pawn/car
+	 */
 	public void setPawn(Image i) {
 		pawn = i;
 		pawnView.setImage(pawn);
@@ -145,6 +175,9 @@ public class HotelBoardBox extends StackPane {
 		getChildren().add(pawnView);
 	}
 
+	/*
+	 * @return
+	 */
 	public void setArrow() {
 		img = HotelFileReader.getArrow();
 		imgView.setImage(img);
@@ -154,6 +187,10 @@ public class HotelBoardBox extends StackPane {
 		System.out.println("HotelBoardBox.java: Finish set arrow");
 	}
 
+	/*
+	 * @param Image View
+	 * @param times of rotate
+	 */
 	public void rotateImageView(ImageView view, int times) {
 		System.out.println("HotelBoardBox.java : Kanw rotate " + times +" fores kai view rotate " + view.getRotate());
 		if(view.getRotate()!=0.0) return;
@@ -162,6 +199,10 @@ public class HotelBoardBox extends StackPane {
 
 	}
 	
+	/*
+	 * @return
+	 */
+	
 	public void setHammer() {
 		hammer = HotelFileReader.getHammer();
 		hammerView.setImage(hammer);
@@ -169,6 +210,10 @@ public class HotelBoardBox extends StackPane {
 		hammerView.setFitWidth(20);
 		getChildren().add(hammerView);
 	}
+	
+	/*
+	 * @return true if box is available else false
+	 */
 	// returns true if box is available else false;
 	public boolean canGo() {
 		if (Character.isLetter(id.charAt(0)) && !id.equals("F"))
@@ -176,50 +221,88 @@ public class HotelBoardBox extends StackPane {
 		return false;
 	}
 
+	/*
+	 * @param String Label
+	 */
 	public void setLabel(String i) {
 		getChildren().add(new Label(i));
 	}
 
+	/*
+	 * @param HotelCard hotel
+	 */
 	public void setHotelCard(HotelCard h) {
 		this.hotelCard = h;
 	}
 
+	/*
+	 * @return HotelCard hotel
+	 */
+	
 	public HotelCard getHotelCard() {
 		return hotelCard;
 	}
 	
+	/*
+	 * @return imageview
+	 */
 	public ImageView getImageView() {
 		return imgView;
 	}
 	
+	/*
+	 * @return Pawn ImageView
+	 */
 	public ImageView getPawnView() {
 		return pawnView;
 	}
 	
+	/*
+	 * @param ImageView of Pawn
+	 */
 	public void setPawnview(ImageView v) {
 		this.pawnView = v;
 	}
+	
+	/*
+	 * @return
+	 */
 	public void removePawn() {
 		getChildren().remove(pawnView);	
 	}
 	
+	/*
+	 * @return true if has player else false
+	 */
 	public boolean hasPlayer() {
 		if(player == null ) return false;
 		return true;
 	}
 	
+	/*
+	 * @param HotelPlayer Player
+	 */
 	public void setPlayer(HotelPlayer p) {
 		player = p;
 	}
 	
+	/*
+	 * @return HotelPlayer Player
+	 */
 	public HotelPlayer getPlayer() {
 		return player;
 	}
 	
+	/*
+	 * @return HotelCard Entrance
+	 */
 	public HotelCard getHotelEntrance() {
 		return entrance;
 	}
 	
+	/*
+	 * @param HotelCard Entrance
+	 */
 	public void setHotelEntrance(HotelCard h) {
 		this.entrance = h;
 		//prostiki sximatos
@@ -236,18 +319,36 @@ public class HotelBoardBox extends StackPane {
 		getChildren().add(this.cirEntrance);
 	}
 	
+	public void deleteEntrance() {
+		System.out.println("HotelBoardBox.java: Delete entrance");
+		this.entranceOwner = null;
+		this.entrance = null;
+		getChildren().remove(this.cirEntrance);
+	}
+	/*
+	 * @return circle image entrance
+	 */
 	public Circle getCirEntrance() {
 		return cirEntrance;
 	}
 	
+	/*
+	 * @return Owner of Entrance
+	 */
 	public HotelPlayer getEntranceOwner() {
 		return entranceOwner;
 	}
 	
+	/*
+	 * @param player, set owner of entrance
+	 */
 	public void setEntranceOwner(HotelPlayer p) {
 		this.entranceOwner = p;
 	}
 	
+	/*
+	 * @return true if equal else false
+	 */
 	public boolean isThis(HotelCard h) {
 		System.out.println("HotelBoardBox.java: isThis");
 		if(this.hotelCard == null) return false;
@@ -256,6 +357,9 @@ public class HotelBoardBox extends StackPane {
 		return false;
 	}
 	
+	/*
+	 * @return 
+	 */
 	public void updateEntranceColor(){
 		if(HotelGame.getCurrentPlayer().getName().equals("Player 1"))
 			this.cirEntrance.setStroke(Color.BLUE);

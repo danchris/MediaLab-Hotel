@@ -20,32 +20,53 @@ class Upgrade{
 	private int daily;
 	private int buildStatus = 0;
 	
+	/*
+	 * @param id of upgrade
+	 * @param cost of purchase
+	 * @param daily cost of upgrade
+	 */
 	public Upgrade(int id, int purchase, int daily) {
 		this.id = id;
 		this.purchase = purchase;
 		this.daily = daily;
 	}
 	
+	/*
+	 * @return id of upgrade
+	 */
 	public int getID() {
 		return id;
 	}
 	
+	/*
+	 * @param build status of upgrade
+	 */
 	public void setBuildStatus(int i) {
 		this.buildStatus = i;
 	}
 	
+	/*
+	 * @return build status of upgrade
+	 */
 	public int getBuildStatus() {
 		return buildStatus;
 	}
 	
+	/*
+	 * @return purchase cost of upgrade
+	 */
 	public int getPurchase() {
 		return purchase;
 	}
 	
+	/*
+	 * @return daily cost of upgrade
+	 */
 	public int getDaily() {
 		return daily;
 	}
 }
+
 public class HotelCard {
 
 	private int id;
@@ -65,6 +86,11 @@ public class HotelCard {
 	private static int maxUpgrade = -1;
 	private static int maxUpgradeDailyCost = -1;
 
+	/*
+	 * @param lines of file
+	 * @param id of card
+	 */
+	
 	public HotelCard(ArrayList<String> lines, int id) {
 
 		this.id = id;
@@ -106,38 +132,65 @@ public class HotelCard {
 		}
 	}
 
+	/*
+	 * @return name of hotel
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/*
+	 * @return id of hotel
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/*
+	 * @return land/plot cost
+	 */
 	public int getPlotCost() {
 		return plotCost;
 	}
 
+	/*
+	 * @return mandatoryPurchaseCost
+	 */
 	public int getMandatoryPurchaseCost() {
 		return mandatoryPurchaseCost;
 	}
 
+	/*
+	 * @return entrance cost
+	 */
 	public int getEntranceCost() {
 		return entranceCost;
 	}
 
+	/*
+	 * @return main building cost
+	 */
 	public int getMainBuildingCost() {
 		return mainBuildingCost;
 	}
 
+	/*
+	 * @return main building daily cost
+	 */
 	public int getOnlyMainBuildingDailyCost() {
 		return onlyMainBuildingDailyCost;
 	}
 
+	/*
+	 * @return list of upgrades of hotel
+	 */
 	public ArrayList<Upgrade> getUpgrades() {
 		return upgrades;
 	}
 	
+	/*
+	 * @param new upgrade
+	 */
 	public void addUpgrade(Upgrade up) {
 		if(upgrades == null) {
 			upgrades = new ArrayList<Upgrade>();
@@ -151,18 +204,30 @@ public class HotelCard {
 		upgrades.add(up);
 	}
 
+	/*
+	 * @@return exterior cost
+	 */
 	public int getExteriorBuildCost() {
 		return exteriorBuildCost;
 	}
 
+	/*
+	 * @return exterior daily cost
+	 */
 	public int getExteriorDailyCost() {
 		return exteriorDailyCost;
 	}
 	
+	/*
+	 * @return owner of hotel
+	 */
 	public HotelPlayer getOwner() {
 		return owner;
 	}
 	
+	/*
+	 * @param owner of hotel
+	 */
 	public void setOwner(HotelPlayer p) {
 		this.owner = p;
 		if(entrances!=null) {
@@ -171,6 +236,7 @@ public class HotelCard {
 			}
 		}
 	}
+	
 	
 	int getBuildStatus() {
 		return buildStatus;
@@ -182,16 +248,25 @@ public class HotelCard {
 		if (i==1) maxUpgradeDailyCost = onlyMainBuildingDailyCost;
 	}
 	
+	/*
+	 * @return entrances of hotel
+	 */
 	public ArrayList<HotelBoardBox> getEntrances(){
 		return entrances;
 	}
 	
+	/*
+	 * @param box of new entrance
+	 */
 	public void addEntrance(HotelBoardBox b) {
 		System.out.println("HotelCard.java: Prosthetw stis eisodous mou to kouti x = "+b._getX() + " y = "+b._getY());
 		if(entrances==null) entrances = new ArrayList<HotelBoardBox>();
 		entrances.add(b);
 	}
 	
+	/*
+	 * @param exterior status
+	 */
 	public void setExteriorStatus(int s) {
 		this.exteriorStatus = s;
 		if(s==1) {
@@ -200,14 +275,23 @@ public class HotelCard {
 		}
 	}
 	
+	/*
+	 * @return exterior status
+	 */
 	public int getExteriorStatus() {
 		return exteriorStatus;
 	}
 
+	/*
+	 * @return max upgrade
+	 */
 	public int getMaxUpgrade() {
 		return maxUpgrade;
 	}
 
+	/*
+	 * @return max upgrade daily cost
+	 */
 	public int getMaxUpgradeDailyCost() {
 		return maxUpgradeDailyCost;
 	}

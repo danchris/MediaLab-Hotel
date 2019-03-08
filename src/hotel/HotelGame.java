@@ -410,8 +410,17 @@ public class HotelGame extends Application {
 		HotelMessenger.generalInfoMessage("Xreokopia", "Game over for "+currentPlayer.getName(), "Xreokopises "+currentPlayer.getName());
 		playerList.remove(currentPlayer);		// afairesi apo tin lista
 		currentBox.removePawn(); // afairw apo to map
-		
-		if(playerList.size()==1) winner(); 
+		for(HotelBoardBox tmp : gui.getGameBoard().getPath()) {
+			System.out.println("HotelGame.java: Eksetazw to "+tmp.getID());
+			if(tmp.getEntranceOwner()!=null && tmp.getEntranceOwner().getName().equals(currentPlayer.getName())) {
+				tmp.deleteEntrance();
+			}
+		}
+		if(playerList.size()==1) winner();
+		HotelGame.setStopFlag(0);
+		HotelToolBox.setDiceFlag(0);
+		// uncomment for play all players
+		 HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
 	}
 	
 	public static void winner() {

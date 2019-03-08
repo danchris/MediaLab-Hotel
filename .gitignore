@@ -15,5 +15,6 @@ TODO.md
 .classpath
 .project
 
+*.odt
 *.docx
 *.pdf

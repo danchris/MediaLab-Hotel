@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -589,8 +588,7 @@ public class HotelMessenger {
 				e.printStackTrace();
 			}
 		} else {
-		    // ... user chose CANCEL or closed the dialog
-			Platform.exit();
+			HotelGame.killGame();
 		}
 		
 	}
