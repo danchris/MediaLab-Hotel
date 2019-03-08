@@ -8,6 +8,11 @@ import java.util.Random;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+/*
+ * @author Daniel Christodoulopoulos
+ */
+
+
 public class HotelGameBoard extends Pane{
 	
 	private static HotelBoardBox[][] gridBoard = new HotelBoardBox[12][15];

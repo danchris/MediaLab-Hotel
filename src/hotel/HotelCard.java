@@ -8,6 +8,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
+/*
+ * @author Daniel Christodoulopoulos
+ */
+
 
 class Upgrade{
 	
