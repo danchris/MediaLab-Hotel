@@ -17,7 +17,6 @@ import javafx.util.Pair;
 
 public class HotelToolBox extends Pane {
 
-	private static Button click;
 	private static Button dice;
 	private static Button reqBuilding;
 	private static Button buyHotel;
@@ -39,7 +38,6 @@ public class HotelToolBox extends Pane {
 		setPrefWidth(200);
 		grid = new GridPane();
 
-		click = new Button("remove");
 		dice = new Button("Roll Dice");
 		diceRes = new Text("Dice Result: ");
 
@@ -174,10 +172,8 @@ public class HotelToolBox extends Pane {
 		grid.add(bank, 0, 6);
 		grid.add(pass, 0, 7);
 		grid.add(currentP, 0, 8);
-		grid.add(click, 0, 9);
 		grid.setVgap(15);
 
-		click.setOnAction(a->{HotelGame.removePlayerFromGame();});
 		getChildren().add(grid);
 
 	}
