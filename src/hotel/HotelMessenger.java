@@ -1,12 +1,11 @@
 package hotel;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -24,8 +23,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import javafx.util.Pair;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -36,7 +33,6 @@ public class HotelMessenger {
 	private static Stage dialogStage;
 	private static Image img;
 	private static ImageView imgView;
-	private static PauseTransition pause = new PauseTransition(Duration.seconds(10));
 	
 
 	public void showMessagesAndStart(String board) {
@@ -61,6 +57,25 @@ public class HotelMessenger {
 		dialogStage.show();
 	}
 
+	public static String chooseFolderBoard(List<String> choices) {
+		ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+		dialog.setTitle("Choice Board");
+		dialog.setHeaderText("Choose Board");
+		dialog.setContentText("Choose Board:");
+		dialog.setResizable(true);
+
+		Optional<String> result = dialog.showAndWait();
+
+		if (result.isPresent()){
+		    System.out.println("Your choice: " + result.get());
+		   return result.get().toString();
+		}
+		else {
+			HotelGame.killGame();
+		}
+		
+		return null;
+	}
 	public void boardSelectedMessage(String board) {
 		System.out.println("HotelGame.java: boardSelectedMessage");
 		dialogStage = new Stage();
@@ -86,6 +101,7 @@ public class HotelMessenger {
 	}
 
 	public void playerTurn(String name) {
+		HotelToolBox.setCurrentPlayerText(name); 	// update ToolBox current player name
 		System.out.println("HotelMessenger.java: playersOrderingMessage");
 		dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -131,7 +147,7 @@ public class HotelMessenger {
 		dialogStage.show();
 	}
 
-	public static void showDice(int n) {
+	public static void showDice(int n,int flag) {
 		dialogStage = new Stage();
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initStyle(StageStyle.UNDECORATED);
@@ -141,7 +157,20 @@ public class HotelMessenger {
 			public void handle(ActionEvent e) {
 				dialogStage.hide();
 				HotelGame.setStopFlag(0);
-				HotelGame.getCurrentPlayer().transitionMove();
+				//normal dice
+				if(flag==0) {
+					HotelGame.getCurrentPlayer().transitionMove();
+				}
+				//calculate days
+				else {
+					System.out.println("HotelMessenger.java: OI meres einai "+n);
+					HotelToolBox.disableButton(1, true); //disable roll dice again
+					generalInfoMessage(HotelGame.getCurrentHotelEntrance().getName(), "Fee", "You must pay "+HotelGame.getCurrentHotelEntrance().getOwner().getName()+" for " + n+" days so = " + HotelGame.getCurrentHotelEntrance().getMaxUpgradeDailyCost()*n+" MLS.");
+					HotelPlayer owner = HotelGame.getCurrentHotelEntrance().getOwner();
+					HotelPlayer guest = HotelGame.getCurrentPlayer();
+					owner.setMLS(owner.getMLS()+HotelGame.getCurrentHotelEntrance().getMaxUpgradeDailyCost()*n);
+					guest.setMLS(guest.getMLS()-HotelGame.getCurrentHotelEntrance().getMaxUpgradeDailyCost()*n);
+				}
 			}
 		});
 
@@ -250,7 +279,7 @@ public class HotelMessenger {
 			// an to exei hdh kapoios to hotel kanw remove to hotel apo tin lista tou kai ton plirwnw
 			if(h.getOwner()!=null) {
 				// plirwnw thn upoxrewtiki aksia oikopedou ston palio idioktiki
-				generalInfoMessage("Buy " + h.getName(), "Buy from " + h.getOwner(), "You will buy " + h.getName() + " from " + h.getOwner());
+				generalInfoMessage("Buy " + h.getName(), "Buy from " + h.getOwner().getName(), "You will buy " + h.getName() + " from " + h.getOwner().getName());
 				h.getOwner().setMLS(h.getOwner().getMLS()+h.getMandatoryPurchaseCost());
 				h.getOwner().removeHotel(h);
 			}
@@ -313,15 +342,22 @@ public class HotelMessenger {
 			
 			// choose a box to put entrance random
 			HotelBoardBox tmp = HotelGameBoard.getRandomEntranceBox(h);
+			if(tmp==null) {
+				// an dn uparxei xwros
+				generalInfoMessage("Error", "Entrance Error", "You cannot build any entrance");
+				HotelGame.setPassHall(0);  //restore default for city hall
+				return;
+			}
 			//add hotel card entrance to board box
 			System.out.println("HotelMessenger.java: Dialextike gia eisodo to " + tmp._getX() + " y = "+tmp._getY());
 			tmp.setHotelEntrance(h);
-			
+			//add entrance to player class
+			HotelGame.getCurrentPlayer().addEntrance();
 			// plirwse gia to entrance an dn einai free
 			if(HotelGame.getPassHall()==0){
 				HotelGame.getCurrentPlayer().setMLS(HotelGame.getCurrentPlayer().getMLS()-h.getEntranceCost());
 			}
-			
+	
 			generalInfoMessage("Entrance Info", "New Entrance", "New Entrance at x = " +tmp._getX() + " y = " +tmp._getY());
 
 			// restore default times gia hall
@@ -451,7 +487,6 @@ public class HotelMessenger {
 			dialog.setContentText("Choose upgrade: ");
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(selected -> {System.out.println("HotelMessenger.java: Your choice: " + selected);
-			Upgrade sel;
 			
 			for(Upgrade tmp : hotelUpgrades) {
 				if(selected.equals(tmp.getID()+". "+tmp.getPurchase()+" MLS")) {
@@ -536,5 +571,30 @@ public class HotelMessenger {
 			
 		} 
 	}
+	
+	public static void winnerMessage() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Winner");
+		alert.setHeaderText("We have a Winner: " +HotelGame.getPlayerList().get(0).getName());
+		alert.setContentText("Play Again?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			try {
+				System.out.println("HotelMessenger.java: Start new Game");
+				HotelGame.startNewGame();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("HotelMessenger.java: Start Button Pressed Exception");
+				e.printStackTrace();
+			}
+		} else {
+		    // ... user chose CANCEL or closed the dialog
+			Platform.exit();
+		}
+		
+	}
+	
+
 	
 }

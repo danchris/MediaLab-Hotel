@@ -2,24 +2,14 @@ package hotel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
-import sun.security.x509.GeneralNameInterface;
 
 /*
  * @author Daniel Christodoulopoulos
@@ -41,6 +31,8 @@ public class HotelToolBox extends Pane {
 	private static int reqDone = 0;
 	private static int buildMul = -1;
 	private ArrayList<HotelCard> currHotels;
+	private static Text currentP;
+	private static int diceFlag = 0;
 
 	public HotelToolBox() {
 		setPrefWidth(200);
@@ -56,6 +48,7 @@ public class HotelToolBox extends Pane {
 		buyEntrance = new Button("Buy Entrance");
 		bank = new Button("Request 1000 MLS");
 		pass = new Button("Pass");
+		currentP = new Text("Current Player: ");
 
 		dice.setOnAction(actionEvent -> {
 			HotelGame.setStopFlag(1);
@@ -63,7 +56,7 @@ public class HotelToolBox extends Pane {
 			System.out.println("Dice selected is " + diceNumber);
 			curr = HotelGame.getCurrentPlayer();
 			curr.setDice(diceNumber);
-			HotelMessenger.showDice(diceNumber);
+			HotelMessenger.showDice(diceNumber,diceFlag);
 			diceRes.setText("Dice Result: " + Integer.toString(diceNumber));
 		});
 
@@ -74,13 +67,12 @@ public class HotelToolBox extends Pane {
 			Pair<HotelCard, HotelCard> neighbors = HotelGameBoard.getNeighborHotels(HotelGame.getCurrentBoardBox());
 			List<String> choices = new ArrayList<String>();
 			curr = HotelGame.getCurrentPlayer();
-			ArrayList<HotelCard> currH = curr.getHotels();
 			// check if have enough money for hotels and hotels are still available
 			int tmp = neighbors.getKey().getPlotCost();
-			if (curr.getMLS() >= tmp && neighbors.getKey().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(tmp)))
+			if (curr.getMLS() >= tmp && neighbors.getKey().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(neighbors.getKey())))
 				choices.add(neighbors.getKey().getName());
 			tmp = neighbors.getValue().getPlotCost();
-			if (curr.getMLS() >= tmp && neighbors.getValue().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(tmp)))
+			if (curr.getMLS() >= tmp && neighbors.getValue().getBuildStatus() == 0 && (curr.getHotels()==null || !curr.getHotels().contains(neighbors.getValue())))
 				choices.add(neighbors.getValue().getName());
 
 			HotelMessenger.showToBuyHotels(choices);
@@ -90,9 +82,10 @@ public class HotelToolBox extends Pane {
 
 			System.out.println("HotelToolBox.java: Pass Action");
 			HotelGame.setStopFlag(0);
+			diceFlag = 0;
 			// uncomment for play all players
-			// HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
-			HotelGame.completeATurn(HotelGame.getPlayerActive());
+			 HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
+			//HotelGame.completeATurn(HotelGame.getPlayerActive());
 
 		});
 
@@ -178,6 +171,7 @@ public class HotelToolBox extends Pane {
 		grid.add(buyEntrance, 0, 5);
 		grid.add(bank, 0, 6);
 		grid.add(pass, 0, 7);
+		grid.add(currentP, 0, 8);
 		grid.setVgap(15);
 
 		getChildren().add(grid);
@@ -228,5 +222,18 @@ public class HotelToolBox extends Pane {
 	
 	public static int getBuildMul() {
 		return buildMul;
+	}
+	
+	public static void setCurrentPlayerText(String t) {
+		System.out.println("HotelToolBox.java: Thetw kainourio onoma "+t);
+		currentP.setText("Current Player: "+t);
+	}
+	
+	public static void setDiceFlag(int f) {
+		diceFlag = f;
+	}
+	
+	public static int getDiceFlag() {
+		return diceFlag;
 	}
 }

@@ -26,6 +26,7 @@ public class HotelPlayer {
 	private int isSet;
 	private PauseTransition pause;
 	private ArrayList<HotelCard> hotels = null;
+	private int entrancesNumber = 0;
 
 	public HotelPlayer(String name, int id, int x, int y, int mls) throws IOException {
 		this.name = name;
@@ -77,7 +78,7 @@ public class HotelPlayer {
 	}
 	
 	public int getID() {
-		return id;
+		return this.id;
 	}
 
 	public void setMLS(int mls) {
@@ -86,6 +87,9 @@ public class HotelPlayer {
 		HotelInfoBar.setMLS(id,this.mls);
 		if (mls > maxMLS)
 			maxMLS = mls;
+		if(this.mls<0) {
+			HotelGame.removePlayerFromGame();
+		}
 	}
 
 	public int getMLS() {
@@ -146,7 +150,7 @@ public class HotelPlayer {
 	}
 
 	public int getStartYet() {
-		return startYet;
+		return this.startYet;
 	}
 
 	public void setStartYet() {
@@ -234,6 +238,7 @@ public class HotelPlayer {
 		}
 		else {
 			System.out.println("HotelPlayer.java: TransisionMove box " + box.getID());
+		//	pause.stop();
 			HotelGame.finishMove();
 		}
 
@@ -246,7 +251,7 @@ public class HotelPlayer {
 	public ArrayList<HotelCard> getHotels(){
 		System.out.println("HotelPlayer.java: Get Hotels");
 		
-		return hotels;
+		return this.hotels;
 	}
 	
 	public void addHotel(HotelCard h) {
@@ -256,5 +261,14 @@ public class HotelPlayer {
 	
 	public void removeHotel(HotelCard h) {
 		this.hotels.remove(h);
+	}
+	
+	public void addEntrance() {
+		this.entrancesNumber++;
+		System.out.println("HotelGame.java: Eimai o "+name+" kai auksanw ta entrances se "+entrancesNumber);
+	}
+	
+	public int getEntrances() {
+		return this.entrancesNumber;
 	}
 }

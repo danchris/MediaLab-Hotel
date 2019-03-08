@@ -23,11 +23,17 @@ oikodomiis me ena allo sima as poume sfuri/askina
 
 [*] exw valei na agorazei mono main building prepei nna ananewwnw lista me ti exei xtisei gia na tou dinw tis katalliles epiloges
 
+[*] global var an perase apo to hall tote energopoiw koumpi gia buy entrance free kai meta sunartisi na psanxw sto path elefthero kouti gia entrance
+
 [ ] na olokliroso to menu, na einai etoimo statistics, entrances klp
 
 [ ] na valw na dialegei poia pista thelei
 
 [ ] na kanw disable ta buttons pou dn prepei na pataei otan kapoios paizei
 
-[ ] global var an perase apo to hall tote energopoiw koumpi gia buy entrance free kai meta sunartisi na psanxw sto path elefthero kouti gia entrance
+[ ] na valw poios nikaei to game, otan kapoios xanei na ton vgazw apo tin lista na emfanizw kai to katallilo minima
+
+na elegxw an dn to exw eegw to hotel tote mono plirwnw
+
+
 

@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -38,6 +37,7 @@ public class HotelBoardBox extends StackPane {
 	private ImageView pawnView;
 	private ImageView hammerView;
 	EventHandler<MouseEvent> clickBoxHandler;
+	private Circle cirEntrance = null;
 
 	public HotelBoardBox(String input, int x, int y) throws IOException {
 		System.out.println("HotelBoardBox.java: Constructor");
@@ -223,17 +223,21 @@ public class HotelBoardBox extends StackPane {
 	public void setHotelEntrance(HotelCard h) {
 		this.entrance = h;
 		//prostiki sximatos
-		Circle cir = new Circle(0,0,16);
-		cir.setFill(Color.TRANSPARENT);
+		this.cirEntrance = new Circle(0,0,16);
+		this.cirEntrance.setFill(Color.TRANSPARENT);
 		
 		if(HotelGame.getCurrentPlayer().getName().equals("Player 1"))
-			cir.setStroke(Color.BLUE);
+			this.cirEntrance.setStroke(Color.BLUE);
 		else if(HotelGame.getCurrentPlayer().getName().equals("Player 2"))
-			cir.setStroke(Color.RED);
+			this.cirEntrance.setStroke(Color.RED);
 		else 
-			cir.setStroke(Color.GREEN);
-		
-		getChildren().add(cir);
+			this.cirEntrance.setStroke(Color.GREEN);
+		this.entranceOwner = HotelGame.getCurrentPlayer();	//set entranceOwner
+		getChildren().add(this.cirEntrance);
+	}
+	
+	public Circle getCirEntrance() {
+		return cirEntrance;
 	}
 	
 	public HotelPlayer getEntranceOwner() {
@@ -250,5 +254,14 @@ public class HotelBoardBox extends StackPane {
 		if(this.hotelCard.equals(h)) return true;
 		
 		return false;
+	}
+	
+	public void updateEntranceColor(){
+		if(HotelGame.getCurrentPlayer().getName().equals("Player 1"))
+			this.cirEntrance.setStroke(Color.BLUE);
+		else if(HotelGame.getCurrentPlayer().getName().equals("Player 2"))
+			this.cirEntrance.setStroke(Color.RED);
+		else 
+			this.cirEntrance.setStroke(Color.GREEN);
 	}
 }

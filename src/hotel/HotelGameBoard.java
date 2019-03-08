@@ -162,6 +162,7 @@ public class HotelGameBoard extends Pane{
 		
 		for(HotelBoardBox i : path) {
 			System.out.println("HotelGameBoard.java: Testarw to " + i._getX() + " y = " + i._getY());
+			if(i.getHotelEntrance()!=null) continue; // an uparxei hdh eisodos edw
 			// an o panw mou einai to idio hotel pou dialekse o tupas
 			if(checkIfHasHotel(i,hotel)) {
 				random.add(i);
@@ -180,10 +181,10 @@ public class HotelGameBoard extends Pane{
 		int currx = curr._getX();
 		int curry = curr._getY();
 		
-		if(gridBoard[currx-1][curry].isThis(hotel)) return true;
-		if(gridBoard[currx][curry+1].isThis(hotel)) return true;
-		if(gridBoard[currx+1][curry].isThis(hotel)) return true;
-		if(gridBoard[currx][curry-1].isThis(hotel)) return true;
+		if(gridBoard[currx-1][curry].isThis(hotel) && gridBoard[currx-1][curry].getHotelEntrance()==null) return true;
+		if(gridBoard[currx][curry+1].isThis(hotel) && gridBoard[currx][curry+1].getHotelEntrance()==null) return true;
+		if(gridBoard[currx+1][curry].isThis(hotel) && gridBoard[currx+1][curry].getHotelEntrance()==null) return true;
+		if(gridBoard[currx][curry-1].isThis(hotel) && gridBoard[currx][curry-1].getHotelEntrance()==null) return true;
 		/*
 		if(gridBoard[currx-1][curry].getHotelCard().getName().equals(hotel.getName())) return true;
 		if(gridBoard[currx][curry+1].getHotelCard().getName().equals(hotel.getName())) return true;

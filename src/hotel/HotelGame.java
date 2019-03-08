@@ -1,15 +1,14 @@
 package hotel;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
@@ -39,6 +38,7 @@ public class HotelGame extends Application {
 	private static PauseTransition pause1;
 	private static int playerActive;			//id of player if its active or 0 if player turn ends
 	private static int passHall = 0;			// 0 if not pass hall | 1 if pass hall
+	private static HotelCard hotelEntrance = null;
 
 	// private static int popupFlag = 0;
 	// private static PauseTransition delay = new
@@ -58,7 +58,7 @@ public class HotelGame extends Application {
 				}
 			});
 			System.out.println("HotelGame.java: Start Application");
-			this.primaryStage = primaryStage;
+			HotelGame.primaryStage = primaryStage;
 			prepareGame();
 
 		} catch (Exception ex) {
@@ -86,13 +86,13 @@ public class HotelGame extends Application {
 		pause.setOnFinished(event -> {
 			continueToGame();
 		});
-		pause1 = new PauseTransition(Duration.seconds(5));
+		setPause1(new PauseTransition(Duration.seconds(5)));
 		// pause.setOnFinished(event -> {continueToGame();}
 		// );
 		gui = new HotelGUI();
 		gui.fileReaderTurnOn();
 		gui.createMainWindow(primaryStage);
-		hotelsCards = HotelFileReader.getHotelsCards();
+		setHotelsCards(HotelFileReader.getHotelsCards());
 
 		playerList = new ArrayList<HotelPlayer>();
 		for (int i = 1; i <= 3; i++)
@@ -177,6 +177,13 @@ public class HotelGame extends Application {
 		timer.stop();
 		stopFlag = 1;
 	}
+	
+	public static void killGame() {
+		if (timer != null)
+			timer.stop();
+		System.out.println("HotelGame.java: Hotel Application Exiting...");
+		Platform.exit();
+	}
 
 	public static ArrayList<HotelPlayer> getPlayerList() {
 		return playerList;
@@ -214,13 +221,6 @@ public class HotelGame extends Application {
 	public static HotelBoardBox getNextBoardBox() {
 		return nextBox;
 	}
-	private static void pressAnyKeyToContinue() {
-		System.out.println("Press Enter key to continue...");
-		try {
-			System.in.read();
-		} catch (Exception e) {
-		}
-	}
 
 	public static Stage getStage() {
 		return primaryStage;
@@ -236,10 +236,15 @@ public class HotelGame extends Application {
 		// update info bar
 		gui.getInfoBar().setAvailableHotels(gui.getInfoBar().getAvailableHotels()-1);
 	}
+	
+	public static HotelCard getCurrentHotelEntrance() {
+		return hotelEntrance;
+	}
 
-	public static void completeATurn(int index) {
+	static void completeATurn(int index) {
 		if(stopFlag==0) {
 			System.out.println("HotelGame.java: completeATurn arxh kanw disable ta buttons ReqBuild,BuyHotel,BuyEntrance kai Bank kai enable to dice");
+			
 			
 			HotelToolBox.disableButton(1, false);	//enable dice button
 			HotelToolBox.disableButton(2, true);	//disable req build button
@@ -273,9 +278,18 @@ public class HotelGame extends Application {
 		//setStopFlag(1);
 		
 		HotelToolBox.disableButton(1, true); // disable dice button
-		HotelToolBox.disableButton(6, false); // enable pass button
+		
 		
 		currentBox = currentPlayer.getCurrentBox();
+		
+		// edw tha vlepw an uparxei eisodos kai na plirwnei o kathenas ton allon
+
+		checkForEntranceAndPay();
+		
+		
+		HotelToolBox.disableButton(6, false); // enable pass button
+		
+		
 		System.out.println("HotelGame.java: finishMove to currentBox einai id = " + currentBox.getID()+"  x = " + currentBox._getX() + "  y = "+currentBox._getY());
 		
 		// edw agorazeis hotels
@@ -302,6 +316,7 @@ public class HotelGame extends Application {
 		// edw pairneis lefta apo tin trapeza
 		else if (currentBox.getID().equals("B")) {
 			System.out.println("HotelGame.java: finishMove eisai sthn trapeza mporeis na pareis lefta");
+			HotelToolBox.disableButton(5, false);	//enable bank button
 			//setStopFlag(0);
 		}
 		// edw agorazeis tzampa eisodo gia opoio hotel exeis
@@ -321,9 +336,61 @@ public class HotelGame extends Application {
 		//completeATurn(playerActive); //only first player plays
 	}
 	
+	
+	static void checkForEntranceAndPay() {
+		String msg;
+		
+		// an den uparxe eisodos epestrepse dn plirwneis tipota
+		if(currentBox.getHotelEntrance()==null) {
+			System.out.println("HotelGame.java: Den uparxei kamia eisodos sunexeia tou game");
+			return ;
+		}
+		
+		HotelPlayer entranceOwner = currentBox.getEntranceOwner();
+		if(entranceOwner.getID()==currentPlayer.getID()) {
+			System.out.println("HotelGame.java: Esu exeis thn eisodo dn plirwneis");
+			return ;
+		}
+		
+		hotelEntrance = currentBox.getHotelEntrance();
+		int maxUp = hotelEntrance.getMaxUpgrade();
+		int maxDailyCost = hotelEntrance.getMaxUpgradeDailyCost();
+		if(maxUp == -1) {
+			maxDailyCost = hotelEntrance.getOnlyMainBuildingDailyCost();
+			System.out.println("HotelGame.java: Einai xtismeno mono to vasiko ktirio ara plirwneis gia to "+hotelEntrance.getName() + " : " + maxDailyCost+ " MLS");
+			msg = "Prepei na plirwseis ton " +hotelEntrance.getOwner().getName() + " gia to hotel "+ hotelEntrance.getName() + " gia to main building "+maxDailyCost+" MLS/day.";
+		}else {
+			System.out.println("HotelGame.java: Einani xtismeno to " + maxUp + " plirwneis " + maxDailyCost + " MLS");
+			msg = "Prepei na plirwseis ton " +hotelEntrance.getOwner().getName() + " gia to hotel "+ hotelEntrance.getName() + " gia to upgrade " + maxUp +" "+maxDailyCost+" MLS/day.";
+		}
+		
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setResizable(true);
+		alert.setTitle("Fee Message");
+		alert.setHeaderText("Plirwmi gia to " + hotelEntrance.getName());
+		alert.setContentText(msg);
+		    
+		    // rikse zari na doume poses meres tha katseis
+		    alert.setOnHidden(evt -> {
+		    	
+		    	// thetw dice flag se 1 gia na allaksw thn leitourga tou dice
+			    HotelToolBox.setDiceFlag(1);
+			    HotelMessenger.generalInfoMessage("Roll Dice", "Roll Dice", "Roll Dice to calculate days");
+			    HotelToolBox.disableButton(1, false); // enable to roll dice gia ligo
+		    });
+
+		    alert.show(); 
+		//HotelMessenger.generalInfoMessage("Pay for Entrance", "Pay", "Prepei na plirwseis ton " + hotelEntrance.getOwner().getName() + " gia to "+maxUp + " "+maxDailyCost+" MLS");
+	}
+	
 	public static HotelPlayer getById(int id) {
+		System.out.println("HotelGame.java: ID = " + id);
 		for (HotelPlayer p : playerList) {
-			if(p.getID()==id) return p;
+			System.out.println("HotelGame.java: EKsetazo ton " + p.getID());
+			if(p.getID()==id) {
+				System.out.println("HotelGame.java: Epistrefw ton " + p.getID());
+				return p;
+			}
 		}
 		
 		return null;
@@ -335,5 +402,44 @@ public class HotelGame extends Application {
 	
 	public static int getPassHall() {
 		return passHall;
+	}
+	
+	public static void removePlayerFromGame() {
+		
+		System.out.println("HoteGame.java: Xreokopises "+currentPlayer.getName());
+		HotelMessenger.generalInfoMessage("Xreokopia", "Game over for "+currentPlayer.getName(), "Xreokopises "+currentPlayer.getName());
+		playerList.remove(currentPlayer);		// afairesi apo tin lista
+		currentBox.removePawn(); // afairw apo to map
+		
+		if(playerList.size()==1) winner(); 
+	}
+	
+	public static void winner() {
+		System.out.println("HotelGame.java: Exoume winner " + playerList.get(0));
+		HotelMessenger.winnerMessage();
+	}
+
+	public static ArrayList<HotelBoardBox> getPath() {
+		return path;
+	}
+
+	public static void setPath(ArrayList<HotelBoardBox> path) {
+		HotelGame.path = path;
+	}
+
+	public static ArrayList<HotelCard> getHotelsCards() {
+		return hotelsCards;
+	}
+
+	public static void setHotelsCards(ArrayList<HotelCard> hotelsCards) {
+		HotelGame.hotelsCards = hotelsCards;
+	}
+
+	public static PauseTransition getPause1() {
+		return pause1;
+	}
+
+	public static void setPause1(PauseTransition pause1) {
+		HotelGame.pause1 = pause1;
 	}
 }

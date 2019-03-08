@@ -2,11 +2,13 @@ package hotel;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javafx.scene.image.Image;
@@ -40,8 +42,33 @@ public class HotelFileReader {
 			File gameBoardsFolder = new File(gameDir + "/boards");
 			
 			// folder o fakelos pou epilextike tuxaia apo ta pithana boards
+			File[] listOfFolders = gameBoardsFolder.listFiles();
+			FileFilter fileFilter = new FileFilter() {
+				public boolean accept(File file) {
+		        return file.isDirectory();
+		        }
+			};
+			listOfFolders = gameBoardsFolder.listFiles(fileFilter);
+			
+			String ret = "";
+			if(listOfFolders.length == 0) {
+				HotelMessenger.generalInfoMessage("Error", "Error Folders", "Boards Not Found!");
+				HotelGame.stopGame();
+			}
+			else {
+				List<String> choices = new ArrayList<String>();
+				for(int i = 0; i < listOfFolders.length;i++) {
+					File folderName = listOfFolders[i];
+					choices.add(folderName.toString());
+				}
+				ret = HotelMessenger.chooseFolderBoard(choices);
+				System.out.println("HotelFileReader.java: Return folder" + ret);
+			}
 			//File folder = getRandom(listOfFolders);
-			folder = new File(gameBoardsFolder + "/default");
+			//folder = new File(gameBoardsFolder + "/simple");
+			//folder = new File(gameBoardsFolder + ret);
+			if(ret==null || ret.equals("")) HotelGame.killGame();
+			folder = new File(ret);
 			File[] listOfFiles = folder.listFiles();
 			hotelsCount = listOfFiles.length - 1;
 			file = new FileReader(gameBoardsFolder + "/" + folder.getName() + "/board.txt");

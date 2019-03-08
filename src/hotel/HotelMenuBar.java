@@ -107,6 +107,59 @@ public class HotelMenuBar extends MenuBar {
 				//}
 			}
 		});
+		
+		Hotels.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				List<String> choices = new ArrayList<String>();
+				for (HotelCard i : HotelFileReader.getHotelsCards()) {
+					choices.add(i.getName());
+				}
+				ChoiceDialog<String> dialog = new ChoiceDialog<>(choices.get(0), choices);
+				dialog.setResizable(true);
+				dialog.setGraphic(null);
+				dialog.setTitle("Hotel Cards");
+				dialog.setHeaderText("Hotel Cards");
+				dialog.setContentText("Choose a Hotel:");
+				Optional<String> result = dialog.showAndWait();
+				result.ifPresent(option -> {
+					for (HotelCard h : HotelFileReader.getHotelsCards()) {
+						if (h.getName().equals(option)) {
+							h.hotelCardStatistics();
+						}
+					}
+
+				});
+			}
+		});
+		
+		Entrances.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setResizable(true);
+				alert.setGraphic(null);
+				alert.setTitle("Entrances");
+				alert.setHeaderText("Entrances");
+				GridPane info = new GridPane();
+				info.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+				info.setVgap(10); //vertical gap in pixels
+				info.setPadding(new Insets(10, 10, 10, 10));
+				
+				if(HotelGame.getById(1)!=null) {
+						info.add(new Text("Player 1: "+HotelGame.getById(1).getEntrances()),0,0);
+				}
+				if(HotelGame.getById(2)!=null) {
+					info.add(new Text("Player 2: "+HotelGame.getById(2).getEntrances()),0,1);
+				}
+				if(HotelGame.getById(3)!=null) {
+					info.add(new Text("Player 3: "+HotelGame.getById(3).getEntrances()),0,2);
+				}
+
+				alert.getDialogPane().setContent(info);
+				alert.showAndWait();
+			}
+		});
 
 	}
 

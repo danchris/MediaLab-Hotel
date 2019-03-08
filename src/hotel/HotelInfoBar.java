@@ -15,7 +15,7 @@ public class HotelInfoBar extends TilePane{
 	private static Text Player3;
 	private static Text AvailableHotels;
 	private static Text TotalTime;
-	private static int availableH;
+	private int availableH;
 	
 	public HotelInfoBar() {
 		System.out.println("HotelInfoBar.java: Constructor Create Info Bar");

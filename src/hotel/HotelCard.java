@@ -7,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 
 class Upgrade{
@@ -59,6 +58,8 @@ public class HotelCard {
 	private HotelPlayer owner = null;
 	private int buildStatus = 0;		//0 if its not build yet | 1 if its build
 	private ArrayList<HotelBoardBox> entrances = null;
+	private static int maxUpgrade = -1;
+	private static int maxUpgradeDailyCost = -1;
 
 	public HotelCard(ArrayList<String> lines, int id) {
 
@@ -134,7 +135,15 @@ public class HotelCard {
 	}
 	
 	public void addUpgrade(Upgrade up) {
-		if(upgrades == null) upgrades = new ArrayList<Upgrade>();
+		if(upgrades == null) {
+			upgrades = new ArrayList<Upgrade>();
+			maxUpgrade = up.getID();
+			maxUpgradeDailyCost = up.getDaily();
+		}
+			if(up.getDaily() > maxUpgradeDailyCost && maxUpgrade!=0) {
+				maxUpgradeDailyCost = up.getDaily();
+				maxUpgrade = up.getID();
+			}
 		upgrades.add(up);
 	}
 
@@ -152,6 +161,11 @@ public class HotelCard {
 	
 	public void setOwner(HotelPlayer p) {
 		this.owner = p;
+		if(entrances!=null) {
+			for(HotelBoardBox b : entrances) {
+				b.updateEntranceColor();
+			}
+		}
 	}
 	
 	int getBuildStatus() {
@@ -161,8 +175,39 @@ public class HotelCard {
 	void setBuildStatus(int i) {
 		System.out.println("HotelCard.java: Allakse to build status tou " + this.name + " se " + i);
 		this.buildStatus = i;
+		if (i==1) maxUpgradeDailyCost = onlyMainBuildingDailyCost;
+	}
+	
+	public ArrayList<HotelBoardBox> getEntrances(){
+		return entrances;
+	}
+	
+	public void addEntrance(HotelBoardBox b) {
+		System.out.println("HotelCard.java: Prosthetw stis eisodous mou to kouti x = "+b._getX() + " y = "+b._getY());
+		if(entrances==null) entrances = new ArrayList<HotelBoardBox>();
+		entrances.add(b);
+	}
+	
+	public void setExteriorStatus(int s) {
+		this.exteriorStatus = s;
+		if(s==1) {
+			maxUpgrade = 0;		// if maxUpgrade == 0 means that exterior building is the max upgrade
+			maxUpgradeDailyCost = exteriorDailyCost;
+		}
+	}
+	
+	public int getExteriorStatus() {
+		return exteriorStatus;
 	}
 
+	public int getMaxUpgrade() {
+		return maxUpgrade;
+	}
+
+	public int getMaxUpgradeDailyCost() {
+		return maxUpgradeDailyCost;
+	}
+	
 	public void hotelCardDialogBox() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setResizable(true);
@@ -194,21 +239,56 @@ public class HotelCard {
 
 	}
 	
-	public ArrayList<HotelBoardBox> getEntrances(){
-		return entrances;
+	public void hotelCardStatistics() {
+		System.out.println("HotelCard.java: HotelCardStatistics");
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setResizable(true);
+		alert.setTitle("Hotel Card Statistc");
+		alert.setGraphic(null);
+		alert.setHeaderText(name + " Hotel");
+		GridPane info = new GridPane();
+		info.setHgap(10); //horizontal gap in pixels => that's what you are asking for
+		info.setVgap(10); //vertical gap in pixels
+		info.setPadding(new Insets(10, 10, 10, 10));
+		info.add(new Text("Name: " + name), 0, 0);
+		
+		if(owner!=null)
+			info.add(new Text("Owner: " + owner.getName()), 0, 1);
+		else 
+			info.add(new Text("Owner: None"), 0, 1);
+		System.out.println("HotelCard.java: Owner ok");
+		if(exteriorBuildCost!=-1)
+			info.add(new Text("Max : "+exteriorBuildCost+" MLS"), 0, 2);
+		else 
+			info.add(new Text("Max : "+upgrades.get(upgrades.size()-1).getID()), 0, 2);
+		System.out.println("HotelCard.java: upgrade ok");
+		
+		if(buildStatus==0)
+			info.add(new Text("Current : No Building Yet"), 0, 3);
+		else {
+			if(maxUpgrade==-1) {
+				info.add(new Text("Current : Main"), 0, 3);
+			}
+			else {
+				info.add(new Text("Current : " + getUpgradeById(maxUpgrade).getPurchase()), 0, 3);
+			}
+		}
+		System.out.println("HotelCard.java: current ok");
+		
+		
+		alert.getDialogPane().setContent(info);
+		alert.showAndWait();
+
 	}
 	
-	public void addEntrance(HotelBoardBox b) {
-		System.out.println("HotelCard.java: Prosthetw stis eisodous mou to kouti x = "+b._getX() + " y = "+b._getY());
-		if(entrances==null) entrances = new ArrayList<HotelBoardBox>();
-		entrances.add(b);
-	}
-	
-	public void setExteriorStatus(int s) {
-		this.exteriorStatus = s;
-	}
-	
-	public int getExteriorStatus() {
-		return exteriorStatus;
+
+	Upgrade getUpgradeById(int id) {
+		for (Upgrade u:upgrades) {
+			if(u.getID()==id) {
+				return u;
+			}
+		}
+		
+		return null;
 	}
 }
