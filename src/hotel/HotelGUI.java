@@ -75,17 +75,6 @@ public class HotelGUI {
 	}
 
 
-	/*
-	 * h create gui ftiaxnei to gui, orizei titlo, kai kalei tis sunartiseis create
-	 * menuber, create infobar kai create board, episis ksekinaei to scene
-	 */
-	/*
-	public HotelGUI(Stage primaryStage){
-		// TODO Copy gui creation here maybe in init...
-		System.out.println("GUI.java: Create GUI");
-
-	}
-	*/
 
 	public void fileReaderTurnOn() {
 		try {
@@ -103,7 +92,6 @@ public class HotelGUI {
 		topContainer = new VBox();
 		menuBar = new HotelMenuBar();
 		topContainer.getChildren().add(menuBar);
-		//topContainer.getChildren().addAll(menuBar, InfoBar);
 		rootPane.setTop(topContainer);
 		
 		scene = new Scene(rootPane, 800, 600);
@@ -133,7 +121,6 @@ public class HotelGUI {
 	
 	public HotelBoardBox getStartBox() {
 		System.out.println("HotelGUI.java: getStartBox");
-		// System.out.println(startBox._getX());
 		return GameBoard.getStartBox();
 	}
 	

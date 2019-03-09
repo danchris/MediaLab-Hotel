@@ -80,7 +80,6 @@ public class HotelBoardBox extends StackPane {
 		clickBoxHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-			//	if (HotelGame.getStopFlag() == 0) {
 					System.out.println("HotelBoardBox.java: Clicked Box x = " + x + " y = " + y + " ID = " + id);
 
 					if (hotelCard != null) {
@@ -91,9 +90,6 @@ public class HotelBoardBox extends StackPane {
 						alert.setHeaderText(id);
 						alert.showAndWait();
 					}
-				//}
-
-
 			}
 		};
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, clickBoxHandler);
@@ -156,12 +152,10 @@ public class HotelBoardBox extends StackPane {
 		pawnView.setFitWidth(25);
 		
 		if (getNext()._getX() < _getX()) {
-			//pawnView.setScaleY(-1);
 			System.out.println("HotelBoardBox.java: 1o if");
 			rotateImageView(pawnView,3);
 		}
 		if (getNext()._getX() > _getX()) {
-		//	pawnView.setScaleY(-1);
 			System.out.println("HotelBoardBox.java: 2o if");
 			rotateImageView(pawnView,1);
 		}

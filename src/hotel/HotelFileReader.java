@@ -64,9 +64,7 @@ public class HotelFileReader {
 				ret = HotelMessenger.chooseFolderBoard(choices);
 				System.out.println("HotelFileReader.java: Return folder" + ret);
 			}
-			//File folder = getRandom(listOfFolders);
-			//folder = new File(gameBoardsFolder + "/simple");
-			//folder = new File(gameBoardsFolder + ret);
+	
 			if(ret==null || ret.equals("")) HotelGame.killGame();
 			folder = new File(ret);
 			File[] listOfFiles = folder.listFiles();

@@ -85,7 +85,6 @@ public class HotelToolBox extends Pane {
 			diceFlag = 0;
 			// uncomment for play all players
 			 HotelGame.completeATurn(HotelGame.getPlayerActive()+1);
-			//HotelGame.completeATurn(HotelGame.getPlayerActive());
 
 		});
 
@@ -105,15 +104,6 @@ public class HotelToolBox extends Pane {
 			curr = HotelGame.getCurrentPlayer();
 
 
-			/*
-			// allos exei hdh eisodo edw
-			if(curr.getCurrentBox().getHotelEntrance()!=null) {
-				System.out.println("HotelToolBox.java: Exei kapoios allos eisodo edw");
-				HotelMessenger.generalInfoMessage("Buy Entrance", "Error", "You can not buy entrance here. "+curr.getCurrentBox().getEntranceOwner().getName() + " has already one");
-				
-				return ;
-			}
-			*/
 			System.out.println("HotelToolBox.java: Possible Entrances");
 			System.out.println(curr.getHotels());
 			
@@ -129,7 +119,6 @@ public class HotelToolBox extends Pane {
 					HotelMessenger.generalInfoMessage("Info", "Free Entrance", "You pass from City Hall, you have a free entrance");
 				}
 				currHotels = curr.getHotels();
-				//ArrayList<HotelBoardBox> possibleEntrances = HotelGameBoard.getPossibleBoxesForBuildOrEntrance(curr.getCurrentBox());
 
 				List<String> choices = new ArrayList<String>();
 				for (HotelCard h : currHotels) {

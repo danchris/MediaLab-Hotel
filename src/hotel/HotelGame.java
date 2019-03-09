@@ -40,9 +40,6 @@ public class HotelGame extends Application {
 	private static int passHall = 0;			// 0 if not pass hall | 1 if pass hall
 	private static HotelCard hotelEntrance = null;
 
-	// private static int popupFlag = 0;
-	// private static PauseTransition delay = new
-	// PauseTransition(Duration.seconds(2));
 	/*
 	 * static { delay.setOnFinished(e -> { popup.hide(); popupFlag = 1; }); }
 	 */
@@ -68,18 +65,7 @@ public class HotelGame extends Application {
 
 	}
 
-	/*
-	 * @Override public void start(Stage primaryStage) throws Exception { // TODO
-	 * Auto-generated method stub Platform.runLater(() -> { try {
-	 * System.out.println("HotelGame.java: Start Application"); this.primaryStage =
-	 * primaryStage; prepareGame();
-	 * 
-	 * } catch (Exception ex) {
-	 * System.out.println("HotelGame.java: Exception throw");
-	 * System.out.println(ex); } });
-	 * 
-	 * }
-	 */
+
 	public static void prepareGame() throws IOException {
 		stopFlag = 0;
 		pause = new PauseTransition(Duration.seconds(1));
@@ -87,8 +73,6 @@ public class HotelGame extends Application {
 			continueToGame();
 		});
 		setPause1(new PauseTransition(Duration.seconds(5)));
-		// pause.setOnFinished(event -> {continueToGame();}
-		// );
 		gui = new HotelGUI();
 		gui.fileReaderTurnOn();
 		gui.createMainWindow(primaryStage);
@@ -118,21 +102,12 @@ public class HotelGame extends Application {
 			for (HotelPlayer i : playerList) {
 				i.setBox(gui.getStartBox());
 			}
-/*
-			// Set starting pawn in the start box
-			gui.getStartBox().setPawn(playerList.get(0).getImg());
-			currentPlayer.setIsSet(1);
-			currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
-			
-			currentPlayer.setBox(currentBox);
-			nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
-*/			timer = new HotelTimer(gui.getInfoBar());
+
+			timer = new HotelTimer(gui.getInfoBar());
 			timer.start();
 			completeATurn(0);
 			
 
-			// pause.play();
-			// continueToGame();
 
 		} else {
 			System.out.println("HotelGame.java : Game is stopped playGame function");
@@ -141,9 +116,7 @@ public class HotelGame extends Application {
 
 	public static void continueToGame() {
 		System.out.println("Eimai sto continue");
-		// timer.start();
 		if (stopFlag == 0) {
-			//currentPlayer.move(currentPlayer.getCurrentBox().getNext(), currentPlayer.getCurrentBox());
 			System.out.println("Stamatisa");
 		}
 		pause.play();
@@ -198,7 +171,6 @@ public class HotelGame extends Application {
 		stopFlag = n;
 		if (n==0) {
 			System.out.println("HotelGame.java: setStopFlag setted to zero so game continue");
-			//completeATurn(playerActive);
 		}
 	}
 
@@ -261,7 +233,6 @@ public class HotelGame extends Application {
 				gui.getStartBox().setPawn(playerList.get(index).getImg());
 				currentBox = gui.getGameBoard().getGridBoard()[startX][startY];
 				currentPlayer.setBox(currentBox);
-			//	nextBox = gui.getGameBoard().getGridBoard()[startX + 1][startY];
 				playerList.get(index).setIsSet(1);
 			}
 			playerActive = index;
@@ -275,7 +246,6 @@ public class HotelGame extends Application {
 	public static void finishMove() {
 		System.out.println("HotelGame.java: finishMove Teleiwsa to transmove tha kanw disable to roll dice");
 		System.out.println("HotelGame.java: finishMove thetw stopFlag se 1");
-		//setStopFlag(1);
 		
 		HotelToolBox.disableButton(1, true); // disable dice button
 		
@@ -311,29 +281,21 @@ public class HotelGame extends Application {
 			System.out.println("HotelGame.java: finishMove eisai se aksina mporeis na xtiseis h buy eisodo");
 			HotelToolBox.disableButton(2, false);	//enable request building button
 			HotelToolBox.disableButton(4, false);	//enable buy entrance button
-		//	setStopFlag(0);
 		}
 		// edw pairneis lefta apo tin trapeza
 		else if (currentBox.getID().equals("B")) {
 			System.out.println("HotelGame.java: finishMove eisai sthn trapeza mporeis na pareis lefta");
 			HotelToolBox.disableButton(5, false);	//enable bank button
-			//setStopFlag(0);
 		}
 		// edw agorazeis tzampa eisodo gia opoio hotel exeis
 		else if (currentBox.getID().equals("C")) {
 			System.out.println("HotelGame.java: finishMove eisai sto dimarxeio mporeis na agoraseis eisodo");
 			HotelToolBox.disableButton(4, false);	//enable buy entrance button
-		//	setStopFlag(0);
 		}
 		// afetiria dn kanies tipota
 		else if (currentBox.getID().equals("S")) {
 			System.out.println("HotelGame.java: finishMove eisai sthn afetiria");
-			//setStopFlag(0);
 		}
-
-		// uncomment line to play all players
-		//completeATurn(playerActive+1);
-		//completeATurn(playerActive); //only first player plays
 	}
 	
 	
@@ -380,7 +342,6 @@ public class HotelGame extends Application {
 		    });
 
 		    alert.show(); 
-		//HotelMessenger.generalInfoMessage("Pay for Entrance", "Pay", "Prepei na plirwseis ton " + hotelEntrance.getOwner().getName() + " gia to "+maxUp + " "+maxDailyCost+" MLS");
 	}
 	
 	public static HotelPlayer getById(int id) {

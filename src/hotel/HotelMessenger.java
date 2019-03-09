@@ -51,7 +51,6 @@ public class HotelMessenger {
 		vbox.setAlignment(Pos.CENTER);
 		vbox.setPadding(new Insets(50));
 
-		// Optional<ButtonType> result = dialogStage.showAndWait();
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();
 	}
@@ -86,7 +85,6 @@ public class HotelMessenger {
 			public void handle(ActionEvent e) {
 				dialogStage.hide();
 				HotelGame.playGame();
-				// playerTurn(HotelGame.getPlayerList().get(0).getName());
 			}
 		});
 		VBox vbox = new VBox(new Text("Board Selected Randomly"), new Text("Name of Board : " + board), continueButton);
@@ -111,7 +109,6 @@ public class HotelMessenger {
 			public void handle(ActionEvent e) {
 				dialogStage.hide();
 				rollDiceMessage();
-				// HotelGame.continueToGame();
 			}
 		});
 
@@ -177,8 +174,7 @@ public class HotelMessenger {
 		img = HotelFileReader.getDice(n);
 		imgView = new ImageView();
 		imgView.setImage(img);
-		// imgView.setFitHeight(20);
-		// imgView.setFitWidth(20);
+
 		VBox vbox = new VBox(new Text("Dice is : " + n));
 		vbox.setSpacing(10);
 		vbox.setAlignment(Pos.CENTER);
@@ -186,7 +182,6 @@ public class HotelMessenger {
 		vbox.getChildren().add(imgView);
 		vbox.getChildren().add(OKButton);
 
-		// Optional<ButtonType> result = dialogStage.showAndWait();
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();
 	}
@@ -203,7 +198,6 @@ public class HotelMessenger {
 				dialogStage.hide();
 				System.out.println("HotelMessenger.java : Thelw lefta");
 				HotelGame.setStopFlag(0);
-				//HotelGame.getCurrentPlayer().transitionMove();
 				HotelGame.getCurrentPlayer().move();
 
 			}
@@ -224,7 +218,6 @@ public class HotelMessenger {
 		vbox.setPadding(new Insets(50));
 		vbox.getChildren().addAll(yes,no);
 
-		// Optional<ButtonType> result = dialogStage.showAndWait();
 		dialogStage.setScene(new Scene(vbox));
 		dialogStage.show();
 	}
@@ -592,7 +585,5 @@ public class HotelMessenger {
 		}
 		
 	}
-	
 
-	
 }

@@ -173,16 +173,12 @@ public class HotelPlayer {
 				if (box.getID().equals("B")) {
 					System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
 					HotelToolBox.disableButton(5, false);	//enable bank button
-					//HotelGame.setStopFlag(1);
-					//HotelMessenger.bankMessage();
 				}
 				// an eimai sto hall energopoihse to button
 				if (box.getID().equals("C")) {
 					System.out.println("HotelPlayer.java: Transision Move perasa apo city hall na energopoihsw to koumpi");
 					HotelGame.setPassHall(1); // energopoihse thn global metavliti
 					HotelToolBox.disableButton(4, false);	//enable buy entrance button
-					//HotelGame.setStopFlag(1);
-					//HotelMessenger.bankMessage();
 				}
 			} else {
 				System.out.println("HotelPlayer.java: Einai allos mprosta mou");
@@ -194,16 +190,12 @@ public class HotelPlayer {
 					if(tmp.getNext().getID().equals("B")) {
 						System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
 						HotelToolBox.disableButton(5, false);	//enable bank button
-						//HotelGame.setStopFlag(1);
-						//HotelMessenger.bankMessage();
 					}
 					// an eimai sto hall energopoihse to button
 					if (box.getID().equals("C")) {
 						System.out.println("HotelPlayer.java: Transision Move perasa apo city hall na energopoihsw to koumpi");
 						HotelGame.setPassHall(1); // energopoihse thn global metavliti
 						HotelToolBox.disableButton(4, false);	//enable buy entrance button
-						//HotelGame.setStopFlag(1);
-						//HotelMessenger.bankMessage();
 					}
 					tmp = tmp.getNext().getNext();
 					c++;
@@ -211,16 +203,12 @@ public class HotelPlayer {
 						if(tmp.equals("B")) {
 							System.out.println("HotelPlayer.java: Transision Move perasa apo trapeza na energopoihsw to koumpi");
 							HotelToolBox.disableButton(5, false);	//enable bank button
-							//HotelGame.setStopFlag(1);
-							//HotelMessenger.bankMessage();
 						}
 						// an eimai sto hall energopoihse to button
 						if (box.getID().equals("C")) {
 							System.out.println("HotelPlayer.java: Transision Move perasa apo city hall na energopoihsw to koumpi");
 							HotelGame.setPassHall(1); // energopoihse thn global metavliti
 							HotelToolBox.disableButton(4, false);	//enable buy entrance button
-							//HotelGame.setStopFlag(1);
-							//HotelMessenger.bankMessage();
 						}
 						tmp = tmp.getNext();
 						c++;
@@ -238,7 +226,6 @@ public class HotelPlayer {
 		}
 		else {
 			System.out.println("HotelPlayer.java: TransisionMove box " + box.getID());
-		//	pause.stop();
 			HotelGame.finishMove();
 		}
 

@@ -90,7 +90,6 @@ public class HotelMenuBar extends MenuBar {
 		Profits.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-			//	if (HotelGame.getStopFlag() == 0) {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setGraphic(null);
 					alert.setTitle("Profits");
@@ -104,7 +103,6 @@ public class HotelMenuBar extends MenuBar {
 					info.add(new Text("Player 3: "+HotelGame.getById(3).getMaxMLS()+ " mls"),0,2);
 					alert.getDialogPane().setContent(info);
 					alert.showAndWait();
-				//}
 			}
 		});
 		

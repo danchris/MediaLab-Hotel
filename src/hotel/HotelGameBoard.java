@@ -22,7 +22,6 @@ public class HotelGameBoard extends Pane{
 
 	public HotelGameBoard(String[][] file) throws IOException {
 		setPrefWidth(600);
-		//setPrefSize(600,600);
 		HotelBoardBox a;
 
 		for (int i = 0; i < 12; i++) {
@@ -190,12 +189,7 @@ public class HotelGameBoard extends Pane{
 		if(gridBoard[currx][curry+1].isThis(hotel) && gridBoard[currx][curry+1].getHotelEntrance()==null) return true;
 		if(gridBoard[currx+1][curry].isThis(hotel) && gridBoard[currx+1][curry].getHotelEntrance()==null) return true;
 		if(gridBoard[currx][curry-1].isThis(hotel) && gridBoard[currx][curry-1].getHotelEntrance()==null) return true;
-		/*
-		if(gridBoard[currx-1][curry].getHotelCard().getName().equals(hotel.getName())) return true;
-		if(gridBoard[currx][curry+1].getHotelCard().getName().equals(hotel.getName())) return true;
-		if(gridBoard[currx+1][curry].getHotelCard().getName().equals(hotel.getName())) return true;
-		if(gridBoard[currx][curry-1].getHotelCard().getName().equals(hotel.getName())) return true;
-		*/
+
 		return false;
 	}
 	
