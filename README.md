@@ -6,6 +6,10 @@ Semester Project for MediaLab. Hotel Board Game in JavaFX.
 * Java 8
 * JavaFx
 
+# About 
+
+Game Rules: https://www.hasbro.com/common/instruct/Hotels.PDF
+
 # LICENSE
 MIT License
 
